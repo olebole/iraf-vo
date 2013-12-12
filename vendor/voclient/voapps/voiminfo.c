@@ -326,7 +326,7 @@ Tests (char *input)
 
     vo_taskTest (task, "--help", NULL);
 
-    if (access (input, F_OK) == 0) {
+    if (strncmp (input, "http://", 7) == 0 || access (input, F_OK) == 0) {
         vo_taskTest (task, "-n", input, NULL);				// Ex 1
         vo_taskTest (task, "-b", "-s", input, NULL);			// Ex 2
         vo_taskTest (task, "-c", input, NULL);				// Ex 3
