@@ -71,7 +71,6 @@ zztest: zztest.o $(OBJS)
 
 lib: objs $(INCS)
 	ar x ../lib/libsamp.a
-	ar x ../lib/libVOTable.a
 	ar x ../lib/libVOClient.a
 	ar x ../lib/libVOApps.a
 	chmod 644 *.o
