@@ -1,0 +1,124 @@
+\hypertarget{vutUtil_8c}{
+\section{vutUtil.c File Reference}
+\label{vutUtil_8c}\index{vutUtil.c@{vutUtil.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$string.h$>$}\par
+{\tt \#include $<$stddef.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include $<$sys/file.h$>$}\par
+{\tt \#include $<$sys/types.h$>$}\par
+{\tt \#include $<$curl/curl.h$>$}\par
+{\tt \#include $<$curl/easy.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+{\tt \#include \char`\"{}votParse.h\char`\"{}}\par
+\subsection*{Data Structures}
+\begin{CompactItemize}
+\item 
+struct \textbf{vutUrl}
+\item 
+struct \textbf{MemoryStruct}
+\item 
+struct \textbf{vutCblock\_\-t}
+\item 
+struct \textbf{vutCmem\_\-t}
+\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\hypertarget{vutUtil_8c_e249c5e3e079ef34750442de10282ce1}{
+\#define \textbf{\_\-DALCLIENT\_\-LIB\_\-}}
+\label{vutUtil_8c_e249c5e3e079ef34750442de10282ce1}
+
+\item 
+\hypertarget{vutUtil_8c_6c4e2dc626b5df43dbd5edfe5dce62c9}{
+\#define \textbf{MB\_\-SIZE}~8192}
+\label{vutUtil_8c_6c4e2dc626b5df43dbd5edfe5dce62c9}
+
+\item 
+\hypertarget{vutUtil_8c_9b60b96aa05174654f74beada0086ea1}{
+\#define \textbf{MB\_\-LARGESTR}~1024}
+\label{vutUtil_8c_9b60b96aa05174654f74beada0086ea1}
+
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{vutUtil_8c_ad2c851a4d3e978d685a92ea7779bddf}{
+typedef struct vutUrl \textbf{vutUrl\_\-t}}
+\label{vutUtil_8c_ad2c851a4d3e978d685a92ea7779bddf}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{vutUtil_8c_e5306076a0a0188aac1998229605963b}{
+void $\ast$ \textbf{vut\_\-urlOpen} (char $\ast$baseURL, char $\ast$resource)}
+\label{vutUtil_8c_e5306076a0a0188aac1998229605963b}
+
+\item 
+\hypertarget{vutUtil_8c_03a40184c340dee37c2f35636c94b30d}{
+void \textbf{vut\_\-urlAddParam} (void $\ast$urlBuilder, char $\ast$param, char $\ast$valstr)}
+\label{vutUtil_8c_03a40184c340dee37c2f35636c94b30d}
+
+\item 
+\hypertarget{vutUtil_8c_1e6c98f722380068b6c1aa3d2b5498b2}{
+char $\ast$ \textbf{vut\_\-urlGetString} (void $\ast$urlBuilder)}
+\label{vutUtil_8c_1e6c98f722380068b6c1aa3d2b5498b2}
+
+\item 
+\hypertarget{vutUtil_8c_d58174f3c61748ca89ee61ffc8759de5}{
+void \textbf{vut\_\-urlClose} (void $\ast$urlBuilder)}
+\label{vutUtil_8c_d58174f3c61748ca89ee61ffc8759de5}
+
+\item 
+\hypertarget{vutUtil_8c_f2ea21295daf9d7b6da0e620501a1907}{
+int \textbf{vut\_\-getURLtoFile} (dalConn\_\-t $\ast$dal, char $\ast$url, char $\ast$fname)}
+\label{vutUtil_8c_f2ea21295daf9d7b6da0e620501a1907}
+
+\item 
+\hypertarget{vutUtil_8c_97d54e2623017ebf162b78f47060d514}{
+char $\ast$ \textbf{vut\_\-getURL} (dalConn\_\-t $\ast$dal, char $\ast$url)}
+\label{vutUtil_8c_97d54e2623017ebf162b78f47060d514}
+
+\item 
+\hypertarget{vutUtil_8c_1af8b12f4b65e397eb549ef0afe28397}{
+char $\ast$ \textbf{vut\_\-setString} (char $\ast$out, char $\ast$in, int size)}
+\label{vutUtil_8c_1af8b12f4b65e397eb549ef0afe28397}
+
+\item 
+\hypertarget{vutUtil_8c_f244ca6506f97cd2901eed43bc8882d0}{
+void $\ast$ \textbf{vut\_\-cmemInit} ()}
+\label{vutUtil_8c_f244ca6506f97cd2901eed43bc8882d0}
+
+\item 
+\hypertarget{vutUtil_8c_db8029e2ca2514ff3f20f32c62e80790}{
+void \textbf{vut\_\-cmemDestroy} (void $\ast$cmem)}
+\label{vutUtil_8c_db8029e2ca2514ff3f20f32c62e80790}
+
+\item 
+\hypertarget{vutUtil_8c_774c7ab63e265a7d6581abe1ce3c0ffd}{
+char $\ast$ \textbf{vut\_\-cmemCopy} (void $\ast$cmem, char $\ast$str)}
+\label{vutUtil_8c_774c7ab63e265a7d6581abe1ce3c0ffd}
+
+\item 
+\hypertarget{vutUtil_8c_a1fdda024ec7634060fee4d06c2c0f83}{
+char $\ast$ \textbf{vut\_\-votableToDelimited} (char $\ast$votable, char delim)}
+\label{vutUtil_8c_a1fdda024ec7634060fee4d06c2c0f83}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+VUTUTIL.C -- DALClient utility classes.
+
+These routines are mostly internal support code specific to DALClient. Some have adapted from VOClient with minor changes, in order for DALClient to be buildable stand-alone as well as a component of VOClient.
+
+\begin{Desc}
+\item[Author:]Doug Tody, Mike Fitzpatrick \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

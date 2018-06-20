@@ -82,7 +82,7 @@ vocatalog (int argc, char **argv, size_t *reslen, void **result)
     /*  Clean up.  Rememebr to free whatever pointers were created when
      *  parsing arguments.
      */
-    for (i=0; i < (argc + 2); i++)
+    for (i=0; i < (argc + 1); i++)
 	free ((void *) pargv[i]);
 
     return (status);

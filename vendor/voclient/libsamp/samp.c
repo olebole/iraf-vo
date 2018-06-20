@@ -1030,14 +1030,15 @@ samp_initServer (Samp *sampP)
      *	receiveCall (string sender-id, string msg-id, map message)
      *	receiveResponse (string responder-id, string msg-tag, map response)
      */
-    xr_addServerMethod ("test.echo", samp_testEcho,   		NULL);
-
+    xr_addServerMethod ("test.echo", 
+				samp_testEcho,   		NULL);
     xr_addServerMethod ("samp.client.receiveCall",
  				samp_receiveCall,   		NULL);
     xr_addServerMethod ("samp.client.receiveNotification",
 				samp_receiveNotification,   	NULL);
     xr_addServerMethod ("samp.client.receiveResponse",
  				samp_receiveResponse,   	NULL);
+
 
     /*  Define the SAMP message handlers.
     */

@@ -1,0 +1,4 @@
+#!/bin/csh -x
+make -f Makefile.zztest
+#EOF
+

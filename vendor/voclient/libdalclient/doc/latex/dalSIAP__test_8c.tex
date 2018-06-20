@@ -1,0 +1,124 @@
+\hypertarget{dalSIAP__test_8c}{
+\section{dalSIAP\_\-test.c File Reference}
+\label{dalSIAP__test_8c}\index{dalSIAP\_\-test.c@{dalSIAP\_\-test.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$sys/time.h$>$}\par
+{\tt \#include $<$getopt.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalSIAP__test_8c_a47d1e5c8d3684fd7adb4dc4e7864f5f}{
+\#define \textbf{LOC\_\-SIAPV2}~\char`\"{}http://localhost:8080/ivoa-dal/siapv2\char`\"{}}
+\label{dalSIAP__test_8c_a47d1e5c8d3684fd7adb4dc4e7864f5f}
+
+\item 
+\hypertarget{dalSIAP__test_8c_851ad7f184190ab5f2369f282d23bf06}{
+\#define \textbf{VAO\_\-SIAPV2}~\char`\"{}http://vaosa-vm1.aoc.nrao.edu/ivoa-dal/siapv2\char`\"{}}
+\label{dalSIAP__test_8c_851ad7f184190ab5f2369f282d23bf06}
+
+\item 
+\hypertarget{dalSIAP__test_8c_1e922f219fa971aed38d2d341f572218}{
+\#define \textbf{ROWSTART}~1}
+\label{dalSIAP__test_8c_1e922f219fa971aed38d2d341f572218}
+
+\item 
+\hypertarget{dalSIAP__test_8c_d427e68b51a04d4e924227c427e66e5f}{
+\#define \textbf{ROWEND}~2}
+\label{dalSIAP__test_8c_d427e68b51a04d4e924227c427e66e5f}
+
+\item 
+\hypertarget{dalSIAP__test_8c_1c1d359a10a68784ac056116c35733d4}{
+\#define \textbf{DELPARAM}~3}
+\label{dalSIAP__test_8c_1c1d359a10a68784ac056116c35733d4}
+
+\item 
+\hypertarget{dalSIAP__test_8c_68f8db667c0a87befe69c4ce3fc74a7e}{
+\#define \textbf{UPDPARAM}~4}
+\label{dalSIAP__test_8c_68f8db667c0a87befe69c4ce3fc74a7e}
+
+\item 
+\hypertarget{dalSIAP__test_8c_30a3f049b718d26a32f16ed72716d588}{
+\#define \textbf{RA}~5}
+\label{dalSIAP__test_8c_30a3f049b718d26a32f16ed72716d588}
+
+\item 
+\hypertarget{dalSIAP__test_8c_fe38ec6126e35e40049e27fdf4586ba5}{
+\#define \textbf{DEC}~6}
+\label{dalSIAP__test_8c_fe38ec6126e35e40049e27fdf4586ba5}
+
+\item 
+\hypertarget{dalSIAP__test_8c_70ed59adcb4159ac551058053e649640}{
+\#define \textbf{SIZE}~7}
+\label{dalSIAP__test_8c_70ed59adcb4159ac551058053e649640}
+
+\item 
+\hypertarget{dalSIAP__test_8c_b57e5c97e5d788f048284f1175c757b7}{
+\#define \textbf{BAND}~8}
+\label{dalSIAP__test_8c_b57e5c97e5d788f048284f1175c757b7}
+
+\item 
+\hypertarget{dalSIAP__test_8c_078b6c12f1ac6819cecef90ab5870276}{
+\#define \textbf{TIME}~9}
+\label{dalSIAP__test_8c_078b6c12f1ac6819cecef90ab5870276}
+
+\item 
+\hypertarget{dalSIAP__test_8c_524e7de641086886b1cfe0391ffc9f57}{
+\#define \textbf{POL}~10}
+\label{dalSIAP__test_8c_524e7de641086886b1cfe0391ffc9f57}
+
+\item 
+\hypertarget{dalSIAP__test_8c_660a5cf7ec17558b0d0125d54d645e48}{
+\#define \textbf{IMTYPE}~11}
+\label{dalSIAP__test_8c_660a5cf7ec17558b0d0125d54d645e48}
+
+\item 
+\hypertarget{dalSIAP__test_8c_960570ecc52c22257b9c7427043e6c0f}{
+\#define \textbf{MAXREC}~12}
+\label{dalSIAP__test_8c_960570ecc52c22257b9c7427043e6c0f}
+
+\item 
+\hypertarget{dalSIAP__test_8c_04c9fab54e2fa0e6f6d6d5c013980fd2}{
+\#define \textbf{COLLECTION}~13}
+\label{dalSIAP__test_8c_04c9fab54e2fa0e6f6d6d5c013980fd2}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalSIAP__test_8c_1a9f18b7eb61939b704529bef31b4b32}{
+void \textbf{psetDump} (FILE $\ast$out, Query query)}
+\label{dalSIAP__test_8c_1a9f18b7eb61939b704529bef31b4b32}
+
+\item 
+\hypertarget{dalSIAP__test_8c_824310c083b203f2654dc3fcb9da5f18}{
+void \textbf{qrDump} (FILE $\ast$out, QResponse qr, int dumpTable, int row1, int row2, int attr)}
+\label{dalSIAP__test_8c_824310c083b203f2654dc3fcb9da5f18}
+
+\item 
+\hypertarget{dalSIAP__test_8c_cb271473521c0a2392b9e4cc83c17fe3}{
+int \textbf{saveToFile} (char $\ast$votable, char $\ast$text)}
+\label{dalSIAP__test_8c_cb271473521c0a2392b9e4cc83c17fe3}
+
+\item 
+\hypertarget{dalSIAP__test_8c_0ddf1224851353fc92bfbff6f499fa97}{
+int \textbf{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})}
+\label{dalSIAP__test_8c_0ddf1224851353fc92bfbff6f499fa97}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALSIAP\_\-TEST -- Test the SIAP service interface.
+
+This test program exercises and demonstrates the DALClient SIAP service interface, and most of the full DALClient library in the process. Only the standard client API is used here (no use of internals).
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

@@ -62,7 +62,7 @@ samp_receiveCall (void *data)
 	fprintf (stderr, "rcvCall(%s) mid='%s' mtype='%s'\n", 
     	    sender, msg_id, mtype);
     }
-
+	
 
     /*  Call the default user handler for all messages.  This is in addition
      *  to the handler installed for a particular mtype or Hub event.
@@ -129,7 +129,7 @@ samp_receiveNotification (void *data)
 
     if (sampP->trace)
 	fprintf (stderr, "rcvNotify(%s) mtype='%s'\n", sender, mtype);
-
+	
 
     /*  Call the default user handler for all messages.  This is in addition
      *  to the handler installe for a particular mtype or Hub event.
@@ -150,9 +150,9 @@ samp_receiveNotification (void *data)
      *  then call the userHandler directly, no reply() to the sender is 
      *  required.
      */
-    if ( (func = samp_getSampHandler (mtype)) )
+    if ( (func = samp_getSampHandler (mtype)) ) {
 	(*func) (sender, mtype, NULL, params);
-    else {
+    } else {
 	/*
 	samp_execUserHandler (sender, mtype, 0, params);
 	*/
@@ -163,8 +163,7 @@ samp_receiveNotification (void *data)
     }
 
 done_:
-    resp = OK_Map;
-resp = samp_getHandlerReply ();
+    resp = samp_getHandlerReply ();
 
     xr_setStructInResult (data, resp);
 

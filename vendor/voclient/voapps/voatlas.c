@@ -123,10 +123,10 @@ static void Tests (char *input);
 int 
 voatlas (int argc, char **argv, size_t *reslen, void **result)
 {
-    char **pargv, optval[SZ_FNAME];
+    char **pargv, optval[SZ_FNAME], ch;
     char  *iname = NULL, *oname = NULL, *dlname = NULL;
     char   tmp[SZ_FNAME], buf[SZ_FNAME];
-    int    i=1, status = OK, apos = 0, samp = -1, naxis = 512, ch;
+    int    i=1, status = OK, apos = 0, samp = -1, naxis = 512;
 
 
     /*  Initialize.
@@ -241,7 +241,7 @@ voatlas (int argc, char **argv, size_t *reslen, void **result)
 	dlname = oname;			    /* output name specified	*/
     } else if (do_samp) {
 	strcpy (tmp, "/tmp/voatlasXXXXXX");    /* temp download name	*/
-	mktemp (tmp);
+	mkstemp (tmp);
 	dlname = tmp;
     } else {
 	if (field)
@@ -296,7 +296,7 @@ voatlas (int argc, char **argv, size_t *reslen, void **result)
 	    status = ERR;
 	    goto done_;
     } else if (field) {
-	if (voa_resolveField (field, &ra, &dec) == OK) {
+	if (voa_resolveField (field, &ra, &dec) != OK) {
 	    fprintf (stderr, "Error: cannot resolve object '%s'\n", field);
 	    status = ERR;
 	    goto done_;
@@ -483,10 +483,10 @@ static int
 voa_callService (char *svc_url, double ra, double dec, double size,
     char *ofname, char *format, int maximages)
 {
-    char *acref    = NULL, *fmt = NULL, *program = NULL;
+    char   *acref = NULL, *fmt = NULL, *program = NULL;
     double  dra, ddec;
-    int   i, nrec = 0, recnum = 0;
-    FILE *fd = (FILE *) NULL;
+    int     i, nrec = 0, recnum = 0;
+    FILE   *fd = (FILE *) NULL;
 
 
     DAL	      siap;				/* DAL Connection	 */
@@ -507,9 +507,9 @@ voa_callService (char *svc_url, double ra, double dec, double size,
 	(list_surveys ? NULL : (graphic ? "image/jpeg" : "image/fits")));
 
 
-    if (VOAPP_DEBUG) {
-        fprintf (stderr, "Executing Query:\n  %s\n\n", 
-            voc_getQueryString (query, SIAP_CONN, 0));
+    if (VOAPP_DEBUG || debug) {
+        fprintf (stderr, "Executing Query:\n\t'%s'\n\n", 
+            voc_getQueryString (query,SIAP_CONN,0));
     }
         
 

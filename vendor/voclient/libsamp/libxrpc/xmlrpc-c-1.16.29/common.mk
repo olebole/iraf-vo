@@ -32,27 +32,11 @@ GCC_CXX_WARNINGS = $(GCC_WARNINGS) -Woverloaded-virtual -Wsynth
 # -UNDEBUG (in any of various ways) to override this.
 #
 CFLAGS_COMMON = -DNDEBUG
-ifeq ($(IRAFARCH),macintel)
-    CFLAGS_COMMON = -DNDEBUG -m64
-    LADD += -m64
-else
-    ifeq ($(IRAFARCH),macosx)
-        CFLAGS_COMMON = -DNDEBUG -m32
-        LADD += -m32 -arch i386
-    endif
-    ifeq ($(IRAFARCH),linux)
-        CFLAGS_COMMON = -m32
-        LADD += -m32
-    endif
-endif
 CXXFLAGS_COMMON = -DNDEBUG
 
 ifeq ($(C_COMPILER_GNU),yes)
   CFLAGS_COMMON += $(GCC_C_WARNINGS) -fno-common -g -ggdb -O0 # -O3
 endif
-
-CFLAGS += $(CFLAGS_COMMON)
-
 
 ifeq ($(CXX_COMPILER_GNU),yes)
   CXXFLAGS_COMMON += $(GCC_CXX_WARNINGS) -g

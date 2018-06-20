@@ -1,0 +1,21 @@
+		  ===================================
+		     LIBVOSI v1.0 Tools README File
+		  ===================================
+
+    This directory contains the source and documentation for the LIBVOSI
+(VO Support Interfaces) API.  See the INSTALL file for detailed
+installation instructions.
+
+Contents:
+---------
+	Makefile		Top-level Makefile for the source
+	README			This file
+	INSTALL			Installation instructions
+	examples/		Example task using the interface
+
+    Please report any bugs, comments, or suggestions to the author.
+
+
+Mike Fitzpatrick, fitz@noao.edu, NOAO
+Aug 11, 2014
+

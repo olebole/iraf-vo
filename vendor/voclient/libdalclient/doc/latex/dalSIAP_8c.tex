@@ -1,0 +1,66 @@
+\hypertarget{dalSIAP_8c}{
+\section{dalSIAP.c File Reference}
+\label{dalSIAP_8c}\index{dalSIAP.c@{dalSIAP.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalSIAP_8c_054a382a4a5f17a30d11b74e0d83f6e1}{
+char $\ast$ \textbf{siap\_\-getQueryURL} (dalQuery\_\-t $\ast$query)}
+\label{dalSIAP_8c_054a382a4a5f17a30d11b74e0d83f6e1}
+
+\item 
+\hypertarget{dalSIAP_8c_e5a17036ffe3ec5d81b97d972f04dc17}{
+void \textbf{siap\_\-initProperties} (dalQR\_\-t $\ast$qr)}
+\label{dalSIAP_8c_e5a17036ffe3ec5d81b97d972f04dc17}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALSIAP -- Simple Image Access Protocol-specific code.
+
+Most of the DALClient code is generic and common to all service types. The files dalSCSP (cone simple search), dalSIAP (simple image access), and so forth contain the protocol-specific code for each class of service. In particular this is where we deal with multiple versions of the VO prtotocols, and shielding the client from the details of the VO protocols as they evolve.
+
+The Simple Image Access Protocol (SIAP) is used to discover, download, and access multi-dimensional astronomical images.
+
+------ Query Parameters ---------
+
+The following standard query parameters are recognized by the SIAP driver and may be used for custom protocol-specific translation. All other query parameters are merely passed through to the remote service.
+
+POS Encoded RA,DEC position encoded as a list SIZE Region size (one or two values). BAND Spectral band TIME Time band POL Polarisation states FORMAT Desired image formats
+
+POS-object Not yet implemented. This will be a generic spatial region object that gets translated into whatever the specific protocol requires, in this case pos,size.
+
+Not all versions of the protocol implement all these parameters. Parameters not implemented by the target service version are ignored.
+
+------ Object Properties ---------
+
+Each row of the SIAP query response describes a single available image. The following Image dataset properties describe each dataset.
+
+protocol Protocol implemented (\char`\"{}SIA\char`\"{}) version Protocol version (e.g., \char`\"{}1.0\char`\"{} or \char`\"{}2.0\char`\"{})
+
+title Image title ra Right ascension of image center (ICRS, decimal degrees) dec Declination of image center (ICRS, decimal degrees) naxes Number of image axes (dimensionality) naxis Length of each axis (blank-delimited array) wcsaxes WCS axes scale Image scale (degrees per pixel) bandname Bandpass or filter name bandlo Numerical bandpass lower limit (meters) bandhi Numerical bandpass upper limit (meters) format Image format (MIME type) acref Access reference (URL) estsize Estimated dataset size (kB)
+
+Other properties may be added but this is a good start...
+
+At the lower level, SIAPV1 uses UCDs to tag object attributes, whereas SIAPV2 usesa UTYPEs. Refer to the IVOA specifications for details.
+
+------ SIAP routines (internal) ---------
+
+str = siap\_\-getQueryURL (query) void siap\_\-initProperties (qr)
+
+The routines in this file are internal to the DALClient code and are not intended to be called directly by applications.
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

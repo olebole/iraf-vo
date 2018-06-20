@@ -29,29 +29,20 @@ CC              = gcc
 CINCS           = -I$(INCDIR)  -I.
 
 ifeq ($(PLATFORM),Darwin)
-    ifeq ($(PLMACH),x86_64)
-        CARCH   = -m64
+    ifeq  ($(PLMACH),x86_64)
+	CARCH	= -m64 -mmacosx-version-min=10.5
     else
-        CARCH   = -m32
-    endif
-    ifdef IRAFARCH
-        ifeq ($(IRAFARCH),macintel)
-            CARCH = -m64
-        else
-            CARCH = -m32
-        endif
+        #CARCH   = -arch i386 -arch ppc -m32 -mmacosx-version-min=10.4
+        CARCH   = -mmacosx-version-min=10.4
     endif
 else
     CLIBS       = -lm -lc -lpthread -lcurl
-    ifdef IRAFARCH
-        ifeq ($(IRAFARCH),linux)
-            CARCH = -m32
-        endif
-    endif
+    CARCH       = -D$(PLATFORM)
 endif
 
 CLIBS		= -lm -lc -lcurl -lpthread
-CFLAGS 		= -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -DIRAF -L./
+#CFLAGS 		= -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -DIRAF
+CFLAGS 		= -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS)
 
 
 
@@ -73,7 +64,6 @@ all:	.BASE lib install
 World:	.BASE lib apps install
 
 install: .BASE lib apps
-	mkdir -p $(LIBDIR) $(INCDIR)
 	cp lib$(NAME).a $(LIBDIR)
 	cp $(INCS) $(INCDIR)
 	/bin/rm -rf *.o
@@ -81,7 +71,7 @@ install: .BASE lib apps
 objs:	$(OBJS) $(INCS)
 
 clean:
-	/bin/rm -f *.o *.a *.e *.so .BASE $(APPS) __*
+	/bin/rm -f *.o *.a *.e *.so .BASE $(APPS)
 	(cd examples ; make clean)
 	(cd libxrpc  ; make clean)
 	/bin/rm -rf libxrpc/lib/build/* libxrpc/lib/*.dylib

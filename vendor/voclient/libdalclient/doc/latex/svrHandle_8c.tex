@@ -1,0 +1,221 @@
+\hypertarget{svrHandle_8c}{
+\section{svrHandle.c File Reference}
+\label{svrHandle_8c}\index{svrHandle.c@{svrHandle.c}}
+}
+Utility methods to convert struct pointers to user handles.  
+
+
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$string.h$>$}\par
+\subsection*{Data Structures}
+\begin{CompactItemize}
+\item 
+struct \textbf{svr\_\-hContext\_\-t}
+\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\hypertarget{svrHandle_8c_9829f825c9f592d5ffe55d12c41ffb11}{
+\#define \textbf{MAX\_\-CONTEXTS}~256}
+\label{svrHandle_8c_9829f825c9f592d5ffe55d12c41ffb11}
+
+\item 
+\hypertarget{svrHandle_8c_23ed8e629c0a28eab14f92c888c8d7ef}{
+\#define \textbf{MAX\_\-HANDLES}~4096}
+\label{svrHandle_8c_23ed8e629c0a28eab14f92c888c8d7ef}
+
+\item 
+\hypertarget{svrHandle_8c_ae1d3cb4d6c4047f335409f0b025f06f}{
+\#define \textbf{SZ\_\-HCNAME}~64}
+\label{svrHandle_8c_ae1d3cb4d6c4047f335409f0b025f06f}
+
+\item 
+\hypertarget{svrHandle_8c_1aa4c4130283232a9b31c1a6655d0d18}{
+\#define \textbf{H\_\-ENCODE}(c, i)~(((i)$<$$<$8)$|$(c))}
+\label{svrHandle_8c_1aa4c4130283232a9b31c1a6655d0d18}
+
+\item 
+\hypertarget{svrHandle_8c_cd756a28f860cd31674897c8d8765daa}{
+\#define \textbf{H\_\-CONTEXT}(h)~((h)\&0x77)}
+\label{svrHandle_8c_cd756a28f860cd31674897c8d8765daa}
+
+\item 
+\hypertarget{svrHandle_8c_d39b5d04f102e1de901a692b565e7b40}{
+\#define \textbf{H\_\-SLOT}(h)~((h)$>$$>$8)}
+\label{svrHandle_8c_d39b5d04f102e1de901a692b565e7b40}
+
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\hypertarget{svrHandle_8c_5ad7d32f3a1ddabdc2933223ca6ce2ea}{
+typedef int \textbf{handle\_\-t}}
+\label{svrHandle_8c_5ad7d32f3a1ddabdc2933223ca6ce2ea}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void \hyperlink{svrHandle_8c_2830c3a33d71f99aa5478ad468f8a747}{svr\_\-initHandles} (void)
+\begin{CompactList}\small\item\em Initialize the handles structure. \item\end{CompactList}\item 
+int \hyperlink{svrHandle_8c_549848ab6efc99d8d41f6d64eaa16130}{svr\_\-newHandleContext} (char $\ast$name, int size)
+\begin{CompactList}\small\item\em Get a new handle context. \item\end{CompactList}\item 
+void \hyperlink{svrHandle_8c_63ae175ef0af630f86a3458de79c315f}{svr\_\-closeHandleContext} (int context)
+\begin{CompactList}\small\item\em Close a handle context. \item\end{CompactList}\item 
+\hypertarget{svrHandle_8c_076cb9fba9fcf38377d1c1b1047afd48}{
+handle\_\-t \textbf{svr\_\-newHandle} (int context, void $\ast$ptr)}
+\label{svrHandle_8c_076cb9fba9fcf38377d1c1b1047afd48}
+
+\item 
+void \hyperlink{svrHandle_8c_2d745c019c35cb8c87a6b46f5d93722e}{svr\_\-freeHandle} (handle\_\-t handle)
+\begin{CompactList}\small\item\em Free the handle for later re-use. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{svrHandle_8c_6fd0d3e0136d1be3fdcb6617ca2fdaca}{svr\_\-H2P} (handle\_\-t handle)
+\begin{CompactList}\small\item\em Convert a handle to a pointer. \item\end{CompactList}\item 
+void \hyperlink{svrHandle_8c_d257115fe5578cfb71989229211c3d0b}{svr\_\-resetHandles} (void)
+\begin{CompactList}\small\item\em Reset the handles structure. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+\hypertarget{svrHandle_8c_b6d82fb2ff0e51a5ff13f2d5b75a1f7e}{
+int \textbf{svr\_\-numHContexts} = 0}
+\label{svrHandle_8c_b6d82fb2ff0e51a5ff13f2d5b75a1f7e}
+
+\item 
+\hypertarget{svrHandle_8c_6093def4bdd0c2a51710e85f573b8770}{
+int \textbf{svr\_\-HContextOverflow} = 0}
+\label{svrHandle_8c_6093def4bdd0c2a51710e85f573b8770}
+
+\item 
+\hypertarget{svrHandle_8c_85b8d297b4960bbc5af12d019a4c57a8}{
+int \textbf{svr\_\-HContextPoolOverflow} = 0}
+\label{svrHandle_8c_85b8d297b4960bbc5af12d019a4c57a8}
+
+\item 
+\hypertarget{svrHandle_8c_be2cf6948d096c2cbfc324a893b16ca6}{
+svr\_\-hContext\_\-t $\ast$ \textbf{svrHContexts} \mbox{[}MAX\_\-CONTEXTS\mbox{]}}
+\label{svrHandle_8c_be2cf6948d096c2cbfc324a893b16ca6}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+Utility methods to convert struct pointers to user handles. 
+
+SVRHANDLE.C -- Utility methods to convert struct pointers to user handles.
+
+\begin{Desc}
+\item[Authors:]Mike Fitzpatrick, Doug Tody \end{Desc}
+\begin{Desc}
+\item[Date:]January 2014\end{Desc}
+This version has been modified to avoid having a single large (eg 8192 element) array of service handles. In particular, if freeHandle deletes a handle and shifts the remaining elements of the array left, then (aside from the obvious inefficiency issue) index values change and the array\mbox{[}index\mbox{]} -$>$ ptr relationship is no longer valid.
+
+This could be fixed by replacing the simple index array with a hash table as in the Java version, however it would be nice to have a simpler scheme. The scheme provided here is instead context or subsystem-oriented. When a module is initialized, opens a connection, or initiates some other module-defined context, it opens a new context with svrHandle. Resource handles are then handed out sequentially within the connection context. If subsequently freed, the slot is merely left unused. When subsequently the connection context is freed, all resource handles created within that context are destroyed, and the connection number within svrHandle is available for re-use. Since connections are associated with dynamic activity this should make it much less likely to run out of space. (In DALClient for example, each connection to a remote service is the basis for all subsequent activity, and all resource handles created during execution are invalid anyway after closing the service connection).
+
+svr\_\-initHandles () svr\_\-resetHandles () hcon = svr\_\-newHandleContext (contextName, size) svr\_\-closeHandleContext (hcon) handle = svr\_\-newHandle (hcon, ptr) svr\_\-freeHandle (handle) ptr = svr\_\-H2P (handle)
+
+We still have a simple global space of integer resource handles at the top level. Each integer handle consists of a connection number plus a resource number (array index within the connection context) packed as a single integer. \mbox{[}The P2H routine was omitted above as it is hard to see where this would be needed in well-designed class code where we are already operating in the space where we have resource pointers\mbox{]}. D.Tody January 2014 
+
+\subsection{Function Documentation}
+\hypertarget{svrHandle_8c_63ae175ef0af630f86a3458de79c315f}{
+\index{svrHandle.c@{svrHandle.c}!svr\_\-closeHandleContext@{svr\_\-closeHandleContext}}
+\index{svr\_\-closeHandleContext@{svr\_\-closeHandleContext}!svrHandle.c@{svrHandle.c}}
+\subsubsection[{svr\_\-closeHandleContext}]{\setlength{\rightskip}{0pt plus 5cm}void svr\_\-closeHandleContext (int {\em context})}}
+\label{svrHandle_8c_63ae175ef0af630f86a3458de79c315f}
+
+
+Close a handle context. 
+
+SVR\_\-CLOSEHANDLECONTEXT -- Close a handle context.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em context}]Handle context\end{description}
+\end{Desc}
+Any pointers to external objects are simply deleted. It is up to the caller to manage any external objects. \hypertarget{svrHandle_8c_2d745c019c35cb8c87a6b46f5d93722e}{
+\index{svrHandle.c@{svrHandle.c}!svr\_\-freeHandle@{svr\_\-freeHandle}}
+\index{svr\_\-freeHandle@{svr\_\-freeHandle}!svrHandle.c@{svrHandle.c}}
+\subsubsection[{svr\_\-freeHandle}]{\setlength{\rightskip}{0pt plus 5cm}void svr\_\-freeHandle (handle\_\-t {\em handle})}}
+\label{svrHandle_8c_2d745c019c35cb8c87a6b46f5d93722e}
+
+
+Free the handle for later re-use. 
+
+SVR\_\-FREEHANDLE -- Free the handle for later re-use.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em handle}]object handle \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]nothing\end{Desc}
+In this implementation we don't actually re-use a handle unless it is at the end of the list, but we mark all freed handles as NULL in any case so that the handle index remains valid. \hypertarget{svrHandle_8c_6fd0d3e0136d1be3fdcb6617ca2fdaca}{
+\index{svrHandle.c@{svrHandle.c}!svr\_\-H2P@{svr\_\-H2P}}
+\index{svr\_\-H2P@{svr\_\-H2P}!svrHandle.c@{svrHandle.c}}
+\subsubsection[{svr\_\-H2P}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ svr\_\-H2P (handle\_\-t {\em handle})}}
+\label{svrHandle_8c_6fd0d3e0136d1be3fdcb6617ca2fdaca}
+
+
+Convert a handle to a pointer. 
+
+SVR\_\-H2P -- Convert a handle to a pointer
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em handle}]object handle \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]pointer to object or NULL \end{Desc}
+\hypertarget{svrHandle_8c_2830c3a33d71f99aa5478ad468f8a747}{
+\index{svrHandle.c@{svrHandle.c}!svr\_\-initHandles@{svr\_\-initHandles}}
+\index{svr\_\-initHandles@{svr\_\-initHandles}!svrHandle.c@{svrHandle.c}}
+\subsubsection[{svr\_\-initHandles}]{\setlength{\rightskip}{0pt plus 5cm}void svr\_\-initHandles (void)}}
+\label{svrHandle_8c_2830c3a33d71f99aa5478ad468f8a747}
+
+
+Initialize the handles structure. 
+
+SVR\_\-INITHANDLES -- Initialize the handles structure.
+
+\begin{Desc}
+\item[Returns:]nothing \end{Desc}
+\hypertarget{svrHandle_8c_549848ab6efc99d8d41f6d64eaa16130}{
+\index{svrHandle.c@{svrHandle.c}!svr\_\-newHandleContext@{svr\_\-newHandleContext}}
+\index{svr\_\-newHandleContext@{svr\_\-newHandleContext}!svrHandle.c@{svrHandle.c}}
+\subsubsection[{svr\_\-newHandleContext}]{\setlength{\rightskip}{0pt plus 5cm}int svr\_\-newHandleContext (char $\ast$ {\em name}, \/  int {\em size})}}
+\label{svrHandle_8c_549848ab6efc99d8d41f6d64eaa16130}
+
+
+Get a new handle context. 
+
+SVR\_\-NEWHANDLECONTEXT -- Get a new handle context.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em name}]Context name (informational only) \item[{\em size}]Max number of handles (not currently implemented) \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Context number allocated\end{Desc}
+The size argument is not currently implemented and should be set to zero, which would cause a context to be created with the default size.
+
+A context number is a small integer, e.g., like a file descriptor. The handle mechanism permits only a limited number of simultaneously active handler contexts (no need to make it more complex than that). \hypertarget{svrHandle_8c_d257115fe5578cfb71989229211c3d0b}{
+\index{svrHandle.c@{svrHandle.c}!svr\_\-resetHandles@{svr\_\-resetHandles}}
+\index{svr\_\-resetHandles@{svr\_\-resetHandles}!svrHandle.c@{svrHandle.c}}
+\subsubsection[{svr\_\-resetHandles}]{\setlength{\rightskip}{0pt plus 5cm}void svr\_\-resetHandles (void)}}
+\label{svrHandle_8c_d257115fe5578cfb71989229211c3d0b}
+
+
+Reset the handles structure. 
+
+SVR\_\-RESETANDLES -- Reset the handles structure.
+
+\begin{Desc}
+\item[Returns:]nothing\end{Desc}
+The handles structure is reset to its initial state, freeing all resources (for example when closing down the module). 

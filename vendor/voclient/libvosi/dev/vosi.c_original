@@ -1,0 +1,232 @@
+/**
+ *  VOSI.C -- Public interface procedures for the VO Support Interfaces (VOSI)
+ *
+ *  @file       vosi.c
+ *  @author     Ken Mighell and Mike Fitzpatrick
+ *  @date       8/11/14
+ *
+ *  @brief      Public interface procedures for the VO Support Interfaces (VOSI)
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#define _GNU_SOURCE
+#include <string.h>
+#include <expat.h>
+#include <unistd.h>
+#include <assert.h>
+#include <ctype.h>
+#include <sys/stat.h>
+
+#include <curl/curl.h>
+#ifdef OLD_CURL
+#include <curl/types.h>
+#endif
+#include <curl/easy.h>
+
+#include "xmlParseP.h"
+#include "xmlParse.h"
+#include "vosiP.h"
+#include "vosi.h"
+
+
+#define	BUFSIZE			4096
+
+    
+/* Private procedures
+ */
+
+
+extern char  *strcasestr();
+
+
+
+/** *************************************************************************
+ *  Public Interface
+ *
+ *	 avail = vosi_getAvailability  (filename|str|url|NULL)
+ *		 int = vosi_Available  (avail)
+ *		   str = vosi_upSince  (avail)
+ *		    str = vosi_downAt  (avail)
+ *		    str = vosi_backAt  (avail)
+ *		      str = vosi_Note  (avail)
+ *
+ *
+ *	   cap = vosi_getCapabilities  (filename|str|url|NULL)
+ *
+ *
+ *	        tab = vosi_getTables  (filename|str|url|NULL)
+ *
+ *
+ ** *************************************************************************/
+
+
+
+/** *************************************************************************
+ **   AVAILABILITY SERVICE
+ ** *************************************************************************/
+
+static  Avail  avail;		/* use only one value - not thread safe!    */
+
+
+/** 
+ *  vosi_getAvailability -- Access the VOSI 'availabilities' service 
+ *
+ *  @brief  Access the VOSI 'availabilities' service 
+ *  @fn     handle_t vosi_getAvailability (char *arg)
+ *
+ *  @param  arg 	The source of the table (fname|url|str)
+ *  @return	 	Handle to the availabilities struct, -1 on error
+ */
+handle_t
+vosi_getAvailability (char *arg)
+{
+    handle_t  xp, top, h, ret_handle = 0;
+    char  *name = NULL, *value = NULL;
+
+
+    /*  Open the argument, returning a handle to the parsed document.  The
+     *  input arg may be a URL to the service, a filename containing the
+     *  XML result, or the XML doc in a string retrieved from an earlier
+     *  query.
+     */
+    if ((xp = xml_openXML (arg)) < 0)
+	return (-1);
+
+    top = xml_getToplevel (xp); 	/*  get the toplevel handle	*/
+
+    /*  Error checking.
+     */
+    name = xml_getToplevelName (top);
+    if (name == (char *) NULL || strcasecmp (name, "availability"))
+	return (-1);
+
+    /*  Initialize.
+     */
+    memset (&avail, 0, sizeof (Avail));
+    vosi_initHandles ();
+
+
+    /*  The children are all in a sequence, so walk the tree and load 
+     *  the structure.
+     */
+    for (h=xml_getChild (top); h; h = xml_getSibling (h)) {
+	name = xml_elemNameByHandle (h);
+	value = xml_getValue (h);
+
+	if (strcasecmp (name, "available") == 0) {
+	    avail.available = (strcasecmp ("true", value) == 0);
+	} else if (strcasecmp (name, "upSince") == 0) {
+	    strcpy (avail.upSince, value);
+	} else if (strcasecmp (name, "downAt") == 0) {
+	    strcpy (avail.downAt, value);
+	} else if (strcasecmp (name, "backAt") == 0) {
+	    strcpy (avail.backAt, value);
+	} else if (strcasecmp (name, "note") == 0) {
+	    strcpy (avail.note, value);
+	} else {
+	    fprintf (stderr, "Warning: unknown element '%s'\n", name);
+	}
+    }
+
+    xml_closeXML (xp); 			/*  free the document resources */
+
+
+    /*  Create a return handle to the availability struct.
+     */
+    ret_handle = vosi_newHandle (0, &avail);
+    return (ret_handle);
+}
+
+
+/** 
+ *  vosi_Available -- Determine is the service is accepting requests.
+ *
+ *  @brief  Determine is the service is accepting requests.
+ *  @fn     int vosi_Available (handle_t avail)
+ *
+ *  @param  avail 	Handle to the parsed availabilities request.
+ *  @return	 	0 is service is down, 1 if available, -1 on error
+ */
+int
+vosi_Available (handle_t avail)
+{
+    Avail *av = (Avail *) NULL;
+
+    if (avail < 0)
+	return (avail);
+
+    av = (Avail *) vosi_H2P(avail);
+    return (av->available);
+}
+
+
+/** 
+ *  vosi_upSince -- Get duration of continuous uptime.
+ *
+ *  @brief  Get duration of continuous uptime.
+ *  @fn     char *vosi_upSince (handle_t avail)
+ *
+ *  @param  avail 	Handle to the parsed availabilities request.
+ *  @return	 	dateTime string containing uptime
+ */
+char *
+vosi_upSince (handle_t avail)
+{
+    return ((char *) NULL);
+}
+
+
+/** 
+ *  vosi_downAt -- Get time of next scheduled down time.
+ *
+ *  @brief  Get time of next scheduled down time.
+ *  @fn     int vosi_downAt (handle_t avail)
+ *
+ *  @param  avail 	Handle to the parsed availabilities request.
+ *  @return	 	dateTime string of down time
+ */
+char *
+vosi_downAt (handle_t avail)
+{
+    return ((char *) NULL);
+}
+
+
+/** 
+ *  vosi_backAt -- Get time of return to service.
+ *
+ *  @brief  Get time of return to service.
+ *  @fn     int vosi_backAt (handle_t avail)
+ *
+ *  @param  avail 	Handle to the parsed availabilities request.
+ *  @return	 	dateTime string of return time
+ */
+char *
+vosi_backAt (handle_t avail)
+{
+    return ((char *) NULL);
+}
+
+
+/** 
+ *  vosi_Note -- Get reason for unavailability.
+ *
+ *  @brief  Get reason for unavailability.
+ *  @fn     int vosi_Note (handle_t avail)
+ *
+ *  @param  avail 	Handle to the parsed availabilities request.
+ *  @return	 	text string
+ */
+char *
+vosi_Note (handle_t avail)
+{
+}
+
+
+
+
+/*****************************************************************************
+ *  Private procedures.
+ ****************************************************************************/
+

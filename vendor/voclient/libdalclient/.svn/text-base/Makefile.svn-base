@@ -1,0 +1,114 @@
+#///////////////////////////////////////////////////////////////////////////////
+#//
+#//  Makefile for the DALClient library
+#//
+#///////////////////////////////////////////////////////////////////////////////
+
+# primary dependencies
+
+NAME       =  dalclient
+VERSION    = 1.0
+PLATFORM  := $(shell uname -s)
+#PLATFORM  = LINUX
+#PLATFORM  = MACOSX
+#PLATFORM  = CYGWIN
+HERE      := $(shell /bin/pwd)
+
+
+# secondary dependencies
+
+LIBBASE    = lib$(NAME)
+STATICLIB  = $(HERE)/$(LIBBASE).a
+SHAREDLIB  = $(HERE)/$(LIBBASE).so
+
+
+# stuff that's precious to keep
+
+.PRECIOUS:	$(STATICLIB) $(SHAREDLIB)
+.KEEP_STATE:
+
+
+# includes, flags and libraries
+CC        = gcc
+CINCS     = -I$(HERE)
+#CFLAGS   = -O2 -DDEBUG -D$(PLATFORM)
+#CFLAGS    = -arch i386 -arch ppc -g -Wall -D$(PLATFORM)
+CFLAGS    = -g -Wall -D$(PLATFORM)
+
+
+# List of source and include files
+SRCS		= dalPos.c dalQExec.c dalQResp.c dalQuery.c \
+		  dalSCSP.c dalSIAP.c dalSSAP.c \
+		  svrHandle.c vocHash.c vocList.c vutUtil.c
+OBJS		= dalPos.o dalQExec.o dalQResp.o dalQuery.o \
+		  dalSCSP.o dalSIAP.o dalSSAP.o \
+		  svrHandle.o vocHash.o vocList.o vutUtil.o
+
+INCS 		= dalclient.h vocHash.h vocList.h
+LIBS		= lib$(NAME).a $(CLIBS)
+
+
+# Targets
+
+all: Static Shared $(STATICLIB)
+
+all_static: Static $(STATICLIB)
+
+all_shared: Shared $(SHAREDLIB)
+
+World:
+	make clean
+	make all
+	make install
+
+clean:
+	/bin/rm -rf Shared Static *.o
+	/bin/rm -rf lib$(NAME).* *$(NAME).so
+	/bin/rm -rf .make.state .nse_depinfo *.dSYM
+	/bin/rm -f  dalSIAP_test vocSIAP_test dataset.fits queryResponse.xml
+
+help: HELP
+
+install: all 
+	# This installs the development version of VOClient.h
+	cp VOClient.h dalclient.h ../include
+	cp lib$(NAME).* ../lib
+	ranlib ../lib/lib$(NAME).a
+
+vocSIAP_test: vocSIAP_test.c Static $(STATICLIB)
+	$(CC) $(CFLAGS) -o vocSIAP_test vocSIAP_test.c \
+	libdalclient.a ../lib/libVOTable.a ../lib/libcurl.a ../lib/libcfitsio.a -lm -lc
+
+dalSIAP_test: dalSIAP_test.c Static $(STATICLIB)
+	$(CC) $(CFLAGS) -o dalSIAP_test dalSIAP_test.c \
+	libdalclient.a ../lib/libVOTable.a ../lib/libcurl.a ../lib/libcfitsio.a -lm -lc
+
+vocList_test: vocList_test.c
+	$(CC) $(CFLAGS) -o vocList_test vocList_test.c -lm -lc
+	/bin/rm -rf vocList_test.dSYM
+
+vocHash_test: vocHash_test.c
+	$(CC) $(CFLAGS) -o vocHash_test vocHash_test.c -lm -lc
+	/bin/rm -rf vocList_test.dSYM
+
+
+
+###############################################################################
+# Leave this stuff alone.
+###############################################################################
+
+$(STATICLIB): $(SRCS:%.c=Static/%.o)
+	/usr/bin/ar rv $@ $?
+Static/%.o: %.c $(INCS)
+	$(CC) $(CINCS) $(CFLAGS) -c $< -o $@
+Static:
+	/bin/mkdir $@
+	chmod 777 $@
+
+$(SHAREDLIB): $(SRCS:%.c=Shared/%.o)
+	/usr/bin/ld -shared -o $@ $? -lc -ldl
+Shared/%.o: %.c $(INCS)
+	$(CC) $(CINCS) $(CFLAGS) -fpic -shared -c $< -o $@
+Shared:
+	/bin/mkdir $@
+	chmod 777 $@

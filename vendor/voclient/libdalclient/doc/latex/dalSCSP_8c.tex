@@ -1,0 +1,60 @@
+\hypertarget{dalSCSP_8c}{
+\section{dalSCSP.c File Reference}
+\label{dalSCSP_8c}\index{dalSCSP.c@{dalSCSP.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalSCSP_8c_5b5187a31436117bb2f301eff16fc23d}{
+char $\ast$ \textbf{scsp\_\-getQueryURL} (dalQuery\_\-t $\ast$query)}
+\label{dalSCSP_8c_5b5187a31436117bb2f301eff16fc23d}
+
+\item 
+\hypertarget{dalSCSP_8c_a7f956866f063f0b92e9c3faf23debbf}{
+void \textbf{scsp\_\-initProperties} (dalQR\_\-t $\ast$qr)}
+\label{dalSCSP_8c_a7f956866f063f0b92e9c3faf23debbf}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALSCSP -- Simple Cone Search protocol-specific code.
+
+Most of the DALClient code is generic and common to all service types. The files dalSCSP (cone simple search), dalSIAP (simple image access), and so forth contain the protocol-specific code for each class of service. In particular this is where we deal with multiple versions of the VO prtotocols, and shielding the client from the details of the VO protocols as they evolve.
+
+The Simple Cone Search protocol (SCSP) is used to query arbitrary astronomical catalogs for all records for which the position described by the object in a record (table row) falls within the circular region centered at RA,DEC with radius SR.
+
+------ Query Parameters ---------
+
+The following standard query parameters are recognized by the SCSP driver and may be used for custom protocol-specific translation. All other query parameters are merely passed through to the remote service.
+
+RA Right ascension (ICRS, decimal degrees) DEC Declination (ICRS, decimal degrees) SR Search radius (decimal degrees)
+
+POS-object Not yet implemented. This will be a generic spatial region object that gets translated into whatever the specific protocol requires, in this case ra,dec,sr.
+
+------ Object Properties ---------
+
+Cone search is used for catalog queries hence there is no real object data model for which to define properties, however the following properties are defined to describe table rows, and the protocol itself:
+
+protocol Protocol implemented (\char`\"{}SCS\char`\"{}) version Protocol version (\char`\"{}1.0\char`\"{})
+
+id Unique key for table row / object (ID\_\-MAIN) ra Right ascension dec Declination
+
+------ SCSP routines (internal) ---------
+
+str = scsp\_\-getQueryURL (query) void scsp\_\-initProperties (qr)
+
+The routines in this file are internal to the DALClient code and are not intended to be called directly by applications.
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

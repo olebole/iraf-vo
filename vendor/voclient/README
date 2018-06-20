@@ -1,7 +1,8 @@
 
 	     VOClient v1.0 -- VO Interfaces and Applications
 	     -----------------------------------------------
-		        Last Revised 2/27/13
+
+		        Last Revised 12/27/13
 
 
 
@@ -21,8 +22,11 @@ as needed.
 
 
     README		- This file
-    Makefile		- Top-level makefile
     TODO		- ToDo list
+
+    Makefile		- Top-level makefile
+    configure		- pseudo autonf package configuration script
+    install_env		- package installation environment defs
 
     bin			- application binaries
     doc			- documentation, design notes, etc
@@ -39,11 +43,35 @@ as needed.
     voclient		- Java VOClient Daemon source code
 
     test-data		- sample test data files
+    testscripts		- sample task test scripts
+
+
+NOTE:   The 'test-data' directory may contain some files that are used by
+	the task unit tests, but are generally of no interest to most users.
+	Users who are developing applications using the various interface
+	libraries may find the sample files in this directory useful when
+	testing new applications, however these are not meant to be a
+	complete collection of sample data available from the VO.
    
 
+Contents:
 
-CLI Task Summary
-----------------
+    1)  CLI Task Summary
+    2)  Client-Side Libraries
+    3)  Using Pre-Built Binaries
+    4)  Building VOClient from Source
+      4.1)  Specifying the Install Directory
+    5)  Supported Platforms
+      5.1)  Platform Dependencies
+    6)  Revision History
+    7)  Help and Contact Info
+
+
+===============================================================================
+
+
+1)  CLI Task Summary
+--------------------
 
 	The VOClient package includes a number of command-line utilities
 built from the underlying interfaces.  These tasks can be scripted from any
@@ -58,9 +86,12 @@ Tasks distributed as part of this release include:
          vodata - query and access VO data services
         voimage - Query VO image services for data
       votiminfo - Print/Get information about a FITS file's structure
-    vosloanspec - Query for SDSS spectra
       vospectra - Query VO spectral services for data
         votopic - Query for data from resources specified by topic keyword
+
+  DESKTOP MESSAGING UTILITIES
+
+         vosamp - Commandline SAMP utility
 
   NAME RESOLUTION UTILITIES
 
@@ -84,8 +115,8 @@ Tasks distributed as part of this release include:
 capabilities are added to the system.
 
 
-Client-Side Libraries
----------------------
+2)  Client-Side Libraries
+-------------------------
 
     The VOClient provides a number of APIs to support developers building
 science applications of their own, or for use in other environments. These
@@ -94,18 +125,18 @@ of VO supported languages.  Each interface is fully documented and higher-
 level "User's Guide" documentation is planned for each interface.
 
 
-  libvoapps         High-level interface to application functionality.
+  libVOApps         High-level interface to application functionality.
                     Tasks are built on these routines to provide the
                     cmdline user interface, but are encapsulated in an
                     API to provide this functionality to other environ-
                     ments easily (as opposed to having that functionality
                     be re-implemented using the low-level interfaces).
 
-  libvotable        A VOTable parser library.  The interface provides
+  libVOTable        A VOTable parser library.  The interface provides
                     both read (lax parsing) and write (strict compliance)
                     capabilities.  Reference is VOTable v1.2.
 
-  libvoclient       A VO Service interface library.  This interface uses
+  libVOClient       A VO Service interface library.  This interface uses
                     the VOClient Daemon to access a variety of VO web
                     services (Registry, Sesame, DAL services, etc) which
                     then communicate to the API to pass information back
@@ -119,10 +150,15 @@ level "User's Guide" documentation is planned for each interface.
                     a message, the API provides only the middle-ware needed
                     to handle the SAMP protocol.
 
+  libVO       	    A combined library containing the above interfaces and
+		    their dependent system libraries (e.g. cURL, eXpat, etc).
+		    This is a convenience library to allow simplified linking
+		    of applications and is used primarily in the IRAF/VO
+		    task interface.
 
 
-Using Pre-Built Binaries
-------------------------
+3)  Using Pre-Built Binaries
+----------------------------
 
 	Pre-built binary distributions are available containg both source
 and binaries for a specific platform.  These distribution names are of the
@@ -138,6 +174,7 @@ distribution.  Within that directory you'll find the following important
 directories needed to install the package on the system:
 
 	bin/		Task binaries
+        doc/            Task man pages, HTML and PDF
 	lib/		API library files
 	include/	Program header files
 
@@ -148,6 +185,7 @@ available in the normal user paths.  For example, to install in /usr/local
 	% sudo cp bin/* /usr/local/bin
 	% sudo cp lib/* /usr/local/lib
 	% sudo cp include/* /usr/local/include
+	% sudo cp doc/* /usr/local/man/man1
 
 When compiling new applications the appropriate '-I' and '-L' flags will
 need to be set to find the libraries and include files needed.  The binary
@@ -155,10 +193,10 @@ installation directory should be some directory in the normal $PATH
 environment setting.
 
 
-Building VOClient from Source
------------------------------
+4)  Building VOClient from Source
+---------------------------------
 
-	The source distribution of the release is containe in the file
+    The source distribution of the release is contained in the file
 
 	voclient-src.tar.gz
 
@@ -167,40 +205,64 @@ It may be unpacked with the command
 	tar zxf /<path>/voclient-src.tar.gz
 
 This will produce a 'voclient' subdirectory containing the unpacked
-distribution.  Utility scripts are used throughout the system to do the
-platform configuration necessary, therefore the only command needed to
-build the package is:
+distribution.  A standard build sequence then consists of the commands:
 
-	% cd /<path>/voclient
-	% make
+	% ./configure
+	% make 
+	% make install
 
-As with the pre-built binary described above, the following important
-directories are needed to install the package on the system:
+By default, this sequence will install the voclient package under
+/usr/local.  That is, "make install" will copy files into the following
+subdirectories of /usr/local:
 
         bin/            Task binaries
         lib/            API library files
         include/        Program header files
+        man/man1/       Task man pages
 
-In a successful build the libraries and binaries are installed in the
-package 'bin' and 'lib' directories, header files needed for program
-development are put in the 'include' directory.  The contents of these
-directories should be copied to some system directory available in the
-normal user paths.  For example, to install in /usr/local
-
-        % cd /<path>/voclient
-        % sudo cp bin/* /usr/local/bin
-        % sudo cp lib/* /usr/local/lib
-        % sudo cp include/* /usr/local/include
-
-When compiling new applications the appropriate '-I' and '-L' flags will
-need to be set to find the libraries and include files needed.  The binary
-installation directory should be some directory in the normal $PATH
-environment setting.
+Thus, you need to run at least "make install" as root.  If these
+directories do not exist, they will be created automatically if you run
+"configure" as root as well.
 
 
+4.1)  Specifying the Install Directory
+--------------------------------------
 
-Supported Platforms
--------------------
+To specify an alternate install directory, the 'configure' script may be used
+as:
+	./configure [ <opts>=<val> | <opt> <val> ]
+ 
+Where options include:
+
+	    -h  -help    --help         print a help summary
+            -p  -prefix  --prefix       set global path prefix
+            -b  -bindir  --bindir       task bin directory
+            -i  -incdir  --incdir       include file directory
+            -l  -libdir  --libdir       library directory
+            -m  -mandir  --mandir       man page directory
+ 
+For example, the following commands are all equivalent for setting the global
+install path prefix to /opt/local:
+ 
+        % ./configure --p /opt/local
+        % ./configure -prefix /opt/local
+        % ./configure --prefix /opt/local
+        % ./configure -p=/opt/local
+        % ./configure -prefix=/opt/local
+        % ./configure --prefix=/opt/local
+
+The individual path options to the configure script may be used to specify 
+paths for each component of the install.
+
+Note:  	The 'configure' command in this case is not a true autoconf script,
+       	but simply a utility to provide a familiar interface.  The script
+	writes the file "install_env" in the voclient source directory to
+	specify the paths used in the 'make install' command, it is possible
+	to edit this file by hand to specify the paths.
+
+
+5)  Supported Platforms
+-----------------------
 
     This release currently supports the following platforms:
 
@@ -210,15 +272,30 @@ Supported Platforms
 
 Additional platforms will be added as needed.
 
+    Compilation flags are used to provide compatibility for OSX 10.4 on
+32-bit systems, and OSX 10.5 on 64-bit systems, however these have not been
+verified to work.  Linux support should be reasonably independent of platform
+and has been tested on the most common distributions released within the
+last few years.
 
-Revision History
-----------------
+5.1)  Platform Dependencies
+----------------------------
 
-2/27/13	    Initial Release v1.0
+	The 'voclientd' process used in the initial release requires that
+Java is available on the machine (Java 1.5 or later).  On recent OSX 10.9
+(Mavericks) systems, and perhaps with some Linux distributions as well, 
+Java must be installed separately before the tasks can be used.
 
 
-Help and Contact Info
----------------------
+
+6)  Revision History
+--------------------
+
+12/27/13	    Initial Release v1.0
+
+
+7)  Help and Contact Info
+-------------------------
 
     For help, questions or suggestions please feel free to contact 
 Mike Fitzpatrick (fitz@noao.edu) or the VAO Help Desk at

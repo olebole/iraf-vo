@@ -1,0 +1,34 @@
+
+
+This directory contains example VOSI result files from various services.
+A description of the service and files are given below:
+
+
+  SIMBAD TAP Service: 				ivo://CDS.SIMBAD/TAP
+
+    VOSI endpoints:
+	
+    	http://simbad.u-strasbg.fr:80/simbad/sim-tap/availability
+    	http://simbad.u-strasbg.fr:80/simbad/sim-tap/capabilities
+    	http://simbad.u-strasbg.fr:80/simbad/sim-tap/tables
+
+    Example Files:
+
+	simbad_avail.xml	VOSI Availability result
+	simbad_cap.xml		VOSI Capability result
+	simbad_table.xml	VOSI Tables result
+
+
+  Candidates for astrometric lensing 		ivo://org.gavo.dc/amlensing/q/q
+
+    VOSI endpoints:
+
+	http://dc.zah.uni-heidelberg.de/amlensing/q/q/availability
+	http://dc.zah.uni-heidelberg.de/amlensing/q/q/capabilities
+	http://dc.zah.uni-heidelberg.de/amlensing/q/q/tableMetadata
+
+    Example Files:
+
+	gavo_avail.xml		VOSI Availability result
+	gavo_cap.xml		VOSI Capability result
+	gavo_table.xml		VOSI Tables result

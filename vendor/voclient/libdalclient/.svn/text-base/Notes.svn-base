@@ -1,0 +1,362 @@
+C API for DALClient Interface
+------------------------------
+
+The DALClient library is a C library providing a client API for querying
+VO Data Access Layer (DAL) services.  This is a self contained library,
+built on top of the VOClient VOTable parsing library, and libCurl which
+is used for HTTP.  While DALClient may be used standalone to invoke DAL
+services, it is normally used as a component within VOClient, which
+provides support for registry queries, SAMP, and other VO protocols, as
+well as capabilities for distributed execution and concurrency.
+
+The DALClient API is briefly summarized below, along with notes on the
+interface design.  It is assumed that anyone reading this is already
+familiar with the internal structure of VOClient.
+
+The API summarized here is the main VOClient API interface to the DAL
+services (voc_ prefix).  The DALClient library is essentially the same,
+but uses the dal_ prefix for function names.  The VOClient API adds an
+RPC mechanism, allowing the DALClient (and other VO client)
+functionality to be called either inline in the current process, or
+remotely via the VOClient daemon.
+
+
+---- Manage Service Context ---------
+
+       dal = voc_openConnection (svc_url, type, version)
+   dal = voc_openConeConnection (svc_url, version)
+   dal = voc_openSiapConnection (svc_url, version)
+   dal = voc_openSsapConnection (svc_url, version)
+            voc_closeConnection (dal)
+
+		openConnection
+		  - One per service (not voclientd) instance.
+		  - Allocate and initialize connection descriptor.
+		  - Set service type, version, and baseURL.
+		  - Internal state to describe pset, resultset, etc.
+
+		openConeConnection etc.
+		  - Convenience routines calling previous.
+		  - Missing: SLAP, TAP, etc.
+
+		closeConnection
+	    	  - Free all resources.
+ 
+
+---- Query Parameters ---------
+
+           query = voc_getQuery (dal)
+		 voc_closeQuery (query)		# free resources
+
+       query = voc_getConeQuery (dal, ra, dec, sr)
+       query = voc_getSiapQuery (dal, ra, dec, ra_size, dec_size, format)
+       query = voc_getSsapQuery (dal, ra, dec, size, band, time, format)
+
+       query = voc_genConeQuery (dal, pos)
+       query = voc_genSiapQuery (dal, pos, band, time, pol, format, mode)
+       query = voc_genSsapQuery (dal, pos, band, time, pol, format, mode)
+
+       		Allocate and initialize Query object with basic pset.
+		  - The first set of constructors handle the most common
+		    and backwards-compatible use cases.
+		  - The "gen" (generalized) constructors generalize to a POS
+		    object and reflect the more modern interfaces.  All
+		    args except the dal handle are NULLable strings, hence
+		    can be set to NULL here, and set more flexibly with an
+		    addParam later.  Or the string version may be used, e.g.,
+		    to simplify form entry.
+		  - Additional custom params may be set using addParam calls.
+		  - The SIAP methods will support both SIAP V1 and V2.
+		  - Missing: SLAP, TAP, etc., but easily added later.
+
+	    pos = voc_getObjPos (objname|NULL)
+	       pos = voc_setPos (c1, c2, size, frame|NULL)
+	      pos = voc_setPos2 (c1, c2, size1, size2, frame|NULL)
+	           <additional-constructors>
+	           <additional-setters>
+	       voc_posGetCoords (pos, c1, c2, &frame)
+		   voc_closePos (pos)
+
+		Create and initialize a generic POS object (replaces
+		POS, SIZE and variants in the DAL interfaces).  ObjPos
+		resolves the object name using name resolvers;
+		preferences if needed can be configured separately.
+		ObsPos(NULL) creates a new, empty POS instance to be
+		subsequently modified.  Additional methods beyond those
+		shown here may be added to handle spatial regions of
+		various types, lists of positions, and the like.  The
+		service-specific code translates the POS object into
+		whatever the called service or service version requires.
+
+		Using an abstract POS object to specify (pos,size),
+		(ra,dec,sr), etc. is more flexible and isolates the
+		client from knowledge of how the particular service or
+		service version requires positional information to be
+		presented.  The dalclient code is responsible for using
+		the abstract POS to provide whatever parameters are
+		required to invoke the service.  Frame is e.g., "ICRS"
+		or "GALACTIC", and in the simplest case this is merely
+		passed to the remote service; an error is returned if
+		the service instance does not support the indicated frame.
+
+		For SIAV2, how to represent the spatial region is still
+		very much in flux.  The POS object provides a level of
+		abstraction that should be able to support whatever ends
+		up being implemented for spatial regions in SIAV2.  In
+		the initial version we can produce what our prototype
+		SIAV2 service requires.
+
+		The arguments for having a POS abstraction could apply to
+		range lists as well: BAND, TIME, POL, etc.  Possibly all
+		we need are range and range-list constructors for the
+		numeric, string, and time datatypes, used with addParam.
+
+	int = voc_getParamCount (query)
+         str = voc_getParamName (query, index)
+         stat = voc_addIntParam (query, pname, ival)
+       stat = voc_addFloatParam (query, pname, dval)
+      stat = voc_addStringParam (query, pname, str)
+		   voc_setParam (query, pname, str)
+	     str = voc_getParam (query, pname, index)
+		   voc_delParam (query, pname)
+
+		Add/delete query parameters.  The parameter set required
+		here is a simple list of parameters, with a name and
+		value for each.  Parameter values are stored internally
+		as strings.  The getParamName method may be used to walk
+		the list of parameters.
+
+		Each call to addParam adds the specified name-value
+		parameter instance to the parameter list.  Multiple
+		instances of the same parameter are permitted, e.g., to
+		set the value of a list-structured parameter.  The
+		getParam routine may be called multiple times with
+		successive values of the index argument to retrieve
+		successive elements of a list-valued parameter.
+		DelParam deletes all instances of the named parameter.
+		SetParam will override the value of the named parameter,
+		adding the parameter if it is not already present, and
+		deleting any instances of the parameter after the first,
+		if present.
+
+		These parameter primitives are thought to be sufficient
+		to support both the DAL interfaces (e.g., a
+		DALI-compliant SIAV2) as well as the planned Python
+		binding, which will be built on top of the C API.
+
+	  str = voc_getQueryURL (query)
+
+	  	Use service URL and pset to form the queryData URL.
+		  - Translate generic pset to whatever is required to
+		    invoke the service request.
+
+		  - For SIAV2 and similar complex protocols this is
+		    where translation occurs to generate whatever is
+		    required by the target service.  Parameter
+		    management itself is generic and simple (addParam
+		    etc.), merely storing name-value parameter
+		    instances.  The parameters defined by the client API
+		    may differ greatly from what the target service
+		    requires.
+
+		    If necessary it is possible to go one step further,
+		    and move all of this into the query exection phase.
+		    This would make it possible, for example, for a
+		    client request to resolve into several service
+		    requests.  The getQueryURL method might still be
+		    provided, but would not be used by executeQuery.
+
+
+---- Query Execution ---------
+
+          qr = voc_executeQuery (query)
+      qr = voc_getQueryResponse (query)
+	 voc_closeQueryResponse (qr)		# free resources
+
+		Form and execute query, process query response.
+		Implementation involves:
+
+		  - Compute service-specific query URL (getQueryURL).
+		  - Execute a HTTP GET (or whatever) to retrieve the votable.
+		      Store votable text in service context memory.
+		  - Parse query response votable (in-core DOM).
+		  - Traverse votable and create a QueryResponse object.
+		      The QueryResponse object content is the same as
+		      the VOTable, but supports efficient runtime
+		      access.  Table metadata is extracted and hashed on
+		      multiple keys.  The QR is a combination of
+		      arrays/lists and hash tables (see details at end
+		      below).
+
+       str = voc_executeVOTable (query)
+
+		As above, but skip all the QR processing, and just
+		return the cached votable text.
+
+       csv_tab = voc_executeCSV (query)
+       tsv_tab = voc_executeTSV (query)
+        ascii = voc_executeText (query)
+
+		Perform executeQuery and serialize output as indicated.
+
+
+---- Query Response ---------
+
+       int = voc_getRecordCount (qr)
+         int = voc_getInfoCount (qr)
+        int = voc_getFieldCount (qr)
+          str = voc_getInfoAttr (qr, index, attr_code)
+         str = voc_getFieldAttr (qr, index, attr_code)
+	int = voc_getFieldIndex (qr, key, attr_code)
+
+		Here "field" is used for both PARAM and FIELD instances
+		in a VOTable.  When searching for retrieval in a client
+		app we don't usually care if it is a param or field
+		(PARAM is like FIELD but is constant-valued for all
+		table rows).  The uniform index can be used for both
+		params and fields, e.g., we can use the first N values
+		for the params, followed by the fields, or just allocate
+		space in the index array for either PARAM or FIELD as it
+		is encountered, with the array index being distinct from
+		the table column.
+
+		This is all pretty trivial to implement given a parsed
+		QR object.  The getXXAttr methods permit discovering the
+		list of FIELDs or INFOs, as well as retriving their
+		attributes (ID, NAME, UTYPE, UCD, etc.).  Attributes are
+		identified by an integer code, e.g. TY_ID, TY_NAME,
+		TY_UTYPE, TY_UCD, and so forth.  GetFieldIndex returns
+		the index of a field or param given a string key of the
+		indicated type (TY_NAME, TY_UTYPE, etc.).  In the
+		initial implementation keys must be unique within a
+		table, however the scheme is extensible to permit
+		multiple field/param instances with the same key (some
+		of the newer VO data models may require this).
+
+            rec = voc_getRecord (qr, recnum)
+       int = voc_getIntProperty (rec, property)
+    dval = voc_getFloatProperty (rec, property)
+    str = voc_getStringProperty (rec, property)
+
+		Properties are the generic object properties defined by
+		the service type.  For SIA we have ra, dec (or long /
+		lat), naxes, naxis, wcsaxes, acref, title, dateobs, etc.
+		The advantage of data model properties is that they work
+		consistently regardless of the service version.
+
+	  int = voc_getIntField (rec, index)
+       dval = voc_getFloatField (rec, index)
+       str = voc_getStringField (rec, index)
+
+		The getField routines operate directly on VOTable FIELDs
+		or PARAMs.  Index identifies the PARAM or FIELD in the
+		list of table FIELD/PARAMS (this index is not
+		necessarily the same as the table column).  The
+		getFieldIndex routine may be used to resolve a field
+		identified by attribute (UTYPE, UCD, NAME, etc.) to an
+		index.  This only has to be done once per table since
+		table records have a uniform structure.  The scheme is
+		extensible in the future to address issues such as
+		multiple instances of the same GROUP within a record.
+
+	stat = voc_getIntColumn (qr, index, iptr)
+      stat = voc_getFloatColumn (qr, index, dptr)
+     stat = voc_getStringColumn (qr, index, sptr)
+
+		These routines extract a table column and return it as
+		an array of the indicated type.  The caller is
+		responsible for allocating and managing the storage
+		required to receive the extracted array.  The output
+		array must provide space for at least RecordCount
+		elements.  The actual number of elements returned, or
+		ERR, is returned as the status value (if index refers to
+		a param the output array will receive a single value).
+
+          stat = voc_getDataset (rec, acref, fname) 
+
+		Extract the object at the given acref URL and put it in
+		the name file (as currently).
+
+
+
+---- SIAV2.getMetadata ---------
+
+	SIAV2 - To be added.  Return full metadata for a single dataset,
+	including detailed metadata (WCS) for all Data elements.  The
+	dataset is identified by its PublisherDID.  The response is a
+	VOTable with one row per Data element.
+
+---- SIAV2.AccessData ---------
+
+	SIAV2 - To be added.  The request interface will be similar to a
+	discovery query but with somewhat different parameters.  The
+	response is the requested image data rather than a VOTable.
+
+---- Error Handling ---------
+
+	Error handling is awkward in C as the function value is often
+	used to return data.  The problem is especially bad in DALClient
+	due to the number of different types of values returned:
+
+	    - Opaque object handles (positive integers)
+	        A zero or negative value is invalid
+	    - Pointers, e.g., char*
+	        A NULL value is invalid
+	    - Array indexes
+	        Zero is normally a valid value in C;
+		negative is invalid
+	    - Status values like OK, ERR
+	        Unfortunately C now defines these as 0, 1
+		Lots of valid integers include these values so this
+		is not useful for a function that normally returns int
+	    - Numerical ints and doubles
+	        There really aren't any invalid values; the only
+		option for suggesting an error is zero or some large
+		pos/neg value
+	What to do?
+	    - Pointers are not a problem; use NULL
+	    - For numeric values including object handles, zero or a large
+		negative value works.
+	    - Can supplement this with an error subsystem, to be set
+		to an error value when an error occurs.
+
+
+---- Primitives Required ---------
+
+	VOTable library (libvotable)
+	HTTP library (libcurl already present)
+	Parameter set class
+	Hash table class
+
+	QueryResponse	In-memory representation of a VOTable
+	Infos		Array of INFO instances (indexed)
+			  - info instance includes data value
+			  - could be hashed
+	Rows		Array of table rows (indexed)
+	Params		Array of PARAM instances (indexed)
+			  - param instance includes data value
+			  - hashed by param attribute (name, utype, etc.)
+	Fields		Array of FIELD descriptors (columns) within record
+			  - field descriptor does NOT include data value
+			  - hashed by field attribute (name, utype, etc.)
+
+	Parameter Set	Linked list of param objects
+			  - hashed by param name
+	Property List	Linked list of property objects
+			  - hashed by property name
+
+	INFO, PARAM, FIELD *instances* are unique within a table
+	  - But there can be multiple instances
+	  - Defined as they are encountered
+	  - The ID attribute, if set, must be unique
+	  - NAME, UTYPE, UCD are usually, but not necessarily, unique
+	So if we hash NAME, UTYPE etc. what do we do?
+	  - Simplest is to keep only the last instance
+	  - Possible to maintain multiple instances in hash table
+	Approach
+	  - Allocate generic node for each INFO, PARAM, FIELD instance
+	      o Linked list, generic node identifies type
+	  - Add reference in appropriate array (info, param, field)
+	  - Build global hash index for all params and fields (infos?)
+
+

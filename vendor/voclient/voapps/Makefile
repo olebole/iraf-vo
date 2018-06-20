@@ -28,42 +28,40 @@ SHAREDLIB   = $(HERE)/$(LIBBASE).so.$(VERSION)
 
 
 # includes, flags and libraries
+CC              = gcc
+CINCS           = -I$(INCDIR)  -I.
+
+
+LIBCURL		= -lcurl
+LIBCURL		= ../lib/libcurl.a
+LIBCFITSIO	= ../lib/libcfitsio.a
+LIBDALCLIENT	= ../lib/libdalclient.a
+        
+ifeq ($(PLATFORM),Darwin)
+    ifeq  ($(PLMACH),x86_64)
+        CARCH   = -m64 -mmacosx-version-min=10.5
+    else
+        #CARCH   = -arch i386 -arch ppc -m32 -mmacosx-version-min=10.4
+        CARCH   = -mmacosx-version-min=10.4
+    endif
+else
+    CLIBS       = -lm -lc $(LIBCURL) -lpthread
+    CARCH       =
+    LIBCURL	= -lcurl -lrt
+endif
+        
+CLIBS           = -L../lib/ -lm -lc $(LIBCURL) -lpthread -lm
+CFLAGS          = -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS)
+CFLAGS          = -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -DVOC_DIRECT
+
+
+# includes, flags and libraries
 CC 	    = gcc
-CINCS  	    = -I$(HERE) -I../ -I$(INCDIR) -I../../../include 
-LFLAGS	    = -L../ -L../lib/ -L../../../bin/
+CINCS  	    = -I$(HERE) -I../ -I../include #-L../ -L../lib/ -L./ 
 
 #F77 	    = g77
 F77 	    = gfortran
 FFLAGS 	    = -g -Wall
-
-
-LIBCFITSIO	= ../lib/libcfitsio.a
-
-ifeq ($(PLATFORM),Darwin)
-    ifeq ($(PLMACH),x86_64)
-        CARCH   = -m64
-    else
-        CARCH   = -m32
-    endif
-    ifdef IRAFARCH
-        ifeq ($(IRAFARCH),macintel)
-            CARCH = -m64
-        else
-            CARCH = -m32
-        endif
-    endif
-else
-    CLIBS       =  -lcurl -lm -lc -lpthread -lrt
-    ifdef IRAFARCH
-        ifeq ($(IRAFARCH),linux)
-            CARCH = -m32
-        endif
-    endif
-endif
-
-#CLIBS           = -lcurl -lm -lpthread -lc
-CFLAGS          = -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -L./ 
-
 
 
 # list of source and include files
@@ -71,13 +69,11 @@ CFLAGS          = -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -L./
 C_SRCS 	    = votcnv.c votget.c votinfo.c vosesame.c vodata.c voregistry.c \
 	      votpos.c votcat.c votsplit.c votstat.c votjoin.c voatlas.c \
 	      votsort.c vosamp.c voiminfo.c \
-	      voimage.c vocatalog.c vospectra.c votopic.c \
-	      voApps_spp.c
+	      voimage.c vocatalog.c vospectrum.c votopic.c
 C_OBJS 	    = votcnv.o votget.o votinfo.o vosesame.o vodata.o voregistry.o \
 	      votpos.o votcat.o votsplit.o votstat.o votjoin.o voatlas.o \
 	      votsort.o vosamp.o voiminfo.o \
-	      voimage.o vocatalog.o vospectra.o votopic.o \
-	      voApps_spp.o
+	      voimage.o vocatalog.o vospectrum.o votopic.o
 C_INCS 	    = voApps.h voAppsP.h
 
 
@@ -94,7 +90,7 @@ SPP_TASKS   =
 F77_TASKS   =
 C_TASKS	    = voregistry \
 	      vosesame \
-	      vodata voatlas voimage vocatalog vospectra votopic \
+	      vodata voatlas voimage vocatalog vospectrum votopic \
 	      votcnv votget votpos votinfo votstat votsort \
 	      vosamp \
 	      voiminfo \
@@ -107,13 +103,13 @@ TARGETS	    = $(F77_TASKS) $(SPP_TASKS) $(C_TASKS)
 
 SRCS	    = $(C_SRCS) $(F77_SRCS) $(SPP_SRCS) 
 OBJS	    = $(C_OBJS) $(F77_OBJS) $(SPP_OBJS) 
-HOST_LIBS   = -lexpat -lcurl $(LFLAGS) -lcfitsio $(CLIBS)
-LIBS        = lib$(NAME).a -lVOTable -lVOClient -lsamp $(HOST_LIBS)
+HOST_LIBS   = $(LIBCURL) $(LIBDALCLIENT) -lcfitsio -lpthread -lm
+LIBS        = -L../lib/ lib$(NAME).a -lVOTable -lVOClient -lsamp $(HOST_LIBS)
 
 
 
-all: c_progs
-	mkdir -p $(LIBDIR) $(BINDIR)
+all:
+	(make c_progs)
 	cp lib$(NAME).a $(LIBDIR)
 	cp $(TARGETS) $(BINDIR)
 
@@ -263,9 +259,9 @@ vocatalog: voApps.c vocatalog.o lib
 	$(CC) $(CFLAGS) -o vocatalog voApps.c $(LIBS)
 	/bin/rm -rf vocatalog.dSYM
 
-vospectra: voApps.c vospectra.o lib
-	$(CC) $(CFLAGS) -o vospectra voApps.c $(LIBS)
-	/bin/rm -rf vospectra.dSYM
+vospectrum: voApps.c vospectrum.o lib
+	$(CC) $(CFLAGS) -o vospectrum voApps.c $(LIBS)
+	/bin/rm -rf vospectrum.dSYM
 
 votopic: voApps.c votopic.o lib
 	$(CC) $(CFLAGS) -o votopic voApps.c $(LIBS)

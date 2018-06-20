@@ -180,9 +180,9 @@ extern char *vo_urlEncode (char *target);
 int
 vosloanspec (int argc, char **argv, size_t *reslen, void **result)
 {
-    int    apos, argnum = 0, status = OK, ch;
+    int    apos, argnum = 0, status = OK;
     FILE  *fd = (FILE *) NULL;
-    char **pargv, optval[SZ_FNAME], *urlList = NULL;;
+    char **pargv, optval[SZ_FNAME], ch, *urlList = NULL;;
     char  *tmp = vot_mktemp ("vosloan");
 
 

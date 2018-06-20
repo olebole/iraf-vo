@@ -1,0 +1,201 @@
+# ./tables_example "data/tables.xml"
+
+3 =numSchema
+
+schema ##################################################
+0 =schemaIndex
+cfht1 =schemaName
+2 =numTable
+
+***** table *************************************
+0 =schemaIndex
+0 =tableIndex
+cfht.deepU  =tableName
+5 =numCols
+========== column ====================
+0 =colIndex
+cfhtlsID  =colName
+adql:VARCHAR  =colDatatype
+2 =numKeys
+--------------- key ----------
+0 =keyIndex
+Lorem =keyTargetTable
+sit =keyFromColumn
+amet =keyTargetColumn
+ipsum =keyDescription
+dolor =keyUType
+--------------- key ----------
+1 =keyIndex
+consectetur =keyTargetTable
+sed =keyFromColumn
+do =keyTargetColumn
+adipiscing =keyDescription
+elit =keyUType
+========== column ====================
+1 =colIndex
+survey  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+2 =colIndex
+field  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+3 =colIndex
+pointing  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+4 =colIndex
+selectionFilter  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+
+***** table *************************************
+0 =schemaIndex
+1 =tableIndex
+TAP_SCHEMA.keys  =tableName
+3 =numCols
+========== column ====================
+0 =colIndex
+key_id  =colName
+unique key to join to TAP_SCHEMA.key_columns  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+1 =colIndex
+from_table  =colName
+the table with the foreign key  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+2 =colIndex
+target_table  =colName
+the table with the primary key  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+
+schema ##################################################
+1 =schemaIndex
+cfht2 =schemaName
+2 =numTable
+
+***** table *************************************
+1 =schemaIndex
+0 =tableIndex
+cfht.deepB  =tableName
+5 =numCols
+========== column ====================
+0 =colIndex
+cfhtlsID  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+1 =colIndex
+survey  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+2 =colIndex
+field  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+3 =colIndex
+pointing  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+4 =colIndex
+selectionFilter  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+
+***** table *************************************
+1 =schemaIndex
+1 =tableIndex
+TAP_SCHEMA.keys  =tableName
+3 =numCols
+========== column ====================
+0 =colIndex
+key_id  =colName
+unique key to join to TAP_SCHEMA.key_columns  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+1 =colIndex
+from_table  =colName
+the table with the foreign key  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+2 =colIndex
+target_table  =colName
+the table with the primary key  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+
+schema ##################################################
+2 =schemaIndex
+cfht3  =schemaName
+2 =numTable
+
+***** table *************************************
+2 =schemaIndex
+0 =tableIndex
+cfht.deepV  =tableName
+5 =numCols
+========== column ====================
+0 =colIndex
+cfhtlsID  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+1 =colIndex
+survey  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+2 =colIndex
+field  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+3 =colIndex
+pointing  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+4 =colIndex
+selectionFilter  =colName
+adql:VARCHAR  =colDatatype
+0 =numKeys
+
+***** table *************************************
+2 =schemaIndex
+1 =tableIndex
+TAP_SCHEMA.keys  =tableName
+3 =numCols
+========== column ====================
+0 =colIndex
+key_id  =colName
+unique key to join to TAP_SCHEMA.key_columns  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+1 =colIndex
+from_table  =colName
+the table with the foreign key  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+========== column ====================
+2 =colIndex
+target_table  =colName
+the table with the primary key  =colDescription
+adql:VARCHAR  =colDatatype
+0 =numKeys
+
+
+That's all folks!
+

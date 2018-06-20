@@ -56,6 +56,9 @@
 #include <pthread.h>
 
 #include <curl/curl.h>
+#ifdef OLD_CURL
+#include <curl/types.h>
+#endif
 #include <curl/easy.h>
 
 #include "samp.h"
@@ -194,8 +197,8 @@ int
 votget (int argc, char **argv, size_t *reslen, void **result)
 {
     char **pargv, optval[SZ_FNAME];
-    char  *iname = NULL;
-    int    samp = 0, pos = 0, stat = OK, ch;
+    char  *iname = NULL, ch;
+    int    samp = 0, pos = 0, stat = OK;
 
 
     /*  Initialize. 
@@ -339,7 +342,7 @@ votableHandler (char *url, char *tblId, char *name)
 
     if (strncmp (url, "http://", 7) == 0) {
         strcpy (fname, "/tmp/votgetXXXXXX");    /* temp download name    */
-        mktemp (fname);
+        mkstemp (fname);
         if (vot_getData (url, fname) < 0) 
 	    fprintf (stderr, "Error accessing url '%s'\n", url);
 

@@ -232,7 +232,7 @@ char *resList[] = {			/* resource fields (full print) */
     "ServiceURL", 	    "ReferenceURL",     "Description",
     "Creator", 		    "Publisher",        "CoverageSpatial",
     "CoverageTemporal",     "Waveband",         "ContentLevel",      
-    "Version",		    "CapabilityName",
+    "Version",
     NULL
 };
 
@@ -364,8 +364,7 @@ voregistry (int argc, char *argv[], size_t *reslen, void **result)
             case 'R':    			/* Resolve mode		*/
 		mode = M_RESOLVE;
 		dal_only++;				
-		fields =
-		     "ShortName,CapabilityStandardID,Identifier,CapabilityName";
+		fields = "ShortName,CapabilityStandardID,Identifier";
 		user_fields++;
 		break;
             case 'S':    			/* SName Resolve mode	*/
@@ -902,12 +901,9 @@ static void
 printFullRecord (char *term)
 {
     RegResult  resource = 0;
-    int        i, j, nresults;
+    int        i, j, nresults = 0;
     char      *attr_val, sql[SZ_LINE];
 
-
-    if (debug)
-	fprintf (stderr, "printFullRec:  term='%s'\n", term);
 
     if (res_all)
         sprintf (sql, "(ShortName like '%%%s%%') OR (Identifier like '%%%s%%')",
@@ -915,6 +911,9 @@ printFullRecord (char *term)
     else
         sprintf (sql, "(ShortName like '%s') OR (Identifier like '%s')",
 	    term, term);
+
+    if (debug)
+	fprintf (stderr, "printFullRec:  term='%s' sql='%s'\n", term, sql);
 
     resource = voc_regExecute (voc_regQuery (sql, 0));
     nresults = voc_resGetCount (resource);
@@ -1008,6 +1007,7 @@ printSvcMetadata (char *svc)
     if (debug) fprintf (stderr, "query nres = %d\n", nresults);
 
     for (i=0; i < nresults; i++) {
+	
 	if ((type = voc_resGetStr (resource, "CapabilityStandardID", i))) {
 	    int len;
 
@@ -1093,8 +1093,8 @@ static char *
 vot_getTime (int type, char *arg)
 {
     char  unit = arg[strlen (arg) - 1];
-    long  diff, val;
-    time_t  now = time((time_t)NULL), then;
+    long  diff=0, val;
+    time_t  now = time((time_t *)NULL), then;
     struct tm *start, *end;
     static char  t1[SZ_TSTR], t2[SZ_TSTR], tquery[SZ_TQUERY];
 

@@ -1,0 +1,42 @@
+\hypertarget{dalPos_8c}{
+\section{dalPos.c File Reference}
+\label{dalPos_8c}\index{dalPos.c@{dalPos.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalPos_8c_73e2a30e57548600b3c845f2f4655e54}{
+POS \textbf{dal\_\-setPos} (DAL dal\_\-h, double c1, double c2, double size, char $\ast$frame)}
+\label{dalPos_8c_73e2a30e57548600b3c845f2f4655e54}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALPOS -- Spatial region object
+
+This class provides a general mechanism for defining a spatial region or list of regions. The various constructors and editors are used to create or edit the POS object, which is then input to the service-specific query code to define the spatial region for the query. The service code then uses the POS object to construct whatever parameter input is required for a given service class.
+
+---- Query Parameters ---------
+
+query = dal\_\-getQuery (dal) dal\_\-closeQuery (query) \# free resources
+
+query = dal\_\-getConeQuery (dal, ra, dec, sr) query = dal\_\-getSiapQuery (dal, ra, dec, ra\_\-size, dec\_\-size, format) query = dal\_\-getSsapQuery (dal, ra, dec, size, band, time, format)
+
+query = dal\_\-genConeQuery (dal, pos) query = dal\_\-genSiapQuery (dal, pos, band, time, pol, format, mode) query = dal\_\-genSsapQuery (dal, pos, band, time, pol, format, mode)
+
+pos = dal\_\-getObjPos (objname$|$NULL) pos = dal\_\-setPos (c1, c2, size, frame$|$NULL) pos = dal\_\-setPos2 (c1, c2, size1, size2, frame$|$NULL) $<$additional-constructors$>$ $<$additional-setters$>$ dal\_\-posGetCoords (pos, c1, c2, \&frame) dal\_\-closePos (pos)
+
+Status: Not yet implemented (except for stubbing out a simple constructor). We are using the lower level query constructors for the moment.
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

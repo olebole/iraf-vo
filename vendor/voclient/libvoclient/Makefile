@@ -33,30 +33,9 @@ SHAREDLIB  = $(HERE)/$(LIBBASE).so
 # includes, flags and libraries
 CC        = gcc
 CINCS     = -I$(HERE)
-ifeq ($(PLATFORM),Darwin)
-    ifeq ($(PLMACH),x86_64)
-        CARCH   = -m64
-    else
-        CARCH   = -m32
-    endif
-    ifdef IRAFARCH
-        ifeq ($(IRAFARCH),macintel)
-            CARCH = -m64
-        else
-            CARCH = -m32
-        endif
-    endif
-else
-    ifdef IRAFARCH
-        ifeq ($(IRAFARCH),linux)
-            CARCH = -m32
-        endif
-    endif
-endif
-
 #CFLAGS   = -O2 -DDEBUG -D$(PLATFORM)
-CFLAGS    = -g -Wall -D$(PLATFORM) $(CARCH)
-
+#CFLAGS    = -arch i386 -arch ppc -g -Wall -D$(PLATFORM)
+CFLAGS    = -g -Wall -D$(PLATFORM)
 
 
 # list of source and include files

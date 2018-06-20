@@ -1,0 +1,229 @@
+#///////////////////////////////////////////////////////////////////////////////
+#//
+#//  Makefile for the VOTable Interface
+#//
+#///////////////////////////////////////////////////////////////////////////////
+
+# primary dependencies
+
+NAME       	 = VOSI
+VERSION    	 = 1.1
+PLATFORM  	:= $(shell uname -s)
+PLMACH  	:= $(shell uname -m)
+HERE      	:= $(shell /bin/pwd)
+BINDIR    	:= ../bin/
+LIBDIR    	:= ../lib/
+INCDIR    	:= ../include/
+
+
+# secondary dependencies
+
+LIBBASE		= lib$(NAME)
+STATICLIB 	= $(LIBDIR)/$(LIBBASE).a
+SHAREDLIB 	= $(LIBDIR)/$(LIBBASE).so.$(VERSION)
+
+
+# includes, flags and libraries
+CC 	  	= gcc
+CINCS  	  	= -I$(INCDIR)  -I.
+ifeq ($(PLATFORM),Darwin)
+    ifeq  ($(PLMACH),x86_64)
+	CARCH	= -m64 -mmacosx-version-min=10.5
+    else
+	#CARCH	= -arch i386 -arch ppc -m32 -mmacosx-version-min=10.4
+	CARCH	= -mmacosx-version-min=10.4
+    endif
+else
+    CARCH	= 
+endif
+
+CFLAGS 		= -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -L./
+CLIBS		= -lm -lc -lpthread -lcurl -lexpat
+
+
+
+# list of source and include files
+SRCS 		= vosi.c vosiHandles.c \
+		  xmlParse.c \
+		  xmlExpatCB.c xmlElement.c xmlAttr.c xmlStack.c xmlHandle.c
+OBJS 		= vosi.o vosiHandles.o \
+		  xmlParse.o \
+		  xmlExpatCB.o xmlElement.o xmlAttr.o xmlStack.o xmlHandle.o
+INCS 		= xmlParse.h
+
+#SPP_SRCS	= 
+#SPP_OBJS	= 
+#SPP_INCS 	= 
+
+XML_SRCS	= xmlParse.c \
+		  xmlExpatCB.c xmlElement.c xmlAttr.c xmlStack.c xmlHandle.c
+XML_OBJS	= xmlParse.o \
+		  xmlExpatCB.o xmlElement.o xmlAttr.o xmlStack.o xmlHandle.o
+
+INCS_PRIV	= xmlParseP.h
+LIBS		= lib$(NAME).a
+
+
+all:	.BASE lib apps install
+
+World:	.BASE lib apps install
+
+install: .BASE lib apps
+	cp $(LIBS) $(LIBDIR)
+	cp $(INCS) $(INCDIR)
+
+objs:	$(OBJS) # $(SPP_OBJS)
+
+clean:
+	/bin/rm -f *.o *.a *.e *.so .BASE
+	/bin/rm -f SWIG* libvosi* php_libvosi.h
+	/bin/rm -f xml*Java.[co]
+	/bin/rm -f xml*Perl.[co]
+	/bin/rm -f xml*Python.[co]
+	/bin/rm -f xml*Tcl.[co]
+	/bin/rm -f xml*Php.[co]
+	/bin/rm -f xml*CSharp.[co]
+	/bin/rm -f xml*Ruby.[co]
+	/bin/rm -f z4test
+
+
+####################################
+#  LIBVOSI Apps
+####################################
+
+apps: z4test
+
+
+z4test:  z4test.c $(OBJS) $(XML_OBJS)
+	$(CC) $(CFLAGS) -o z4test z4test.c $(LIBS) $(CLIBS)
+
+
+
+####################################
+#  LIBVOSI dependency libraries.
+####################################
+
+.BASE:
+	(./mkbase $(HERE)/lib$(NAME).a)
+	touch .BASE
+
+lib: objs
+	ar rv lib$(NAME).a $(OBJS) # $(SPP_OBJS)
+	rm -f $(OBJS) # $(SPP_OBJS)
+
+
+###############################################################################
+#  SPP Utility procedures
+###############################################################################
+
+
+
+
+###############################################################################
+#  SWIG Wrapper code generation
+###############################################################################
+
+wrap_code: tcl_wrap py_wrap perl_wrap java_wrap # php_wrap ruby_wrap mono_wrap
+
+
+tcl_wrap:  xmlParse.i
+	(swig -tcl    -o xmlParseTcl.c    xmlParse.i     )
+	make tcl_lib
+
+py_wrap:  xmlParse.i
+	(swig -python -o xmlParsePython.c xmlParse.i     )
+	make python_lib
+
+perl_wrap:  xmlParse.i
+	(swig -perl   -o xmlParsePerl.c   xmlParse.i     )
+	make perl_lib
+
+java_wrap:  xmlParse.i
+	(swig -java   -o xmlParseJava.c   xmlParse.i     )
+	make java_lib
+
+php_wrap:  xmlParse.i
+	(swig -php    -o xmlParsePhp.c    xmlParse.i     )
+	make php_lib
+
+ruby_wrap:  xmlParse.i
+	(swig -ruby   -o xmlParseRuby.c   xmlParse.i     )
+	#make ruby_lib
+
+mono_wrap:  xmlParse.i
+	(swig -csharp -o xmlParseCSharp.c xmlParse.i     )
+	#make mono_lib
+
+
+
+##############################################################################
+#
+#  SWIG Wrapper share library builds -- highly platform dependent!!
+#
+##############################################################################
+
+wrap_libs: wrap_code tcl_lib python_lib perl_lib java_lib 
+
+tcl_lib:  xmlParse.i
+	$(CC) -fPIC -c $(SRCS) xmlParseTcl.c
+	$(CC) -shared $(OBJS) xmlParseTcl.o -o lib$(NAME).so
+	$(RM) xmlParse_wrap.*
+
+
+PY_INCS = -I.   -I/usr/include/python2.2 -I/usr/include/python2.3 \
+                -I/usr/include/python2.4 -I/usr/include/python2.5
+
+python_lib:  xmlParse.i
+	$(CC) -w -c $(PY_INCS) $(SRCS) xmlParsePython.c
+	ld -shared $(OBJS) xmlParsePython.o -o _lib$(NAME).so
+	$(RM) xmlParse_wrap.*
+
+perl_lib:  xmlParse.i
+	gcc -c $(SRCS) xmxmlsePerl.c `perl -MExtUtils::Embed -e ccopts`
+	ld -G $(OBJS) -o lib$(NAME).so
+	$(RM) xmlParse_wrap.*
+
+
+JWRAP_FLAGS 	= -I/usr/java/j2sdk/include/ -I/usr/java/j2sdk/include/linux
+
+java_lib:  xmlParse.i
+	gcc -fpic -c $(WRAP_SRCS) xmlParseJava.c $(JWRAP_FLAGS)
+	gcc -shared $(WRAP_OBJS) xmlParseJava.o -o lib$(NAME).so
+	$(RM) xmlParse_wrap.*
+
+
+
+PHP_INCS = -I. -I/usr/include/php -I/usr/local/include/php \
+	   -I/usr/local/php -I/usr/include/php/Zend \
+	   -I/usr/local/include/php/Zend
+
+php_lib:   xmlParse.i
+	gcc -fpic -c $(PHP_INCS) $(WRAP_SRCS) xmlParsePhp.c
+	gcc -shared $(WRAP_OBJS) xmlParsePhp.o -o lib$(NAME).so
+	$(RM) xmlParse_wrap.*
+
+
+
+
+
+###############################################################################
+# Leave this stuff alone.
+###############################################################################
+
+$(STATICLIB): $(SRCS:%.c=Static/%.o)
+	/usr/bin/ar rv $@ $?
+Static/%.o: %.c $(INCS)
+	/usr/bin/gcc $(CINCS) $(CFLAGS) -c $< -o $@
+Static/%.o: %.x $(SPP_INCS)
+	xc -c $< -o $@
+Static:
+	/bin/mkdir $@
+	chmod 777 $@
+
+$(SHAREDLIB): $(SRCS:%.c=Shared/%.o)
+	/usr/bin/ld -shared -o $@ $? -lc -ldl
+Shared/%.o: %.c $(INCS)
+	/usr/bin/gcc $(CINCS) $(CFLAGS) -fpic -shared -c $< -o $@
+Shared:
+	/bin/mkdir $@
+	chmod 777 $@

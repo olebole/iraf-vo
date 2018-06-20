@@ -271,7 +271,7 @@ static Task  self  	= {  "vodata",  vodata,  0,  0,  0  };
 
 /*  Note:  the leading ':' in the opts string is required to suppress errors
  */
-static char *opts  	= ":%hrNSACFHIKMO:RTVXab:ce:fgi:mno:p:qr:s:t:uv";
+static char *opts  	= ":%hrNSACFHIKMO:RTVXab:cefgi:mno:p:qr:s:t:uv";
 
 static struct option long_opts[] = {
     { "test",        2, 0, '%' },	/* test (std)			*/
@@ -288,7 +288,7 @@ static struct option long_opts[] = {
     { "inventory",   2, 0, 'I' },	/* inventory (not used)		*/
     { "kml",         2, 0, 'K' },	/* KML output			*/
     { "verbmeta",    2, 0, 'M' },	/* verbose metadata		*/
-    { "output",      2, 0, 'O' },	/* root output name		*/
+    { "output",      1, 0, 'O' },	/* root output name		*/
     { "raw",         2, 0, 'R' },	/* Raw output			*/
     { "tsv",         2, 0, 'T' },	/* TSV output			*/
     { "votable",     2, 0, 'V' },	/* VOTable output		*/
@@ -378,7 +378,7 @@ static void Tests (char *input);
 int
 vodata (int argc, char *argv[], size_t *reslen, void **result)
 {
-    int    i, ch, pos=0;
+    int    i, ch, pos=0, inc=0;
     char  *eval, *argfile, *next_arg, posn[SZ_LINE];
     char  **pargv, optval[SZ_FNAME];
 
@@ -423,7 +423,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
     all_data  = 0;
 
 
-    rs_time = time ((time_t) NULL);
+    rs_time = time ((time_t *) NULL);
 
     /*  Now process the command line arguments. 
      */
@@ -444,14 +444,17 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 
 	memset (optval, 0, SZ_FNAME);
 	ch = vo_paramNext (opts, long_opts, argc, pargv, optval, &pos);
-#ifdef PARAM_DBG
-	fprintf (stderr, "ch = '%c' %d  optval = '%s'\n", 
-  	    ch, ch, (optval[0] ? optval : "N/A"));
-#endif
+
+	if (PARAM_DBG) {
+	    fprintf (stderr, "ch = '%c' %d  optval = '%s'\n", 
+  	        ch, ch, (optval[0] ? optval : "NULL"));
+	}
 
         if (ch > 0) {
             switch (ch) {
  	    case '?':				/* unknown		*/
+	        fprintf (stderr, "Warning: ignoring invalid option '%c'...\n",
+		    optopt);
 		break;
 
  	    case 'h':				/* help			*/
@@ -515,7 +518,6 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 		break;
 
             case 'O':    			/* root output name	*/
-		//VOT_NEXTARG(argc,argv,i);
 		output = strdup (optval);
 		if (output[0] == '-') {
 		    wr_stdout++;
@@ -529,6 +531,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 			mkdir (wrkdir, (mode_t)0666);
 		    chdir (wrkdir);
 		}
+//		i++;
 		break;
 
             case 'a':    			/* all data 		*/
@@ -537,11 +540,13 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 		/*sr = -1.0; */			/* flag to get all data */
 		break;
             case 'b':				/* forced type string	*/
-		if (optval[0] == '/' || isdigit(optval[0]))
+		if (optval[0] == '/' || isdigit(optval[0])) {
 		    d2_band = strdup (optval);
-		else 
+		} else {
 		    if (strncasecmp (optval, "any", 3) != 0)
 		        bpass = strdup (optval);
+		}
+//		i++;
 		break;
             case 'c':    
 		count++;				
@@ -549,7 +554,9 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 		break;
 
             case 'e':    			/* extract pos/acrefs?	*/
-		if (strncmp (optval, "pos", 3) == 0)
+		if (!optval[0])
+		    extract  = EX_ALL;
+		else if (strncmp (optval, "pos", 3) == 0)
 		    extract |= EX_POS;
 		else if (strncmp (optval, "url", 3) == 0)
 		    extract |= EX_ACREF;
@@ -561,24 +568,26 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 		    extract |= EX_XML;
 		else if (strncmp (optval, "all", 3) == 0)
                     extract  = EX_ALL;
-		else 
-                    extract  = EX_ALL, i++;
+		else {
+                    extract  = EX_ALL;
+//		    i += (optval[0] ? 1 : 0);   /* inc if invalid arg 	*/
+		}
 		break;
 
             case 'f':    			/* force table read	*/
 		force_read++;
 		break;
 
-            case 'g':			/* get specific results */    
+            case 'g':			/* get specific results 	*/    
 		extract |= EX_ACREF;
 		fileRange.nvalues = RANGE_ALL;
 		file_get = RANGE_ALL;
 		break;
 
-            case 'i':		/* take remaining args from file */    
-		VOT_NEXTARG(argc,argv,i);
+            case 'i':			/* take remaining args from file */    
+		//VOT_NEXTARG(argc,argv,i);
 		sv_apos = apos;
-		argfile = strdup (argv[++i]);
+		argfile = strdup (optval);
 		if (argfile[0] == '-') {
 		    if (strlen (argfile) > 1) {
 			fprintf (stderr, "ERROR: the '-i' flag requires ");
@@ -621,7 +630,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 	 	break;
 
             case 'o':			/* query object name	*/
-		VOT_NEXTARG(argc,argv,i);
+		//VOT_NEXTARG(argc,argv,i);
 		use_name++;
 		next_arg = argv[i+1];
 		if (next_arg[0] == '-') {
@@ -635,7 +644,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 		    	fixed_obj++;
 			vot_readObjFile ("-");
 		    }
-		    i++;			/* advance argv 	*/
+//		    i++;			/* advance argv 	*/
 		} else if (inventory) {
 		    vot_parseObjectList (argv[++i], TRUE);
 		    sources = strdup (argv[i]);
@@ -665,7 +674,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
                         rd_stdin++, fixed_pos++;
 			vot_readObjFile ("-");
 		    }
-		    i++;			/* advance argv 	*/
+//		    i++;			/* advance argv 	*/
 		} else {
 		    if (isSexagesimal(optval) || isDecimal(optval)) {
 		        vot_parseObjectList (optval, TRUE);
@@ -686,12 +695,12 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 		break;
 
             case 'r':  			/* search radius	*/
-		VOT_NEXTARG(argc,argv,i);
-		sr = vot_atof (argv[++i]);
+		//VOT_NEXTARG(argc,argv,i);
+		sr = vot_atof (optval);
 		break;
 
             case 's':			/* data service		*/
-		VOT_NEXTARG(argc,argv,i);
+		//VOT_NEXTARG(argc,argv,i);
 		if (strncmp (argv[i+1], "http", 4) == 0)
 		   force_svc++;
 		next_arg = argv[i+1];
@@ -702,7 +711,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 			exit (1);
 		    } else
 			vot_readSvcFile ("-", dalOnly);
-		    i++;			/* advance argv 	*/
+//		    i++;			/* advance argv 	*/
 		} else if (isdigit (argv[i+1][0])) {
 		    svcNumber = vot_atoi (argv[++i]);
 		    vot_parseServiceList ((resources = strdup (argv[++i])), 
@@ -724,7 +733,8 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
             case 't':			/* forced type string	*/
 		//VOT_NEXTARG(argc,argv,i);
 		if (strncasecmp (optval, "any", 3) != 0)
-		    typestr = strdup (optval), i++;
+		    typestr = strdup (optval);
+//		i++;
 		break;
 
             case 'u':			/* forced url download	*/
@@ -804,12 +814,10 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
 	    ** Since we're parsing the argv[], be sure to take into account
 	    ** any increments added because of consumed arguments.
 	    */
-	    int  inc = 0;
+	    inc = 0;
 
-    	    for ( ; i < argc; i++) {
-//if (i > 2 && apos == 0) i--;
-//fprintf (stderr, "pos: '%s' '%s' apos=%d i=%d\n", argv[i], argv[i+1], apos, i);
-	        if (vot_parseArgToken (argv[i], argv[i+1], apos, &inc) != OK) {
+    	    for (i=optind ; i < argc; i++) {
+	        if (vot_parseArgToken(pargv[i], pargv[i+1], apos, &inc) != OK) {
 	    	    exit (1);
 	        } else 
 	            i += inc;		/* add the argv[] increment  	*/
@@ -818,7 +826,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
     	    }
 	}
     }
-    re_time = time ((time_t) NULL);
+    re_time = time ((time_t *) NULL);
 
 
     /* Close VOClient connection.  Each child process will need to reopen
@@ -827,6 +835,8 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
     */
     voc_closeVOClient (0);			
 
+    if (VOD_DEBUG)
+	debug = 1;
 
     /*  If we're broadcasting the result tables, open the SAMP connection
     **  now and let the child processes simply send the message.
@@ -978,9 +988,8 @@ cleanup_:
 static char
 vot_setArgWord (char *arg, char *val)
 {
-#ifdef PARAM_DBG
-    fprintf (stderr, "setArg = '%s'  val = '%s'\n", arg, val);
-#endif
+    if (PARAM_DBG)
+	fprintf (stderr, "setArg = '%s'  val = '%s'\n", arg, val);
 
     if (arg[0] == '-') {
 	fprintf (stderr, "Invalid argument string '--'\n");
@@ -1362,7 +1371,11 @@ vot_parseArgToken (char *arg, char *next, int pos, int *inc)
     ** By default we assume size is in degrees, the ra/dec will
     ** be assumed to be ICRS J200 and may be sexagesimal or decimal.
     */
-//fprintf (stderr, "parseArg:  '%s' '%s' %d apos=%d\n", arg, next, pos, apos);
+
+    if (PARAM_DBG)
+	fprintf (stderr, "parseArg:  '%s' '%s' %d apos=%d\n", 
+	    arg, next, pos, apos);
+
     switch (apos) {
     case 0:				/* <resource> | <url>	*/
 
@@ -1627,7 +1640,7 @@ vot_runSvcThreads ()
     pthread_attr_t  attr;		/* thread attributes		*/
 
 
-    qs_time = time ((time_t) NULL);
+    qs_time = time ((time_t *) NULL);
 
     if (verbose && !count && !meta && nservices > 1)
 	fprintf (stderr, "# Creating service processing threads...\n");
@@ -1688,7 +1701,7 @@ vot_runSvcThreads ()
 
         pthread_attr_destroy (&attr);
     }
-    qe_time = time ((time_t) NULL);
+    qe_time = time ((time_t *) NULL);
 
     if ((debug && verbose > 1)) {
 	fprintf (stderr, "\n\n..........THREAD PROCS COMPLETED.....\n");
@@ -2362,7 +2375,6 @@ Tests (char *input)
 
     vo_taskTest (task, "-O", "white97", "-all", "J/MNRAS/292/419", NULL);
 
-    vo_taskTest (task, "-rv", "-t", "image", "xmm", NULL);
     vo_taskTest (task, "-cq", "xmm-newton", "3c273", NULL);
     vo_taskTest (task, "--count", "--quiet", "xmm-newton", "3c273", NULL);
     vo_taskTest (task, "--get", "xmm-newton", "3c273", NULL);

@@ -1,0 +1,3977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tableset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vod="http://www.ivoa.net/xml/VODataService/v1.1" xsi:type="vod:TableSet">
+	<schema>
+		<name>TAP_SCHEMA</name>
+		<description>Schema dedicated to TAP. It contains all information about available schemas, tables and columns.</description>
+		<table type="base_table">
+			<name>TAP_SCHEMA.tables</name>
+			<column std="true">
+				<name>schema_name</name>
+				<description>the schema name from TAP_SCHEMA.schemas</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+				<flag>indexed</flag>
+				<flag>primary</flag>
+			</column>
+			<column std="true">
+				<name>table_name</name>
+				<description>table name as it should be used in queries</description>
+				<dataType xsi:type="vod:TAPType" size="132">VARCHAR</dataType>
+				<flag>indexed</flag>
+				<flag>primary</flag>
+			</column>
+			<column std="true">
+				<name>table_type</name>
+				<description>one of: table, view</description>
+				<dataType xsi:type="vod:TAPType" size="10">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>description</name>
+				<description>brief description of table</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>utype</name>
+				<description>UTYPE if table corresponds to a data model</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+		</table>
+		<table type="base_table">
+			<name>TAP_SCHEMA.schemas</name>
+			<column std="true">
+				<name>schema_name</name>
+				<description>schema name, possibly qualified</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+				<flag>indexed</flag>
+				<flag>primary</flag>
+			</column>
+			<column std="true">
+				<name>description</name>
+				<description>brief description of schema</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>utype</name>
+				<description>UTYPE if schema corresponds to a data model</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+		</table>
+		<table type="base_table">
+			<name>TAP_SCHEMA.keys</name>
+			<column std="true">
+				<name>key_id</name>
+				<description>unique key identifier</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+				<flag>indexed</flag>
+				<flag>primary</flag>
+			</column>
+			<column std="false">
+				<name>from_table</name>
+				<description>fully qualified table name</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>target_table</name>
+				<description>fully qualified table name</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>description</name>
+				<description>description of this key</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>utype</name>
+				<description>utype of this key</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+		</table>
+		<table type="base_table">
+			<name>TAP_SCHEMA.key_columns</name>
+			<column std="false">
+				<name>key_id</name>
+				<description>unique key identifier</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+				<flag>indexed</flag>
+				<flag>primary</flag>
+			</column>
+			<column std="false">
+				<name>from_column</name>
+				<description>key column name in the from_table</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>target_column</name>
+				<description>key column name in the target_table</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+			</column>
+		</table>
+		<table type="base_table">
+			<name>TAP_SCHEMA.columns</name>
+			<column std="true">
+				<name>table_name</name>
+				<description>table name from TAP_SCHEMA.tables</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+				<flag>indexed</flag>
+				<flag>primary</flag>
+			</column>
+			<column std="true">
+				<name>column_name</name>
+				<description>column name</description>
+				<dataType xsi:type="vod:TAPType" size="32">VARCHAR</dataType>
+				<flag>indexed</flag>
+				<flag>primary</flag>
+			</column>
+			<column std="true">
+				<name>description</name>
+				<description>brief description of column</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>unit</name>
+				<description>unit in VO standard format</description>
+				<dataType xsi:type="vod:TAPType" size="16">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>ucd</name>
+				<description>UCD of column if any</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>utype</name>
+				<description>UTYPE of column if any</description>
+				<dataType xsi:type="vod:TAPType" size="255">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>datatype</name>
+				<description>ADQL datatype as in section 2.5</description>
+				<dataType xsi:type="vod:TAPType" size="16">VARCHAR</dataType>
+			</column>
+			<column std="true">
+				<name>size</name>
+				<description>length of variable length datatypes</description>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="true">
+				<name>principal</name>
+				<description>a principal column; 1 means true, 0 means false</description>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="true">
+				<name>indexed</name>
+				<description>an indexed column; 1 means true, 0 means false</description>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="true">
+				<name>std</name>
+				<description>a standard column; 1 means true, 0 means false</description>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+		</table>
+	</schema>
+	<schema>
+		<name>public</name>
+		<description>Default schema</description>
+		<table type="base_table">
+			<name>public.flux</name>
+			<description>Flux information about an astronomical object</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>filter</name>
+				<description>flux filter name</description>
+				<ucd>instr.filter</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>flux</name>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>flux_prec</name>
+				<description>flux precision</description>
+				<ucd>instr.precision;phot.flux</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>flux_err</name>
+				<description>flux error</description>
+				<ucd>stat.error;phot.mag</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>flux_err_prec</name>
+				<description>flux error precision</description>
+				<ucd>instr.precision;stat.error;phot.flux</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>qual</name>
+				<description>flux quality flag</description>
+				<ucd>meta.code.qual;phot.flux</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>flux reference</description>
+				<ucd>meta.bib.bibcode;phot.flux</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+			<foreignKey>
+				<targetTable>public.filter</targetTable>
+				<fkColumn>
+					<fromColumn>filter</fromColumn>
+					<targetColumn>filtername</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesXmm</name>
+			<description>XMM log</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>obsid</name>
+				<description>Observation identifier</description>
+				<unit></unit>
+				<ucd>meta.id;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="10">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesHerschel</name>
+			<description>Herschel log</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>obsid</name>
+				<description>Observation identifier</description>
+				<unit></unit>
+				<ucd>meta.id;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="10">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right ascension</description>
+				<unit>h:m:s</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="11">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination</description>
+				<unit>d:m:s</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="11">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesHgamma</name>
+			<description>Values of the equivalent width of the H{gamma} line,from Petrie et al.,Publ. Dominion Astrophys. Obs. 14,151,1973,and continuations.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>width</name>
+				<description>equivalent width of H{gamma} line</description>
+				<unit></unit>
+				<ucd>spect.line.eqWidth</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>width_prec</name>
+				<description>Precision (# of decimal positions) associated with the column width</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>nbmes</name>
+				<description>number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>flag</name>
+				<description>Flag (E: emission  R: ???)</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesRot</name>
+			<description>Stellar Rotational Velocities.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>upvsini</name>
+				<description>Upper value of Vsini</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>vsini</name>
+				<description>V sini</description>
+				<unit>km.s-1</unit>
+				<ucd>phys.veloc.rotat</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>vsini_prec</name>
+				<description>Precision (# of decimal positions) associated with the column vsini</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>vsini_err</name>
+				<description>error</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>vsini_err_prec</name>
+				<description>Precision (# of decimal positions) associated with the column vsini_err</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>qual</name>
+				<description>Quality</description>
+				<unit></unit>
+				<ucd>code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesGcrv</name>
+			<description>General Catalogue of Radial Velocities</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>radvel</name>
+				<description>Radial velocity</description>
+				<unit>km.s-1</unit>
+				<ucd>phys.veloc;pos.heliocentric</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>radvel_prec</name>
+				<description>Precision (# of decimal positions) associated with the column radvel</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>qual</name>
+				<description>Quality</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>remarks</name>
+				<description>Remarks</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="5">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>obscode</name>
+				<description>Observatory code</description>
+				<unit></unit>
+				<ucd>meta.id;instr.obsty</ucd>
+				<dataType xsi:type="vod:TAPType" size="2">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>dispersion</name>
+				<description>Dispersion</description>
+				<unit>A.mm-1</unit>
+				<ucd>instr.dispersion</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesposa</name>
+			<description>Measurements of Position (since June 1998).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right ascension</description>
+				<unit>h:m:s</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="13">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination</description>
+				<unit>'d:m:s'</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="13">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>upmajaxis</name>
+				<description>Upper value of Major axis</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>majaxis</name>
+				<description>Major axis of the error ellipse</description>
+				<unit>arcsec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>majaxis_prec</name>
+				<description>Precision (# of decimal positions) associated with the column majaxis</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>upminaxis</name>
+				<description>Upper value of Minor axis</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>minaxis</name>
+				<description>Minor axis of the error ellipse</description>
+				<unit>arcsec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>minaxis_prec</name>
+				<description>Precision (# of decimal positions) associated with the column minaxis</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>posangle</name>
+				<description>Position angle of the error ellipse</description>
+				<unit>deg</unit>
+				<ucd>pos.posAng</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>posangle_prec</name>
+				<description>Precision (# of decimal positions) associated with the column posangle</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>equi</name>
+				<description>Equinox</description>
+				<unit>yr</unit>
+				<ucd>time.equinox</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>epoch</name>
+				<description>Epoch</description>
+				<unit>yr</unit>
+				<ucd>time.epoch</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>epoch_prec</name>
+				<description>Precision (# of decimal positions) associated with the column epoch</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesMK</name>
+			<description>MK classifications in the Morgan-Keenan system and the Michigan Catalogues of Two-Dimensional Spectral Types for the HD stars (Houk N.,1975,and seq.).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>dispsystem</name>
+				<description>dispersive system</description>
+				<unit></unit>
+				<ucd>meta.id;instr</ucd>
+				<dataType xsi:type="vod:TAPType" size="2">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>mssnote</name>
+				<description>mss notes</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="3">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>sptype</name>
+				<description>MK/MSS spectral type</description>
+				<unit></unit>
+				<ucd>src.spType</ucd>
+				<dataType xsi:type="vod:TAPType" size="36">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesDistance</name>
+			<description>Measurements of distance</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>dist</name>
+				<description>Distance value</description>
+				<unit></unit>
+				<ucd>pos.distance</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>dist_prec</name>
+				<description>Precision (# of decimal positions) associated with the column dist</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>qual</name>
+				<description>Quality</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>unit</name>
+				<description>Unit (pc,kpc or Mpc)</description>
+				<unit></unit>
+				<ucd>meta.unit</ucd>
+				<dataType xsi:type="vod:TAPType" size="4">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>minus_err</name>
+				<description>minus error</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>minus_err_prec</name>
+				<description>Precision (# of decimal positions) associated with the column minus_err</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>plus_err</name>
+				<description>plus error</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>plus_err_prec</name>
+				<description>Precision (# of decimal positions) associated with the column plus_err</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>method</name>
+				<description>distance calculation method</description>
+				<unit></unit>
+				<ucd>instr.setup</ucd>
+				<dataType xsi:type="vod:TAPType" size="8">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesISO</name>
+			<description>Infrared Space Observatory (ISO) log</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>obsid</name>
+				<description>Observation identifier</description>
+				<unit></unit>
+				<ucd>meta.id;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="8">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right ascension</description>
+				<unit>deg</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>ra_prec</name>
+				<description>Precision (# of decimal positions) associated with the column ra</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination</description>
+				<unit>deg</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>dec_prec</name>
+				<description>Precision (# of decimal positions) associated with the column dec</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesClg</name>
+			<description>Cluster of Galaxies: Abell &amp;amp; Corwin,Astrophys. J. Suppl.,70,1 (1989).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>distClass</name>
+				<description>Distance class</description>
+				<unit></unit>
+				<ucd>src.class.distance</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>richnessClass</name>
+				<description>Richness class</description>
+				<unit></unit>
+				<ucd>src.class.richness</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>nbclust</name>
+				<description>number of cluster members between m3 and m3+2</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>errorFlag</name>
+				<description>flag</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>abellClass</name>
+				<description>Cluster classification in Abell s system</description>
+				<unit></unit>
+				<ucd>src.class.struct</ucd>
+				<dataType xsi:type="vod:TAPType" size="3">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>BMclass</name>
+				<description>Cluster classification in the Bautz-Morgan system</description>
+				<unit></unit>
+				<ucd>src.class.struct</ucd>
+				<dataType xsi:type="vod:TAPType" size="6">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>BMclassFlag</name>
+				<description>BMclass flag</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>m1</name>
+				<description>Weighted mean total V mag. estimate for the fist-ranked cluster member</description>
+				<unit>mag</unit>
+				<ucd>phot.mag</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m1flag</name>
+				<description>m1 flag</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>m3</name>
+				<description>Weighted mean total V mag. estimate for the third-ranked cluster member</description>
+				<unit>mag</unit>
+				<ucd>phot.mag</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m3flag</name>
+				<description>m3 flag</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>m10</name>
+				<description>Weighted mean total V mag. estimate for the tenth-ranked cluster member</description>
+				<unit>mag</unit>
+				<ucd>phot.mag</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m10flag</name>
+				<description>m10 flag</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>m10a</name>
+				<description>Weighted mean total V mag. estimate for the tenth-ranked cluster member (xxx)</description>
+				<unit>mag</unit>
+				<ucd>phot.mag</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m10aflag</name>
+				<description>m10a flag</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesFe_h</name>
+			<description>The Stellar Metallicity Values are taken from the compilation by Cayrel de Strobel G.,et all,published in A&amp;amp;AS (1997A&amp;amp;AS..124..299C); the catalogue is numbered &amp;lt;III/200&amp;gt; in the CDS archive.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>teff</name>
+				<description>Effective Temperature</description>
+				<unit>unit-degK</unit>
+				<ucd>phys.temperature.effective</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>log_g</name>
+				<description>Decimal logarithm of the surface gravity</description>
+				<unit>cm/s**2</unit>
+				<ucd>phys.gravity</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>log_g_prec</name>
+				<description>Precision (# of decimal positions) associated with the column log_g</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>fe_h</name>
+				<description>Metallicity index relative to the Sun</description>
+				<unit></unit>
+				<ucd>phys.abund.Fe</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>fe_h_prec</name>
+				<description>Precision (# of decimal positions) associated with the column fe_h</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>flag</name>
+				<description>Flag on the [Fe/H] value</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>compstar</name>
+				<description>Designates the comparison star from which the [Fe/H] value was obtained</description>
+				<unit></unit>
+				<ucd>meta.id</ucd>
+				<dataType xsi:type="vod:TAPType" size="9">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>catno</name>
+				<description>Star in the Cayrel et al. (1997A&amp;AS..124..299C) compilation</description>
+				<unit></unit>
+				<ucd>meta.id;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="5">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.author</name>
+			<description>Author of a bibliographic reference</description>
+			<column std="false">
+				<name>oidbibref</name>
+				<description>Bibcode internal identifier</description>
+				<ucd>meta.record;meta.bib</ucd>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>name</name>
+				<description>Author of a bibliographical reference</description>
+				<ucd>meta.bib.author</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>pos</name>
+				<description>Position of the author in the bib ref</description>
+				<ucd>meta.number;meta.bib.author</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.ref</targetTable>
+				<fkColumn>
+					<fromColumn>oidbibref</fromColumn>
+					<targetColumn>oidbib</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesIRAS</name>
+			<description>The IRAS data are extracted from the IRAS Point Source Catalog,2nd Edition (Joint IRAS Science W.G.,IPAC,1988).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right Ascension B1950</description>
+				<unit>h:m:s</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="10">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination B1950</description>
+				<unit>'d:m:s'</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="9">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>majaxis_err</name>
+				<description>major axis of error ellipse</description>
+				<unit>arcsec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>minaxis_err</name>
+				<description>minor axis of error ellipse</description>
+				<unit>arcsec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>angle_err</name>
+				<description>position angle (east of north)</description>
+				<unit>deg</unit>
+				<ucd>pos.posAng</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f12</name>
+				<description>flux density in 12mu-m filter</description>
+				<unit>Jy</unit>
+				<ucd>phot.flux.density;em.IR.8-15um</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>f12_prec</name>
+				<description>Precision (# of decimal positions) associated with the column f12</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f12_qual</name>
+				<description>quality of the 12mu-m flux density</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>f12_unc</name>
+				<description>percent relative flux density uncertainties for f12</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f25</name>
+				<description>flux density in 25mu-m filter</description>
+				<unit>Jy</unit>
+				<ucd>phot.flux.density;em.IR.15-30um</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>f25_prec</name>
+				<description>Precision (# of decimal positions) associated with the column f25</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f25_qual</name>
+				<description>quality of the 25mu-m flux density</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>f25_unc</name>
+				<description>percent relative flux density uncertainties for f25</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f60</name>
+				<description>flux density in 60mu-m filter</description>
+				<unit>Jy</unit>
+				<ucd>phot.flux.density;em.IR.30-60um</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>f60_prec</name>
+				<description>Precision (# of decimal positions) associated with the column f60</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f60_qual</name>
+				<description>quality of the 60mu-m flux density</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>f60_unc</name>
+				<description>percent relative flux density uncertainties for f60</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f100</name>
+				<description>flux density in 100mu-m filter</description>
+				<unit>Jy</unit>
+				<ucd>phot.flux.density;em.IR.60-100um</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>f100_prec</name>
+				<description>Precision (# of decimal positions) associated with the column f100</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>f100_qual</name>
+				<description>quality of the 100mu-m flux density</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>f100_unc</name>
+				<description>percent relative flux density uncertainties for f100</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>conflag</name>
+				<description>confusion flags (c) for the four bands</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType" size="4">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>var</name>
+				<description>percent likelihood of variability of the source in the far infra-red</description>
+				<unit></unit>
+				<ucd>stat.fit.goodness;src.var</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>nbspec</name>
+				<description>Number of significant low-resolution spectra</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>nbass</name>
+				<description>Number of associated (optical) sources in the original catalog</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.ident</name>
+			<description>Identifiers of an astronomical object</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>id</name>
+				<description>Identifier</description>
+				<ucd>meta.id</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesCEL</name>
+			<description>Celescope catalog of ultra-violet photometry,by Davis et al.,SAO Special Report 350,1973.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u1</name>
+				<description>Magn U1 (210-320nm)</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV.200-300nm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u1_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u1</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u1_merr</name>
+				<description>sigma(U1)</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u1_merr_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u1_merr</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u2</name>
+				<description>Magn U2 (155-320nm)</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u2_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u2</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u2_merr</name>
+				<description>sigma(U2)</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u2_merr_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u2_merr</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u3</name>
+				<description>Magn U3 (135-315nm)</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u3_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u3</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u3_merr</name>
+				<description>sigma(U3)</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u3_merr_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u3_merr</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u4</name>
+				<description>Magn U4 (105-215nm)</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV.100-200nm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u4_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u4</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u4_merr</name>
+				<description>sigma(U4)</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u4_merr_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u4_merr</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pec</name>
+				<description>peculiarities</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="13">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.basic</name>
+			<description>General data about an astronomical object</description>
+			<column std="false">
+				<name>oid</name>
+				<description>Object internal identifier</description>
+				<ucd>meta.record;meta.id</ucd>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>main_id</name>
+				<description>Main identifier for an object</description>
+				<ucd>meta.id;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>nbref</name>
+				<description>number of references</description>
+				<ucd>meta.bib;meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>otype</name>
+				<description>Object type</description>
+				<ucd>src.class</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right ascension</description>
+				<unit>deg</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>ra_prec</name>
+				<description>Right ascension precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination</description>
+				<unit>deg</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>dec_prec</name>
+				<description>Declination precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>coord</name>
+				<description>ADQL POINT</description>
+				<unit>deg</unit>
+				<dataType xsi:type="vod:TAPType">POINT</dataType>
+				<flag>indexed</flag>
+			</column>
+			<column std="false">
+				<name>coo_err_maj</name>
+				<description>Coordinate error major axis</description>
+				<unit>mas</unit>
+				<ucd>phys.angSize.smajAxis;pos.errorEllipse;pos.eq</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>coo_err_maj_prec</name>
+				<description>Coordinate error major axis precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>coo_err_min</name>
+				<description>Coordinate error minor axis</description>
+				<unit>mas</unit>
+				<ucd>phys.angSize.sminAxis;pos.errorEllipse;pos.eq</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>coo_err_min_prec</name>
+				<description>Coordinate error minor axis precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>coo_err_angle</name>
+				<description>Coordinate error angle</description>
+				<unit>deg</unit>
+				<ucd>pos.posAng;pos.errorEllipse;pos.eq</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>coo_qual</name>
+				<description>Coordinate quality</description>
+				<ucd>meta.code.qual;pos.eq</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>coo_wavelength</name>
+				<description>Wavelength class for the origin of the coordinates (R,I,V,U,X,G)</description>
+				<ucd>instr.bandpass;pos.eq</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>coo_bibcode</name>
+				<description>Coordinate reference</description>
+				<ucd>meta.bib.bibcode;pos.eq</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>pmra</name>
+				<description>Proper motion in RA</description>
+				<unit>mas.yr-1</unit>
+				<ucd>pos.pm;pos.eq.ra</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>pmra_prec</name>
+				<description>Proper motion in RA precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmdec</name>
+				<description>Proper motion in DEC</description>
+				<unit>mas.yr-1</unit>
+				<ucd>pos.pm;pos.eq.dec</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>pmdec_prec</name>
+				<description>Proper motion in DEC precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pm_err_maj</name>
+				<description>Proper motion error major axis</description>
+				<unit>mas.yr-1</unit>
+				<ucd>phys.angSize.smajAxis;pos.errorEllipse;pos.pm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pm_err_maj_prec</name>
+				<description>Proper motion error major axis precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pm_err_min</name>
+				<description>Proper motion error minor axis</description>
+				<unit>mas.yr-1</unit>
+				<ucd>phys.angSize.sminAxis;pos.errorEllipse;pos.pm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pm_err_min_prec</name>
+				<description>Proper motion error minor axis precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pm_err_angle</name>
+				<description>Proper motion error angle</description>
+				<unit>deg</unit>
+				<ucd>pos.posAng;pos.errorEllipse;pos.pm</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pm_qual</name>
+				<description>Proper motion quality</description>
+				<ucd>meta.code.qual;pos.pm</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>pm_bibcode</name>
+				<description>Proper motion reference</description>
+				<ucd>meta.bib.bibcode;pos.pm</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>plx_value</name>
+				<description>Parallax</description>
+				<unit>mas</unit>
+				<ucd>pos.parallax.trig</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>plx_prec</name>
+				<description>Parallax precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>plx_err</name>
+				<description>Parallax error</description>
+				<unit>mas</unit>
+				<ucd>stat.error;pos.parallax.trig</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>plx_err_prec</name>
+				<description>Parallax error precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>plx_qual</name>
+				<description>Parallax quality</description>
+				<ucd>meta.code.qual;pos.parallax.trig</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>plx_bibcode</name>
+				<description>Parallax reference</description>
+				<ucd>meta.bib.bibcode;pos.parallax.trig</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_type</name>
+				<description>Radial velocity / redshift type</description>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_radvel</name>
+				<description>Radial Velocity</description>
+				<unit>km.s-1</unit>
+				<ucd>spect.dopplerVeloc.opt</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_radvel_prec</name>
+				<description>Radial velocity precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_redshift</name>
+				<description>redshift</description>
+				<ucd>src.redshift</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_redshift_prec</name>
+				<description>redshift precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_err</name>
+				<description>Radial velocity / redshift error</description>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_err_prec</name>
+				<description>Radial velocity / redshift error precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_qual</name>
+				<description>Radial velocity / redshift quality</description>
+				<ucd>meta.code.qual;spect.dopplerVeloc</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>rvz_bibcode</name>
+				<description>Radial velocity / redshift reference</description>
+				<ucd>meta.bib.bibcode;spect.dopplerVeloc</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>sp_type</name>
+				<description>MK spectral type</description>
+				<ucd>src.spType</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>sp_qual</name>
+				<description>Spectral type quality</description>
+				<ucd>meta.code.qual;src.spType</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>sp_bibcode</name>
+				<description>spectral type reference</description>
+				<ucd>meta.bib.bibcode;src.spType</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>morph_type</name>
+				<description>Morphological type</description>
+				<ucd>src.morph.type</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>morph_qual</name>
+				<description>Morphological type quality</description>
+				<ucd>meta.code.qual;src.morph.type</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>morph_bibcode</name>
+				<description>morphological type reference</description>
+				<ucd>meta.bib.bibcode;src.morph.type</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_majaxis</name>
+				<description>Angular size major axis</description>
+				<unit>arcmin</unit>
+				<ucd>phys.angSize.smajAxis</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_majaxis_prec</name>
+				<description>Angular size major axis precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_minaxis</name>
+				<description>Angular size minor axis</description>
+				<unit>arcmin</unit>
+				<ucd>phys.angSize.sminAxis</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_minaxis_prec</name>
+				<description>Angular size minor axis precision</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_angle</name>
+				<description>Galaxy ellipse angle</description>
+				<unit>deg</unit>
+				<ucd>pos.posAng</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_incl</name>
+				<description>Galaxy inclinaison code (0-7)</description>
+				<ucd>src.orbital.inclination</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_qual</name>
+				<description>Galaxy dimension quality</description>
+				<ucd>meta.code.qual;phys.angSize</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>galdim_bibcode</name>
+				<description>Galaxy dimension reference</description>
+				<ucd>meta.bib.bibcode;phys.angSize</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+		</table>
+		<table type="base_table">
+			<name>public.otypedef</name>
+			<description>all names and definitions for the object types</description>
+			<column std="false">
+				<name>otype</name>
+				<description>Object type</description>
+				<ucd>src.class</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>otype_shortname</name>
+				<description>Object type, short name</description>
+				<ucd>src.class</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>otype_longname</name>
+				<description>Object type, full description string</description>
+				<ucd>src.class</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.otypes</targetTable>
+				<fkColumn>
+					<fromColumn>otype</fromColumn>
+					<targetColumn>otype</targetColumn>
+				</fkColumn>
+			</foreignKey>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>otype</fromColumn>
+					<targetColumn>otype</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesIRC</name>
+			<description>Infra-red measurements from the Two micron sky survey,by Neugebauer and Leighton,Calif. Institute of Technology,NASA,1969.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>kremarks</name>
+				<description>K magnitude remark</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>kmag</name>
+				<description>K magnitude</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.IR.K</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>kmag_prec</name>
+				<description>Precision (# of decimal positions) associated with the column kmag</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>knbmes</name>
+				<description>Number of observations</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>ksigma</name>
+				<description>{sigma} on K magnitude</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>ksigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column ksigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>kchi2</name>
+				<description>{chi}2 on K magnitude</description>
+				<unit></unit>
+				<ucd>stat.fit.chi2</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>kchi2_prec</name>
+				<description>Precision (# of decimal positions) associated with the column kchi2</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>iremarks</name>
+				<description>I magnitude remark</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>imag</name>
+				<description>I magnitude</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.I</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>imag_prec</name>
+				<description>Precision (# of decimal positions) associated with the column imag</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>inbmes</name>
+				<description>Number of observations</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>isigma</name>
+				<description>{sigma} on I magnitude</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>isigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column isigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>ichi2</name>
+				<description>{chi}2 on I magnitude</description>
+				<unit></unit>
+				<ucd>stat.fit.chi2</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>ichi2_prec</name>
+				<description>Precision (# of decimal positions) associated with the column ichi2</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>remark</name>
+				<description>Remark</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesVelocities</name>
+			<description>all velocities and redshift from other measures and new ones</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>velType</name>
+				<description>velocity type (v, z or cz)</description>
+				<unit></unit>
+				<ucd>meta.code;spect.dopplerVeloc</ucd>
+				<dataType xsi:type="vod:TAPType" size="3">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>velValue</name>
+				<description>Velocity</description>
+				<unit></unit>
+				<ucd>spect.dopplerVeloc</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>velValue_prec</name>
+				<description>Precision (# of decimal positions) associated with the column velValue</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>remark</name>
+				<description>colon is uncertain question mark is questionable</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>meanError</name>
+				<description>sigma(Value)</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>meanError_prec</name>
+				<description>Precision (# of decimal positions) associated with the column meanError</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>quality</name>
+				<description>Quality</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>nature</name>
+				<description>nature of the measurement</description>
+				<unit></unit>
+				<ucd>meta.code;spect.dopplerVeloc</ucd>
+				<dataType xsi:type="vod:TAPType" size="2">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>qual</name>
+				<description>Quality</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>wdomain</name>
+				<description>Wavelength domain (Rad,mm,IR,Opt,UV,XRay,Gam)</description>
+				<unit></unit>
+				<ucd>em.wl.central;spect.dopplerVeloc</ucd>
+				<dataType xsi:type="vod:TAPType" size="4">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>resolution</name>
+				<description>Resolution</description>
+				<unit></unit>
+				<ucd>spect.resolution</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>d</name>
+				<description>'D' if the resolution is a conversion from the dispersion</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>obsdate</name>
+				<description>Observation date</description>
+				<unit></unit>
+				<ucd>time.epoch</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>obsdate_prec</name>
+				<description>Precision (# of decimal positions) associated with the column obsdate</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>remarks</name>
+				<description>Remarks</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="7">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>origin</name>
+				<description>Origin of the radial velocity</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="2">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesPLX</name>
+			<description>Catalogue of parallaxes</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>plx</name>
+				<description>Parallaxe</description>
+				<unit>arcsec</unit>
+				<ucd>pos.parallax.trig</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>plx_prec</name>
+				<description>Precision (# of decimal positions) associated with the column plx</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>plx_err</name>
+				<description>sigma{plx}</description>
+				<unit>arcsec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>obscode</name>
+				<description>Observatory code</description>
+				<unit></unit>
+				<ucd>meta.id;instr.obsty</ucd>
+				<dataType xsi:type="vod:TAPType" size="2">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesGen</name>
+			<description>Geneva Photometric System Catalogue</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u_b</name>
+				<description>color index U-B</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.U;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u_b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u_b</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>v_b</name>
+				<description>color index V-B</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.V;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>v_b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column v_b</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>b1_b</name>
+				<description>color index B1-B</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.B;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>b1_b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column b1_b</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>b2_b</name>
+				<description>color index B2-B</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.B;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>b2_b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column b2_b</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>v1_b</name>
+				<description>color index V1-B</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.V;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>v1_b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column v1_b</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>g_b</name>
+				<description>color index G-B</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.V;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>g_b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column g_b</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>wt_colind</name>
+				<description>weight on color indices</description>
+				<unit></unit>
+				<ucd>stat.weight</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>me_colind</name>
+				<description>m.e. sigma on color indices</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>me_colind_prec</name>
+				<description>Precision (# of decimal positions) associated with the column me_colind</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>vmag</name>
+				<description>V magnitude</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.V</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>vmag_prec</name>
+				<description>Precision (# of decimal positions) associated with the column vmag</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>wt_vmag</name>
+				<description>weight on V magnitude</description>
+				<unit></unit>
+				<ucd>stat.weight</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>me_vmag</name>
+				<description>m.e. sigma on V magnitude</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>me_vmag_prec</name>
+				<description>Precision (# of decimal positions) associated with the column me_vmag</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>remarks</name>
+				<description>Remarks</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="5">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesUVBY</name>
+			<description>The Stromgren uvby photometric system</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>b_y</name>
+				<description>b-y color index</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.B;em.opt.V</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>b_y_prec</name>
+				<description>Precision (# of decimal positions) associated with the column b_y</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>b_y_sigma</name>
+				<description>{sigma}(b-y)</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>b_y_sigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column b_y_sigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m1</name>
+				<description>m1 index (Balmer discontinuity)</description>
+				<unit>mag</unit>
+				<ucd>phot.color</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m1_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m1</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m1_sigma</name>
+				<description>{sigma}(m1)</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m1_sigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m1_sigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>c1</name>
+				<description>c1 index (line blocking)</description>
+				<unit>mag</unit>
+				<ucd>phot.color</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>c1_prec</name>
+				<description>Precision (# of decimal positions) associated with the column c1</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>c1_sigma</name>
+				<description>{sigma}(c1)</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>c1_sigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column c1_sigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>flag</name>
+				<description>flag</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>flag1</name>
+				<description>flag 1</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>flag2</name>
+				<description>flag 2</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>flag3</name>
+				<description>flag 3</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>flag4</name>
+				<description>flag 4</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesTD1</name>
+			<description>UV fluxes from TD1 satellite,by Thompson et al. (Scientific Research Council,1978); magnitudes and standard errors are derived from absolute fluxes by means of the calibration by Hayes &amp;amp; Latham ( A. J. 197,593,1975).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m2740</name>
+				<description>magnitude at 274.0 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV.200-300nm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m2740_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m2740</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m2740_sigma</name>
+				<description>{sigma}(m2740)</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m2740_sigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m2740_sigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m2365</name>
+				<description>magnitude at 236.5 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV.200-300nm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m2365_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m2365</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m2365_sigma</name>
+				<description>{sigma}(m2365)</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m2365_sigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m2365_sigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m1965</name>
+				<description>magnitude at 196.5 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV.100-200nm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m1965_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m1965</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m1965_sigma</name>
+				<description>{sigma}(m1965)</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m1965_sigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m1965_sigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m1565</name>
+				<description>magnitude at 156.5 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.UV.100-200nm</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m1565_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m1565</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m1565_sigma</name>
+				<description>{sigma}(m1565)</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m1565_sigma_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m1565_sigma</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesSao</name>
+			<description>SAO catalogue (Star catalog of 258997 stars for the epoch and equinox 1950.0,1966)</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right ascension</description>
+				<unit>h:m:s</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="12">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination</description>
+				<unit>'d:m:s'</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="12">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>coo_err</name>
+				<description>Mean error on position</description>
+				<unit>arcsec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>coo_err_prec</name>
+				<description>Precision (# of decimal positions) associated with the column coo_err</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmra</name>
+				<description>Proper motion {mu}alpha*cos(delta)</description>
+				<unit>arcsec.yr-1</unit>
+				<ucd>pos.pm;pos.eq.ra</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pmra_prec</name>
+				<description>Precision (# of decimal positions) associated with the column pmra</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmra_err</name>
+				<description>sigma on pm-ra</description>
+				<unit>mas.yr-1</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmde</name>
+				<description>Proper motion {mu}delta</description>
+				<unit>arcsec.yr-1</unit>
+				<ucd>pos.pm;pos.eq.dec</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pmde_prec</name>
+				<description>Precision (# of decimal positions) associated with the column pmde</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmde_err</name>
+				<description>sigma on pm-de</description>
+				<unit>mas.yr-1</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesDiameter</name>
+			<description>Stellar diameters, see 2001A&amp;amp;A...367..521P for an explanation of the coding of the methods of measurements.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>diameter</name>
+				<description>Diameter value</description>
+				<unit></unit>
+				<ucd>phys.angSize</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>diameter_prec</name>
+				<description>Precision (# of decimal positions) associated with the column diameter</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>qual</name>
+				<description>Quality</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>unit</name>
+				<description>Unit (mas/km)</description>
+				<unit></unit>
+				<ucd>meta.unit</ucd>
+				<dataType xsi:type="vod:TAPType" size="4">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>error</name>
+				<description>Error</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>error_prec</name>
+				<description>Precision (# of decimal positions) associated with the column error</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>filter</name>
+				<description>filter or wavelength</description>
+				<unit></unit>
+				<ucd>instr.filter</ucd>
+				<dataType xsi:type="vod:TAPType" size="8">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>method</name>
+				<description>calculation method</description>
+				<unit></unit>
+				<ucd>instr.setup</ucd>
+				<dataType xsi:type="vod:TAPType" size="8">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesEinstein</name>
+			<description>The Einstein Observatory Soft X-ray Source List</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right Ascension B1950</description>
+				<unit>h:m:s</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="10">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination B1950</description>
+				<unit>'d:m:s'</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="9">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>err_coo</name>
+				<description>Error on position</description>
+				<unit>arcsec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>countRate</name>
+				<description>Count rate in the total Einstein energy band (0.16 to 3.5 keV)</description>
+				<unit>ct/s</unit>
+				<ucd>phot.count;em.X-ray</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>countRate_prec</name>
+				<description>Precision (# of decimal positions) associated with the column countRate</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>err_count</name>
+				<description>error on count rate</description>
+				<unit>ct/s</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>err_count_prec</name>
+				<description>Precision (# of decimal positions) associated with the column err_count</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>hard</name>
+				<description>Hardness ratio</description>
+				<unit></unit>
+				<ucd>phot.flux;arith.ratio</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>hard_prec</name>
+				<description>Precision (# of decimal positions) associated with the column hard</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>harderrplus</name>
+				<description>+Hardness ratio error</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>harderrplus_prec</name>
+				<description>Precision (# of decimal positions) associated with the column harderrplus</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>harderrminus</name>
+				<description>-Hardness ratio error</description>
+				<unit></unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>harderrminus_prec</name>
+				<description>Precision (# of decimal positions) associated with the column harderrminus</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesVar</name>
+			<description>Parameters extracted mainly from the General Catalog of Variable Stars by Kukarkin et al. USSR Academy of Sciences (3rd edition in 1969,and continuations).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>vartyp</name>
+				<description>Type of variability</description>
+				<unit></unit>
+				<ucd>meta.code;src.var</ucd>
+				<dataType xsi:type="vod:TAPType" size="6">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>lowVmax</name>
+				<description>Upper limit flag for Vmax</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>vmax</name>
+				<description>Maximum of brightness</description>
+				<unit>mag</unit>
+				<ucd>phot.mag</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>vmax_prec</name>
+				<description>Precision (# of decimal positions) associated with the column vmax</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>r_vmax</name>
+				<description>Uncertainty flag</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>magtyp</name>
+				<description>Magnitude type</description>
+				<unit></unit>
+				<ucd>meta.id;phot</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>uppVmin</name>
+				<description>Lower limit flag for Vmin</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>vmin</name>
+				<description>Minimum of brightness</description>
+				<unit>mag</unit>
+				<ucd>phot.mag</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>vmin_prec</name>
+				<description>Precision (# of decimal positions) associated with the column vmin</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>r_vmin</name>
+				<description>Uncertainty flag for Vmin</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>upperiod</name>
+				<description>Lower limit flag for the period</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>period</name>
+				<description>Period</description>
+				<unit>day</unit>
+				<ucd>time.period</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>period_prec</name>
+				<description>Precision (# of decimal positions) associated with the column period</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>r_period</name>
+				<description>Uncertainty flag on period (:)</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType" size="2">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>epoch</name>
+				<description>Epoch of maximum or minimum</description>
+				<unit>day</unit>
+				<ucd>time.epoch</ucd>
+				<dataType xsi:type="vod:TAPType">DOUBLE</dataType>
+			</column>
+			<column std="false">
+				<name>epoch_prec</name>
+				<description>Precision (# of decimal positions) associated with the column epoch</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>r_epoch</name>
+				<description>Uncertainty on epoch (:)</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>raisingTime</name>
+				<description>Raising time for all other variable types</description>
+				<unit></unit>
+				<ucd>time.interval</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>raisingTime_prec</name>
+				<description>Precision (# of decimal positions) associated with the column raisingTime</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>r_raisingTime</name>
+				<description>Uncertainty flag on raising time</description>
+				<unit></unit>
+				<ucd>meta.code.error</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.ref</name>
+			<description>Bibliographic reference</description>
+			<column std="false">
+				<name>oidbib</name>
+				<description>Bibcode internal identifier</description>
+				<ucd>meta.record;meta.bib</ucd>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>Bibcode</description>
+				<ucd>meta.bib.bibcode</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>year</name>
+				<description>Publication year</description>
+				<ucd>meta.note;meta.bib</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>journal</name>
+				<description>Abbreviation for the journal</description>
+				<ucd>meta.bib.journal</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>page</name>
+				<description>page number</description>
+				<ucd>meta.bib.page</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>last_page</name>
+				<description>Last page number</description>
+				<ucd>meta.bib.page</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>volume</name>
+				<description>volume number</description>
+				<ucd>meta.bib.volume</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>title</name>
+				<description>Title</description>
+				<ucd>meta.title</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>doi</name>
+				<description>DOI designation</description>
+				<ucd>meta.code;meta.bib</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+		</table>
+		<table type="base_table">
+			<name>public.has_ref</name>
+			<description>Associations between astronomical objects and their bibliographic references</description>
+			<column std="false">
+				<name>oidbibref</name>
+				<description>Bibcode internal identifier</description>
+				<ucd>meta.record;meta.bib</ucd>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+			<foreignKey>
+				<targetTable>public.ref</targetTable>
+				<fkColumn>
+					<fromColumn>oidbibref</fromColumn>
+					<targetColumn>oidbib</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesUBV</name>
+			<description>UBV data in Johnson s UBV system compiled by J.-Cl. Mermilliod from Institut d Astronomie de Lausanne (Mermilliod,J.-C.,1987,A&amp;amp;A Sup. 71,413).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>photSystem</name>
+				<description>Photometric system</description>
+				<unit></unit>
+				<ucd>meta.id;phot</ucd>
+				<dataType xsi:type="vod:TAPType" size="3">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>v</name>
+				<description>V magnitude</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.V</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>v_prec</name>
+				<description>Precision (# of decimal positions) associated with the column v</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>b_v</name>
+				<description>B-V color index</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.B;em.opt.V</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>b_v_prec</name>
+				<description>Precision (# of decimal positions) associated with the column b_v</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u_b</name>
+				<description>U-B color index</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.U;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u_b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u_b</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>qual</name>
+				<description>Quality</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType" size="5">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>remarks</name>
+				<description>REMARKS</description>
+				<unit>char</unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="11">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesGJ</name>
+			<description>Data related to nearby stars (Catalog of stars within 20 parsecs of the Sun by Gliese (Ver??fflichungen Heidelberg Nr 22),and continuations by Gliese and Jahreiss).</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>plx</name>
+				<description>resulting parallax</description>
+				<unit>unit-plx</unit>
+				<ucd>pos.parallax.trig</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>plx_prec</name>
+				<description>Precision (# of decimal positions) associated with the column plx</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>plx_err</name>
+				<description>probable error on parallax</description>
+				<unit>unit-plx</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>magabs</name>
+				<description>Absolute magnitude</description>
+				<unit>mag</unit>
+				<ucd>phys.magAbs</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>magabs_prec</name>
+				<description>Precision (# of decimal positions) associated with the column magabs</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>flagMagabs</name>
+				<description>Flag indication that Mabs=Mpg</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>qualMagabs</name>
+				<description>Quality on Abs. magn (A:very good-&gt;F:very poor)</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>u</name>
+				<description>component of velocity directed to (b=0d l=0d)</description>
+				<unit>km/s</unit>
+				<ucd>phys.veloc;pos.cartesian.x</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>v</name>
+				<description>component of velocity directed to (b=0d l=+90d)</description>
+				<unit>km/s</unit>
+				<ucd>phys.veloc;pos.cartesian.y</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>w</name>
+				<description>component of velocity directed to (b=+90d)</description>
+				<unit>km/s</unit>
+				<ucd>phys.veloc;pos.cartesian.z</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesPM</name>
+			<description>This table groups all measurements of stellar proper motions,with the exception of SAO catalogue, which has its own table</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmra</name>
+				<description>Proper motion R.A.</description>
+				<unit>arcsec.yr-1</unit>
+				<ucd>pos.pm;pos.eq.ra</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pmra_prec</name>
+				<description>Precision (# of decimal positions) associated with the column pmra</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmra_err</name>
+				<description>sigma{pm-ra}</description>
+				<unit>arcsec.yr-1</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pmra_err_prec</name>
+				<description>Precision (# of decimal positions) associated with the column pmra_err</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmde</name>
+				<description>Proper motion DEC.</description>
+				<unit>arcsec.yr-1</unit>
+				<ucd>pos.pm;pos.eq.dec</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pmde_prec</name>
+				<description>Precision (# of decimal positions) associated with the column pmde</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>pmde_err</name>
+				<description>sigma{pm-de}</description>
+				<unit>arcsec.yr-1</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>pmde_err_prec</name>
+				<description>Precision (# of decimal positions) associated with the column pmde_err</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>coosystem</name>
+				<description>coordinates system designation</description>
+				<unit></unit>
+				<ucd>pos.frame</ucd>
+				<dataType xsi:type="vod:TAPType" size="4">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesJP11</name>
+			<description>UBVRIJKLMNH Johnson s photometry.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u_360</name>
+				<description>magnitude at {lambda}eff = 360 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.U</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>u_prec</name>
+				<description>Precision (# of decimal positions) associated with the column u_360</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>u_sp</name>
+				<description>special value U magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>u_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>b_450</name>
+				<description>magnitude at {lambda}eff = 450 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.B</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>b_prec</name>
+				<description>Precision (# of decimal positions) associated with the column b_450</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>b_sp</name>
+				<description>special value B magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>b_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>v_555</name>
+				<description>magnitude at {lambda}eff = 555 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.V</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>v_prec</name>
+				<description>Precision (# of decimal positions) associated with the column v_555</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>v_sp</name>
+				<description>special value V magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>v_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>r_670</name>
+				<description>magnitude at {lambda}eff = 670 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.R</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>r_prec</name>
+				<description>Precision (# of decimal positions) associated with the column r_670</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>r_sp</name>
+				<description>special value R magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>r_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>i_870</name>
+				<description>magnitude at {lambda}eff = 870 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.opt.I</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>i_prec</name>
+				<description>Precision (# of decimal positions) associated with the column i_870</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>i_sp</name>
+				<description>special value I magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>i_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>j_1200</name>
+				<description>magnitude at {lambda}eff = 1200 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.IR.J</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>j_prec</name>
+				<description>Precision (# of decimal positions) associated with the column j_1200</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>j_sp</name>
+				<description>special value J magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>j_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>k_2200</name>
+				<description>magnitude at {lambda}eff = 2200 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.IR.K</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>k_prec</name>
+				<description>Precision (# of decimal positions) associated with the column k_2200</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>k_sp</name>
+				<description>special value K magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>k_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>l_3500</name>
+				<description>magnitude at {lambda}eff = 3500 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.IR.3-4um</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>l_prec</name>
+				<description>Precision (# of decimal positions) associated with the column l_3500</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>l_sp</name>
+				<description>special value L magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>l_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m_5000</name>
+				<description>magnitude at {lambda}eff = 5000 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.IR.4-8um</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>m_prec</name>
+				<description>Precision (# of decimal positions) associated with the column m_5000</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>m_sp</name>
+				<description>special value M magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>m_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>n_9000</name>
+				<description>magnitude at {lambda}eff = 9000 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.IR.8-15um</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>n_prec</name>
+				<description>Precision (# of decimal positions) associated with the column n_9000</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>n_sp</name>
+				<description>special value N magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>n_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>h_16200</name>
+				<description>magnitude at {lambda}eff = 16200 nm</description>
+				<unit>mag</unit>
+				<ucd>phot.mag;em.IR.H</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>h_prec</name>
+				<description>Precision (# of decimal positions) associated with the column h_16200</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>h_sp</name>
+				<description>special value H magnitude</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>h_nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesHbet</name>
+			<description>The H{beta} photometric system (Crawford and Mander,1966,Astron. J. 7,114)</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>hbeta</name>
+				<description>Hbeta index</description>
+				<unit>mag</unit>
+				<ucd>phot.color;em.opt.B;em.line.Hbeta</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>hbeta_prec</name>
+				<description>Precision (# of decimal positions) associated with the column hbeta</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>hbeta_err</name>
+				<description>Erreur sur Hbet</description>
+				<unit>mag</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>hbeta_err_prec</name>
+				<description>Precision (# of decimal positions) associated with the column hbeta_err</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>nbmes</name>
+				<description>Number of measurements</description>
+				<unit></unit>
+				<ucd>meta.number</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>remark1</name>
+				<description>Remark</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>remark2</name>
+				<description>Remark</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>remark3</name>
+				<description>Remark</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>remark4</name>
+				<description>Remark</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mespos</name>
+			<description>This table groups all old measurements of stellar positions,with the exception of SAO data.</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>ra</name>
+				<description>Right ascension</description>
+				<unit>h:m:s</unit>
+				<ucd>pos.eq.ra;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="13">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>dec</name>
+				<description>Declination</description>
+				<unit>'d:m:s'</unit>
+				<ucd>pos.eq.dec;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="13">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>ra_merr</name>
+				<description>sigma{RA}</description>
+				<unit>sec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>ra_merr_prec</name>
+				<description>Precision (# of decimal positions) associated with the column ra_merr</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>dec_merr</name>
+				<description>sigma{DEC}</description>
+				<unit>sec</unit>
+				<ucd>stat.error</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>dec_merr_prec</name>
+				<description>Precision (# of decimal positions) associated with the column dec_merr</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>equi</name>
+				<description>Equinox</description>
+				<unit>yr</unit>
+				<ucd>time.equinox</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>epoch</name>
+				<description>Epoch</description>
+				<unit>yr</unit>
+				<ucd>time.epoch</ucd>
+				<dataType xsi:type="vod:TAPType">REAL</dataType>
+			</column>
+			<column std="false">
+				<name>epoch_prec</name>
+				<description>Precision (# of decimal positions) associated with the column epoch</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.otypes</name>
+			<description>List of all object types associated with an object</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>otype</name>
+				<description>Object type</description>
+				<ucd>src.class</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.mesIUE</name>
+			<description>International Ultraviolet Explorer</description>
+			<column std="false">
+				<name>oidref</name>
+				<description>Object internal identifier</description>
+				<dataType xsi:type="vod:TAPType">BIGINT</dataType>
+			</column>
+			<column std="false">
+				<name>mespos</name>
+				<description>Position of a measurement in a list of measurements</description>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>name</name>
+				<description>Homogenized Name</description>
+				<unit></unit>
+				<ucd>meta.id;meta.main</ucd>
+				<dataType xsi:type="vod:TAPType" size="16">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>complid</name>
+				<description>Complementary Identifier</description>
+				<unit></unit>
+				<ucd>meta.id</ucd>
+				<dataType xsi:type="vod:TAPType" size="12">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>progid</name>
+				<description>Observing Program Identification</description>
+				<unit></unit>
+				<ucd>meta.id;obs</ucd>
+				<dataType xsi:type="vod:TAPType" size="5">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>classcode</name>
+				<description>IUE class code</description>
+				<unit></unit>
+				<ucd>src.class</ucd>
+				<dataType xsi:type="vod:TAPType">SMALLINT</dataType>
+			</column>
+			<column std="false">
+				<name>dispcode</name>
+				<description>Dispersion code</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>camid</name>
+				<description>Camera id</description>
+				<unit></unit>
+				<ucd>meta.id;instr</ucd>
+				<dataType xsi:type="vod:TAPType" size="3">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>image</name>
+				<description>Image number</description>
+				<unit></unit>
+				<ucd>obs.image</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>aperture</name>
+				<description>Aperture designation code</description>
+				<unit></unit>
+				<ucd>instr.fov</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>fescount</name>
+				<description>FES count</description>
+				<unit></unit>
+				<ucd>phot.count;em.opt</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>fesmode</name>
+				<description>FES mode</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType" size="2">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>obsdate</name>
+				<description>Observation date</description>
+				<unit></unit>
+				<ucd>time.epoch</ucd>
+				<dataType xsi:type="vod:TAPType" size="6">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>obstime</name>
+				<description>Observation time</description>
+				<unit></unit>
+				<ucd>time.epoch</ucd>
+				<dataType xsi:type="vod:TAPType" size="6">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>exptime</name>
+				<description>Effective exposure time</description>
+				<unit>sec</unit>
+				<ucd>time.expo</ucd>
+				<dataType xsi:type="vod:TAPType">INTEGER</dataType>
+			</column>
+			<column std="false">
+				<name>abnormcode</name>
+				<description>Abnormality code</description>
+				<unit></unit>
+				<ucd>meta.code.qual</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>expqualcode</name>
+				<description>Exposure quality code</description>
+				<unit></unit>
+				<ucd>meta.code.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="3">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>station</name>
+				<description>Station (V=Vilspa/G=Goddard)</description>
+				<unit></unit>
+				<ucd>meta.flag;instr.tel</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>comments</name>
+				<description>Comments</description>
+				<unit></unit>
+				<ucd>meta.note</ucd>
+				<dataType xsi:type="vod:TAPType" size="20">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>flag</name>
+				<description>Flag</description>
+				<unit></unit>
+				<ucd>meta.code</ucd>
+				<dataType xsi:type="vod:TAPType">CHAR</dataType>
+			</column>
+			<column std="false">
+				<name>bibcode</name>
+				<description>measurement bibcode</description>
+				<ucd>meta.bib.bibcode;src.class</ucd>
+				<dataType xsi:type="vod:TAPType" size="19">CHAR</dataType>
+			</column>
+			<foreignKey>
+				<targetTable>public.basic</targetTable>
+				<fkColumn>
+					<fromColumn>oidref</fromColumn>
+					<targetColumn>oid</targetColumn>
+				</fkColumn>
+			</foreignKey>
+		</table>
+		<table type="base_table">
+			<name>public.filter</name>
+			<description>Description of a flux filter</description>
+			<column std="false">
+				<name>filtername</name>
+				<description>flux filter name</description>
+				<ucd>instr.filter</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>description</name>
+				<description>flux filter description</description>
+				<ucd>meta.note;instr.filter</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+			<column std="false">
+				<name>unit</name>
+				<description>physical unit name</description>
+				<ucd>meta.unit</ucd>
+				<dataType xsi:type="vod:TAPType">VARCHAR</dataType>
+			</column>
+		</table>
+	</schema>
+</tableset>

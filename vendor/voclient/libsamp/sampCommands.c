@@ -154,6 +154,14 @@ samp_Ping (handle_t handle, String appName)
         Msg   msg   = samp_newMsg ();
         Param param = samp_newParam ();
 
+	if (strcasecmp (appName, pubId) == 0) {
+	    char *clist = NULL;
+
+	    samp_mapClients (handle);
+	    clist = samp_getClients (handle);
+	    pubId = samp_app2id (handle, appName);
+	}
+
 	samp_msgMType (msg, "samp.app.ping");
 	samp_msgParam (msg, param);
 

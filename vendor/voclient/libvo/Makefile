@@ -28,7 +28,7 @@ CC              = gcc
 CINCS           = -I$(INCDIR)  -I.
 
 CLIBS		= -lm -lc -lcurl -lpthread
-CARCH		= -m64
+CARCH		= -m64 -mmacosx-version-min=10.5
 
 CFLAGS 		= -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -L./
 
@@ -71,8 +71,10 @@ zztest: zztest.o $(OBJS)
 
 lib: objs $(INCS)
 	ar x ../lib/libsamp.a
+	ar x ../lib/libVOTable.a
 	ar x ../lib/libVOClient.a
 	ar x ../lib/libVOApps.a
+	ar x ../lib/libcurl.a
 	chmod 644 *.o
 	ar rv libVO.a *.o
 	/bin/rm -f *.o __*

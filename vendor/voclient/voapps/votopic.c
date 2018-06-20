@@ -8,7 +8,7 @@
  *  @author     Mike Fitzpatrick
  *  @date       2/03/13
  *
- *  @brief      Query all VO Image services.
+ *  @brief      Query VO services by keyword topic.
  */ 
 
 #include <stdio.h>
@@ -201,10 +201,10 @@ votopic (int argc, char **argv, size_t *reslen, void **result)
      *  parsing arguments.
      */
     for (i=0; i < nres_arg; i++)
-	if (res_argv[i]);
+	if (res_argv[i])
 	    free ((void *) res_argv[i]);
     for (i=0; i < ndat_arg; i++)
-	if (dat_argv[i]);
+	if (dat_argv[i])
 	    free ((void *) dat_argv[i]);
     unlink (resname);
 

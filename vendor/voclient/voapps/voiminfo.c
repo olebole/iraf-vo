@@ -326,13 +326,14 @@ Tests (char *input)
 
     vo_taskTest (task, "--help", NULL);
 
-    if (access (input, F_OK) == 0) {
+    if (strncmp (input, "http://", 7) == 0 || access (input, F_OK) == 0) {
         vo_taskTest (task, "-n", input, NULL);				// Ex 1
         vo_taskTest (task, "-b", "-s", input, NULL);			// Ex 2
         vo_taskTest (task, "-c", input, NULL);				// Ex 3
         vo_taskTest (task, "-b", input, NULL);				// Ex 4
     } else 
 	fprintf (stderr, "Warning: input file '%s' not found...\n", input);
+
 
     if (access (sif, F_OK) == 0)
 	for (i=0; opts[i]; i++)

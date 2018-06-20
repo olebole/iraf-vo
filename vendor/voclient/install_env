@@ -1,0 +1,25 @@
+#!/bin/bash
+
+prefix=/opt/voclient
+
+bindir=${prefix}/bin/
+libdir=${prefix}/lib/
+incdir=${prefix}/include/
+mandir=${prefix}/man/man1/
+
+# Process cmdline flags.
+for a in "$@"
+do
+    case "$a" in
+    -b | -bindir | --bindir)        # task bin directory
+        echo /opt/voclient/bin/ ;;
+    -l | -libdir | --libdir)        # library directory
+        echo /opt/voclient/lib/ ;;
+    -i | -incdir | --incdir) 	    # include directory
+        echo /opt/voclient/include/ ;;
+    -m | -mandir | --mandir)        # man page directory
+        echo /opt/voclient/man/man1/ ;;
+    *)
+	exit 1 ;;
+    esac
+done

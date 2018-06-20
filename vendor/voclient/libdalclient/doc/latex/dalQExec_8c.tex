@@ -1,0 +1,89 @@
+\hypertarget{dalQExec_8c}{
+\section{dalQExec.c File Reference}
+\label{dalQExec_8c}\index{dalQExec.c@{dalQExec.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+{\tt \#include \char`\"{}votParse.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalQExec_8c_694283dd86b3cd661cc0065f6296b9bd}{
+QResponse \textbf{dal\_\-executeQuery} (Query query\_\-h)}
+\label{dalQExec_8c_694283dd86b3cd661cc0065f6296b9bd}
+
+\item 
+\hypertarget{dalQExec_8c_7fc79b66057a22401e0ceb1745cc1a1d}{
+int \textbf{dal\_\-accessData} (Query query\_\-h, char $\ast$fname)}
+\label{dalQExec_8c_7fc79b66057a22401e0ceb1745cc1a1d}
+
+\item 
+\hypertarget{dalQExec_8c_617da33db3e9cc9fcb14e3f75fd245af}{
+QResponse \textbf{dal\_\-getQueryResponse} (Query query\_\-h)}
+\label{dalQExec_8c_617da33db3e9cc9fcb14e3f75fd245af}
+
+\item 
+\hypertarget{dalQExec_8c_93574b848dfe7235af7c7f26dcda4835}{
+QResponse \textbf{dal\_\-initQueryResponse} (DAL dal\_\-h, char $\ast$votable, int resource, int table)}
+\label{dalQExec_8c_93574b848dfe7235af7c7f26dcda4835}
+
+\item 
+\hypertarget{dalQExec_8c_98a9879032d24d142eb3ed06af1f2550}{
+void \textbf{dal\_\-closeQueryResponse} (QResponse qr\_\-h)}
+\label{dalQExec_8c_98a9879032d24d142eb3ed06af1f2550}
+
+\item 
+\hypertarget{dalQExec_8c_6149bc0702fa018eb49415bac4061a7c}{
+char $\ast$ \textbf{dal\_\-executeVOTable} (Query query\_\-h)}
+\label{dalQExec_8c_6149bc0702fa018eb49415bac4061a7c}
+
+\item 
+\hypertarget{dalQExec_8c_637bfd2bff974c00cfafb9be8231a6b7}{
+char $\ast$ \textbf{dal\_\-executeCSV} (Query query\_\-h)}
+\label{dalQExec_8c_637bfd2bff974c00cfafb9be8231a6b7}
+
+\item 
+\hypertarget{dalQExec_8c_a5239f9f153c13cde18bf7bebc5042e9}{
+char $\ast$ \textbf{dal\_\-executeTSV} (Query query\_\-h)}
+\label{dalQExec_8c_a5239f9f153c13cde18bf7bebc5042e9}
+
+\item 
+\hypertarget{dalQExec_8c_2f2521368802ea6f7f369ee3e1f32b3b}{
+char $\ast$ \textbf{dal\_\-executeASCII} (Query query\_\-h)}
+\label{dalQExec_8c_2f2521368802ea6f7f369ee3e1f32b3b}
+
+\item 
+\hypertarget{dalQExec_8c_3c5974b3ba7293fbc7b5d2e6a3cc4b9c}{
+char $\ast$ \textbf{dal\_\-executeDelimited} (Query query\_\-h, char delim)}
+\label{dalQExec_8c_3c5974b3ba7293fbc7b5d2e6a3cc4b9c}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALQEXEC -- Execution of VO Data Access Layer (DAL) Queries.
+
+These routines take a DAL service Connection object and corresponding DAL Query object containing the parameters defining a query, execute the query, retrieve the query response VOTable, and parse the VOTable, building up a Query Response object.
+
+---- Query Execution ---------
+
+qr = dal\_\-executeQuery (query) str = dal\_\-executeVOTable (query) stat = dal\_\-accessData (query, fname)
+
+qr = dal\_\-getQueryResponse (query) qr = dal\_\-initQueryResponse (dal, votable, resource, table) dal\_\-closeQueryResponse (qr) \# free resources
+
+csv\_\-tab = dal\_\-executeCSV (query) tsv\_\-tab = dal\_\-executeTSV (query) ascii = dal\_\-executeText (query)
+
+The result of these routines is normally a QueryResponse object, but can also be the raw VOTable or processed serializations of the QueryResponse, e.g., text such as CSV, TSV or a formatted text table. In the case of AccessData an Image subset is returned, produced by directly accessing the remote Image dataset.
+
+dal\_\-executeQuery provides a QueryResponse constructor that executes a predefined Query and processes the response to produce a QueryResponse object for the query response VOTAble. The lower level initQueryResponse provides a QueryResponse constructor for any generic VOTable.
+
+\begin{Desc}
+\item[Author:]Doug Tody, Mike Fitzpatrick \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

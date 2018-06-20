@@ -1,0 +1,158 @@
+
+
+Schema for the #tables response:
+--------------------------------
+
+<tableset>
+  <schema>
+    <name>
+    <title>  			[opt]
+    <description>		[opt]
+    <utype>			[opt]
+    <table  type="">		[opt]
+      <name>
+      <title>			[opt]
+      <description>		[opt]
+      <utype>			[opt]
+      <column>			[opt]
+        <name>			[opt]		BaseParam
+        <description>		[opt]		BaseParam
+        <unit>			[opt]		BaseParam
+        <ucd>			[opt]		BaseParam
+        <utype>			[opt]		BaseParam
+        <datatype>		[opt]		TableParam
+        <flag>			[opt]		TableParam
+        <std>					TableParam
+        <foreignKey>		[opt]
+          <targetTable>
+          <fkColumn>
+            <fromColumn>
+            <targetColumn>
+          </fkColumn>
+          <description>
+          <utype>
+        </foreignKey>
+        <foreignKey>
+	      :
+        </foreignKey>
+      </column>
+      <column>			[opt]
+	  :
+      </column>
+    </table>
+  </schema>
+  <schema>			[opt]
+      :
+  </schema>
+</tableset>
+
+
+
+
+Data Structures
+---------------
+
+typedef struct {
+    char   *targetTable;		/* FQ name of table joinable by key  */
+    char   *fromColumn;			/* column from current table	     */
+    char   *targetColumn;		/* column from target table 	     */
+    char   *description;		/* description of key and meaning    */
+    char   *utype;			/* DM concept of key		     */
+} foreignKey, *foreignKeyP;
+
+
+#define  COL_INDEXED		0	// column flag options
+#define  COL_PRIMARY		1
+#define  COL_NULLABLE		2
+
+typedef struct {
+    char       *name;			/* name of the column		     */
+    char       *description;		/* description of contents	     */
+    char       *unit;			/* unit associated w/ col values     */
+    char       *ucd;			/* UCD describing content            */
+    char       *utype;			/* DM concept of column		     */
+    char       *datatype;		/* type of data in column            */
+    char       *flag;			/* traits of column                  */
+    int         std;			/* true if defined by std model      */
+
+    int         nkeys;			/* number of foreign keys            */
+    foreignKey *keys;			/* ptr to foreign keys               */
+
+    void      *next;			/* next pointer in linked list       */
+} vosiColumn, *vosiColumnP;
+
+
+typedef struct {
+    char      *name;			/* unique table name in set          */
+    char      *title;			/* human readable name of table      */
+    char      *description;		/* description of how table relation */
+    char      *utype;			/* DM concept of table		     */
+
+    vosiTable *table;			/* ptr to table                      */
+
+    void      *next;			/* next pointer in linked list       */
+} Schema, *SchemaP;
+
+
+typedef struct {
+    char      *name;			/* unique table name in set          */
+    char      *title;			/* human readable name of table      */
+    char      *description;		/* description of how table relation */
+    char      *utype;			/* DM concept of table		     */
+
+    int	        ncols;			/* number of columns in table        */
+    vosiColumn *cols;			/* ptr to column list                */
+} vosiTable, *vosiTableP;
+
+
+typedef struct {
+    int	        nschema;		/* num. of table schema in response  */
+    vosiSchema *schema;			/* ptr to schema list                */
+} vosiTableSet, *vosiTableSetP;
+
+
+
+Interface Description
+---------------------
+
+            tset = vosi_getTables  (filename|str|url|NULL)
+
+               N = vosi_numSchema  (tset)
+          schema = vosi_getSchema  (tset)
+      schema = vosi_schemaByIndex  (tset, index)
+         schema = vosi_nextSchema  (schema)
+
+            str = vosi_schemaName  (schema)
+           str = vosi_schemaTitle  (schema)
+     str = vosi_schemaDescription  (schema)
+           str = vosi_schemaUType  (schema)
+
+            table = vosi_getTable  (schema)
+             str = vosi_tableName  (table)
+            str = vosi_tableTitle  (table)
+      str = vosi_tableDescription  (table)
+            str = vosi_tableUType  (table)
+
+                 N = vosi_numCols  (table)
+           cols = vosi_getColumns  (table)
+            col = vosi_colByIndex  (cols, index)
+            col = vosi_nextColumn  (cols)
+
+               str = vosi_colName  (col)
+        str = vosi_colDescription  (col)
+               str = vosi_colUnit  (col)
+                str = vosi_colUCD  (col)
+              str = vosi_colUType  (col)
+           str = vosi_colDatatype  (col)
+
+                 N = vosi_numKeys  (col)
+       keys = vosi_getForeignKeys  (col)
+            key = vosi_keyByIndex  (col, index)
+               key = vosi_nextKey  (keys)
+
+        str = vosi_keyTargetTable  (key)
+         str = vosi_keyFromColumn  (key)
+       str = vosi_keyTargetColumn  (key)
+        str = vosi_keyDescription  (key)
+              str = vosi_keyUtype  (key)
+

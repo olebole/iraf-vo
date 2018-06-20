@@ -1,0 +1,221 @@
+\hypertarget{vocList_8c}{
+\section{vocList.c File Reference}
+\label{vocList_8c}\index{vocList.c@{vocList.c}}
+}
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$string.h$>$}\par
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include \char`\"{}vocList.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+vocList\_\-t $\ast$ \hyperlink{vocList_8c_f24b90be778084df7a1918c0b8b33d45}{vll\_\-init} (long req\_\-size)
+\begin{CompactList}\small\item\em Create a new linked ist. \item\end{CompactList}\item 
+long \hyperlink{vocList_8c_ab00ac30bf145825e84a22bb55754ad3}{vll\_\-count} (vocList\_\-t $\ast$list)
+\begin{CompactList}\small\item\em Get the current size of the list. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{vocList_8c_a9876d2307012b54e4b534e74e7593b9}{vll\_\-seek} (vocList\_\-t $\ast$list, long offset, int whence)
+\begin{CompactList}\small\item\em Seek to the indicated position in the list. \item\end{CompactList}\item 
+\hypertarget{vocList_8c_8d4716dba65c138edf75043ec2a1a4ac}{
+void $\ast$ \textbf{vll\_\-find} (vocList\_\-t $\ast$list, void $\ast$obj, long $\ast$index)}
+\label{vocList_8c_8d4716dba65c138edf75043ec2a1a4ac}
+
+\item 
+void $\ast$ \hyperlink{vocList_8c_94da8f1a5cf17ebf3c3e13aab340ddb6}{vll\_\-prev} (vocList\_\-t $\ast$list)
+\begin{CompactList}\small\item\em Get the previous element in the list. \item\end{CompactList}\item 
+void $\ast$ \hyperlink{vocList_8c_26a1a38a174db6cd9d5903dad23cfcb8}{vll\_\-next} (vocList\_\-t $\ast$list)
+\begin{CompactList}\small\item\em Get the next element in the list. \item\end{CompactList}\item 
+\hypertarget{vocList_8c_5f2095b6734c6dc699c64d2a4f04ad98}{
+void $\ast$ \textbf{vll\_\-insert} (vocList\_\-t $\ast$list, void $\ast$obj, long $\ast$index)}
+\label{vocList_8c_5f2095b6734c6dc699c64d2a4f04ad98}
+
+\item 
+\hypertarget{vocList_8c_d614219da9ba8d6a7d8742dc226ce2ae}{
+void $\ast$ \textbf{vll\_\-append} (vocList\_\-t $\ast$list, void $\ast$obj, long $\ast$index)}
+\label{vocList_8c_d614219da9ba8d6a7d8742dc226ce2ae}
+
+\item 
+void $\ast$ \hyperlink{vocList_8c_72b0563b0c8c56ed8677410860b41b47}{vll\_\-remove} (vocList\_\-t $\ast$list, long req\_\-pos)
+\begin{CompactList}\small\item\em Remove a node from the list. \item\end{CompactList}\item 
+void \hyperlink{vocList_8c_b10af1f0b19cb9493368bffe4a1f735b}{vll\_\-destroy} (vocList\_\-t $\ast$list, void($\ast$func)(void $\ast$ptr))
+\begin{CompactList}\small\item\em Destroy the List object and free resources. \item\end{CompactList}\item 
+int \hyperlink{vocList_8c_28e9778710835857c95b41cd83db5213}{vll\_\-rebuild\_\-index} (vocList\_\-t $\ast$list, int req\_\-size)
+\begin{CompactList}\small\item\em Rebuild the array index. \item\end{CompactList}\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+VOCLIST.C - Simple C Array-List Class.
+
+Lists are doubly-linked, with the value being a pointer to an arbitrary external object. The life cycle of the external object is not managed by the list. An unusual feature is that an array index is supported to permit randomly accessing the list as an array.
+
+list = vll\_\-init (size) \# create with initial size len = vll\_\-count (list) \# get current list length obj = vll\_\-seek (list, offset, whence) \# seek to offset from whence obj = vll\_\-find (list, obj, index) \# find next node with object obj = vll\_\-prev (list) \# back up one node obj = vll\_\-next (list) \# advance to next node obj = vll\_\-insert (list, obj, index) \# insert at current pos obj = vll\_\-append (list, obj, index) \# append to the list obj = vll\_\-remove (list, pos) \# remove node from list vll\_\-destroy (list, func) \# free all list resources
+
+The list may be traversed in either direction or may be randomly accessed like an array. The access methods (e.g., seek, prev, next) return a pointer to the object associated with the current list node.
+
+Note: This code is optimized for fairly static lists to which items are mainly appended. The need to maintain an index into the list requires that the index be rebuilt if elements are inserted or removed anywhere other than at the end of the list. Note that rebuilding the index can cause index values for nodes to change. Appending to the list has no performance penalty. These considerations affect only efficiency; inserting and removing elements at random is otherwise not affected.
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}
+
+
+\subsection{Function Documentation}
+\hypertarget{vocList_8c_ab00ac30bf145825e84a22bb55754ad3}{
+\index{vocList.c@{vocList.c}!vll\_\-count@{vll\_\-count}}
+\index{vll\_\-count@{vll\_\-count}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}long vll\_\-count (vocList\_\-t $\ast$ {\em list})}}
+\label{vocList_8c_ab00ac30bf145825e84a22bb55754ad3}
+
+
+Get the current size of the list. 
+
+vll\_\-count -- Return a count of the current number of list elements.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em list}]Linked list to be accessed \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Number of items currently in the List \end{Desc}
+\hypertarget{vocList_8c_b10af1f0b19cb9493368bffe4a1f735b}{
+\index{vocList.c@{vocList.c}!vll\_\-destroy@{vll\_\-destroy}}
+\index{vll\_\-destroy@{vll\_\-destroy}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}vll\_\-destroy (vocList\_\-t $\ast$ {\em list}, \/  void($\ast$)(void $\ast$ptr) {\em func})}}
+\label{vocList_8c_b10af1f0b19cb9493368bffe4a1f735b}
+
+
+Destroy the List object and free resources. 
+
+vll\_\-destroy -- Destroy a List object and free all resources.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em list}]Linked List object to be destroyed. \item[{\em func}]Optional object delete function \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]No return value\end{Desc}
+A pointer to a function to delete the \char`\"{}value\char`\"{} elements of nodes may optionally be specified, otherwise this operation only affects the list itself, and the external objects referenced in list elements are not affected. The signature for FUNC is the same as free(). \hypertarget{vocList_8c_f24b90be778084df7a1918c0b8b33d45}{
+\index{vocList.c@{vocList.c}!vll\_\-init@{vll\_\-init}}
+\index{vll\_\-init@{vll\_\-init}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}list vll\_\-init (long {\em size})}}
+\label{vocList_8c_f24b90be778084df7a1918c0b8b33d45}
+
+
+Create a new linked ist. 
+
+vll\_\-init -- Create a new, empty linked list.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em size}]Initial max size of list, or 0 for default \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Reference to List object\end{Desc}
+A new, empty list is created. Initial storage for the index array used to randomly access the list may optionally be specified as SIZE. If SIZE=0, a default maximum size will be used. The maximum size of the list is a soft maximum, i.e., the list will be grown automatically as needed. \hypertarget{vocList_8c_26a1a38a174db6cd9d5903dad23cfcb8}{
+\index{vocList.c@{vocList.c}!vll\_\-next@{vll\_\-next}}
+\index{vll\_\-next@{vll\_\-next}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-next}]{\setlength{\rightskip}{0pt plus 5cm}obj vll\_\-next (vocList\_\-t $\ast$ {\em list})}}
+\label{vocList_8c_26a1a38a174db6cd9d5903dad23cfcb8}
+
+
+Get the next element in the list. 
+
+vll\_\-next -- Seek to the next position in the list.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em list}]Linked list to be accessed \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Pointer to the object stored at that node\end{Desc}
+If the seek position is valid a pointer to the object at that location is returned, otherwise NULL. Attempting to seek beyond the end of the list results in NULL being returned. 
+
+References vll\_\-seek().\hypertarget{vocList_8c_94da8f1a5cf17ebf3c3e13aab340ddb6}{
+\index{vocList.c@{vocList.c}!vll\_\-prev@{vll\_\-prev}}
+\index{vll\_\-prev@{vll\_\-prev}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-prev}]{\setlength{\rightskip}{0pt plus 5cm}obj vll\_\-prev (vocList\_\-t $\ast$ {\em list})}}
+\label{vocList_8c_94da8f1a5cf17ebf3c3e13aab340ddb6}
+
+
+Get the previous element in the list. 
+
+vll\_\-prev -- Seek to the previous position in the list.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em list}]Linked list to be accessed \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Pointer to the object stored at that node\end{Desc}
+If the seek position is valid a pointer to the object at that location is returned, otherwise NULL. Attempting to seek beyond the beginning of the list results in NULL being returned. 
+
+References vll\_\-seek().\hypertarget{vocList_8c_28e9778710835857c95b41cd83db5213}{
+\index{vocList.c@{vocList.c}!vll\_\-rebuild\_\-index@{vll\_\-rebuild\_\-index}}
+\index{vll\_\-rebuild\_\-index@{vll\_\-rebuild\_\-index}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-rebuild\_\-index}]{\setlength{\rightskip}{0pt plus 5cm}vll\_\-rebuild\_\-index (vocList\_\-t $\ast$ {\em list}, \/  int {\em req\_\-size})}}
+\label{vocList_8c_28e9778710835857c95b41cd83db5213}
+
+
+Rebuild the array index. 
+
+vll\_\-rebuild\_\-index -- Internal routine to reallocate and rebuild the array index for the list if it overflows, or if elements are deleted other than at the end.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em list}]Linked List object to be destroyed. \item[{\em size}]Size for the new list, or zero if no change. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Execution status code\end{Desc}
+EXIT\_\-SUCCESS is returned if the new index is created successfully, otherwise EXIT\_\-FAILURE. If an error occurs the old index is not replaced, but may no longer be valid (depending upon the calling routine). 
+
+Referenced by vll\_\-remove().\hypertarget{vocList_8c_72b0563b0c8c56ed8677410860b41b47}{
+\index{vocList.c@{vocList.c}!vll\_\-remove@{vll\_\-remove}}
+\index{vll\_\-remove@{vll\_\-remove}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-remove}]{\setlength{\rightskip}{0pt plus 5cm}vll\_\-remove (vocList\_\-t $\ast$ {\em list}, \/  long {\em req\_\-pos})}}
+\label{vocList_8c_72b0563b0c8c56ed8677410860b41b47}
+
+
+Remove a node from the list. 
+
+vll\_\-remove -- Remove the node at the given position from the list.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em list}]Linked list to be accessed. \item[{\em pos}]Position of item to be removed. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Pointer to the object stored in the node\end{Desc}
+POS should be a valid node index from 0 to count-1, or the value -1 which causes the node at the current position to be removed (this allows a node to be removed without having to know its absolute position in the list). A pointer to the object referenced by the deleted node is returned upon successful completion, otherwise NULL is returned. POS is left pointing to the element preceding the deleted element. 
+
+References vll\_\-rebuild\_\-index(), and vll\_\-seek().\hypertarget{vocList_8c_a9876d2307012b54e4b534e74e7593b9}{
+\index{vocList.c@{vocList.c}!vll\_\-seek@{vll\_\-seek}}
+\index{vll\_\-seek@{vll\_\-seek}!vocList.c@{vocList.c}}
+\subsubsection[{vll\_\-seek}]{\setlength{\rightskip}{0pt plus 5cm}obj vll\_\-seek (vocList\_\-t $\ast$ {\em list}, \/  long {\em offset}, \/  int {\em whence})}}
+\label{vocList_8c_a9876d2307012b54e4b534e74e7593b9}
+
+
+Seek to the indicated position in the list. 
+
+vll\_\-seek -- Seek to the indicated position in the list.
+
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em list}]Linked list to be accessed \item[{\em offset}]Offset from the given position \item[{\em whence}]Reference position for seek \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]Pointer to the object stored at that node\end{Desc}
+The current position in the list is set to the node OFFSET positions from the reference point indicated by WHENCE: SEEK\_\-SET (beginning of list), SEEK\_\-CUR (current position), SEEK\_\-END (end of list). The values of WHENCE are as defined in $<$stdio.h$>$. A seek to (0,SEEK\_\-SET) positions to the beginning of the list, whereas (0,SEEK\_\-END) positions ot the end of the list.
+
+If the seek position is valid a pointer to the object at that location is returned, otherwise NULL. A seek on an empty list always returns NULL since there is no object pointer to return. The current list position is unaffected if NULL is returned. 
+
+Referenced by vll\_\-next(), vll\_\-prev(), and vll\_\-remove().

@@ -88,7 +88,7 @@ votinfo (int argc, char **argv, size_t *reslen, void **result)
     char  *iname, *id, *name, *ucd, *desc, *value, *numpar = NULL, *clist=NULL;
     char **pargv, optval[SZ_FNAME], param[SZ_FNAME];
     int   res, tab, data, tdata, field, handle, status = OK;
-    int   i, nlen, ncols, nrows, pos, ch;
+    int   i, nlen=0, ncols=0, nrows=0, pos=0, ch=0;
 
 
     /*  Initialize. 
@@ -170,7 +170,7 @@ votinfo (int argc, char **argv, size_t *reslen, void **result)
         nrows = vot_getNRows (tdata);
         ncols = vot_getNCols (tdata);
     } else
-        tdata = nrows = ncols = 0;
+        tdata = data = nrows = ncols = 0;
 
     if (numberOf) {
 	switch (strdic (numpar, param, SZ_FNAME, N_ITEMS)) {
@@ -310,11 +310,13 @@ votinfo (int argc, char **argv, size_t *reslen, void **result)
         printf ("%s\n\n", (iname[0] == '-' ? "stdin" : iname));
         printf ("    Resources:  %d\tType: %-12s\t"
 	    "    Table Size:  %d x %d\n", 
-	    vot_getLength (res), vot_getDATATypeString (data), ncols, nrows);
+	    vot_getLength (res), (data ? vot_getDATATypeString (data) : "none"), 
+	    ncols, nrows);
 
         if ((handle = vot_getINFO (res)) > 0)
             printf ("         INFO:  %d\n", vot_getLength (handle));
 
+	nlen = 0;
         if ((handle = vot_getPARAM (res)) > 0)
             printf ("        PARAM:  %d\t", 
 		(nlen=vot_getLength (handle)));

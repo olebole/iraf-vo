@@ -1,0 +1,234 @@
+\hypertarget{dalQuery_8c}{
+\section{dalQuery.c File Reference}
+\label{dalQuery_8c}\index{dalQuery.c@{dalQuery.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalQuery_8c_ae448d0ff2af9182dc4401a9e440e707}{
+DAL \textbf{dal\_\-openConnection} (char $\ast$baseurl, char $\ast$protocol, char $\ast$version)}
+\label{dalQuery_8c_ae448d0ff2af9182dc4401a9e440e707}
+
+\item 
+\hypertarget{dalQuery_8c_e215e60d4a55c17843621db9fd395aa9}{
+DAL \textbf{dal\_\-openConeConnection} (char $\ast$baseurl, char $\ast$version)}
+\label{dalQuery_8c_e215e60d4a55c17843621db9fd395aa9}
+
+\item 
+\hypertarget{dalQuery_8c_98ac60b2ef677cd4406b6f91293a3e0f}{
+DAL \textbf{dal\_\-openSiapConnection} (char $\ast$baseurl, char $\ast$version)}
+\label{dalQuery_8c_98ac60b2ef677cd4406b6f91293a3e0f}
+
+\item 
+\hypertarget{dalQuery_8c_f0d4e73550e8edb6ed2b13491806c7ac}{
+DAL \textbf{dal\_\-openSsapConnection} (char $\ast$baseurl, char $\ast$version)}
+\label{dalQuery_8c_f0d4e73550e8edb6ed2b13491806c7ac}
+
+\item 
+\hypertarget{dalQuery_8c_6599dfbf1c661457e646b3fee48fb435}{
+void \textbf{dal\_\-closeConnection} (DAL dal\_\-h)}
+\label{dalQuery_8c_6599dfbf1c661457e646b3fee48fb435}
+
+\item 
+\hypertarget{dalQuery_8c_0b1f723a75853ea1225b8a76457097dc}{
+void \textbf{dal\_\-setBaseUrl} (DAL dal\_\-h, char $\ast$base\_\-url)}
+\label{dalQuery_8c_0b1f723a75853ea1225b8a76457097dc}
+
+\item 
+\hypertarget{dalQuery_8c_e1b447ab9b60a7223b79182bad017c15}{
+char $\ast$ \textbf{dal\_\-getBaseUrl} (DAL dal\_\-h)}
+\label{dalQuery_8c_e1b447ab9b60a7223b79182bad017c15}
+
+\item 
+\hypertarget{dalQuery_8c_6d275d41413539a9d0639face46550be}{
+Query \textbf{dal\_\-getQuery} (DAL dal\_\-h)}
+\label{dalQuery_8c_6d275d41413539a9d0639face46550be}
+
+\item 
+\hypertarget{dalQuery_8c_49c22edd74f63ea13ba40e94463f913a}{
+void \textbf{dal\_\-closeQuery} (Query query\_\-h)}
+\label{dalQuery_8c_49c22edd74f63ea13ba40e94463f913a}
+
+\item 
+\hypertarget{dalQuery_8c_613b713fe19317ecfe04e38183705b5e}{
+Query \textbf{dal\_\-getConeQuery} (DAL dal\_\-h, double ra, double dec, double sr)}
+\label{dalQuery_8c_613b713fe19317ecfe04e38183705b5e}
+
+\item 
+\hypertarget{dalQuery_8c_93ede9c3c1f64b7b00c8feef8c8c5e1c}{
+Query \textbf{dal\_\-getSiapQuery} (DAL dal\_\-h, double ra, double dec, double ra\_\-size, double dec\_\-size, char $\ast$format)}
+\label{dalQuery_8c_93ede9c3c1f64b7b00c8feef8c8c5e1c}
+
+\item 
+\hypertarget{dalQuery_8c_3211b77dae86cc0336c776b33dc56c72}{
+Query \textbf{dal\_\-getSsapQuery} (DAL dal\_\-h, double ra, double dec, double size, char $\ast$band, char $\ast$time, char $\ast$format)}
+\label{dalQuery_8c_3211b77dae86cc0336c776b33dc56c72}
+
+\item 
+\hypertarget{dalQuery_8c_f274202b97d6a015e63662d9ad1f3e37}{
+Query \textbf{dal\_\-getAccessDataQuery} (DAL dal\_\-h)}
+\label{dalQuery_8c_f274202b97d6a015e63662d9ad1f3e37}
+
+\item 
+\hypertarget{dalQuery_8c_3c684eb32f0d273f4e6c1ed9d2265201}{
+int \textbf{dal\_\-getParamCount} (Query query\_\-h)}
+\label{dalQuery_8c_3c684eb32f0d273f4e6c1ed9d2265201}
+
+\item 
+\hypertarget{dalQuery_8c_5086e7625a0f95a1dffa1e8733deaa9b}{
+char $\ast$ \textbf{dal\_\-getParamName} (Query query\_\-h, int index)}
+\label{dalQuery_8c_5086e7625a0f95a1dffa1e8733deaa9b}
+
+\item 
+\hypertarget{dalQuery_8c_c9dd7eded8a99b8e90450addce135053}{
+int \textbf{dal\_\-addIntParam} (Query query\_\-h, char $\ast$pname, long value)}
+\label{dalQuery_8c_c9dd7eded8a99b8e90450addce135053}
+
+\item 
+\hypertarget{dalQuery_8c_4527b6ba84b5555f6afb1cabe6213fa7}{
+int \textbf{dal\_\-addFloatParam} (Query query\_\-h, char $\ast$pname, double value)}
+\label{dalQuery_8c_4527b6ba84b5555f6afb1cabe6213fa7}
+
+\item 
+\hypertarget{dalQuery_8c_7e02460872b8b19fed3ca0f1a4b5db8a}{
+int \textbf{dal\_\-addStringParam} (Query query\_\-h, char $\ast$pname, char $\ast$value)}
+\label{dalQuery_8c_7e02460872b8b19fed3ca0f1a4b5db8a}
+
+\item 
+\hypertarget{dalQuery_8c_d71556c3f247604cf19ca81378df851f}{
+int \textbf{dal\_\-setParam} (Query query\_\-h, char $\ast$pname, char $\ast$value)}
+\label{dalQuery_8c_d71556c3f247604cf19ca81378df851f}
+
+\item 
+\hypertarget{dalQuery_8c_32bf50613a213bdd66d0451a8515d86a}{
+char $\ast$ \textbf{dal\_\-getParam} (Query query\_\-h, char $\ast$pname, int index)}
+\label{dalQuery_8c_32bf50613a213bdd66d0451a8515d86a}
+
+\item 
+\hypertarget{dalQuery_8c_5b5fea1ff4f472a4b105831267dd8967}{
+int \textbf{dal\_\-delParam} (Query query\_\-h, char $\ast$pname)}
+\label{dalQuery_8c_5b5fea1ff4f472a4b105831267dd8967}
+
+\item 
+\hypertarget{dalQuery_8c_a577b89c5273c6ad84d7c0bc86bce814}{
+char $\ast$ \textbf{dal\_\-getQueryURL} (Query query\_\-h)}
+\label{dalQuery_8c_a577b89c5273c6ad84d7c0bc86bce814}
+
+\item 
+\hypertarget{dalQuery_8c_6ef5612d6ebc25301018b6d823d16584}{
+int \textbf{dal\_\-getError} (DAL dal\_\-h)}
+\label{dalQuery_8c_6ef5612d6ebc25301018b6d823d16584}
+
+\item 
+\hypertarget{dalQuery_8c_d9c2a00588cb9cd374dee93b54fdfdaa}{
+char $\ast$ \textbf{dal\_\-getErrorMsg} (DAL dal\_\-h)}
+\label{dalQuery_8c_d9c2a00588cb9cd374dee93b54fdfdaa}
+
+\item 
+\hypertarget{dalQuery_8c_2dd934b66a2adb2fd0e8a2e9c5e92bb1}{
+void \textbf{dal\_\-clearError} (DAL dal\_\-h)}
+\label{dalQuery_8c_2dd934b66a2adb2fd0e8a2e9c5e92bb1}
+
+\item 
+int \hyperlink{dalQuery_8c_e0708e2a6ca72c22c8d5aec42e3eea56}{dal\_\-error} (dalConn\_\-t $\ast$dal, int errcode)
+\item 
+void \hyperlink{dalQuery_8c_b472375e52c28fed7e4461072d1f41fd}{dal\_\-setErrorMsg} (dalConn\_\-t $\ast$dal, char $\ast$errmsg)
+\item 
+void $\ast$ \hyperlink{dalQuery_8c_c7a9ae9bd250b14f1e43552a1bcb5a82}{dal\_\-nError} (dalConn\_\-t $\ast$dal, int errcode)
+\item 
+int \hyperlink{dalQuery_8c_270da81a2191e86e0f01a24c0d2acd0a}{dal\_\-qError} (dalQuery\_\-t $\ast$query, int errcode)
+\item 
+int \hyperlink{dalQuery_8c_3e73a387cd144d587cc0886375a5db1f}{dal\_\-qrError} (dalQR\_\-t $\ast$qr, int errcode)
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALQUERY -- Compose a query to a VO Data Access Layer (DAL) Service.
+
+These routines are used to create a DALClient context to be used to query a DAL service, and then compose the query.
+
+---- Service Connection ---------
+
+dal = dal\_\-openConnection (baseurl, protocol, version) dal = dal\_\-openConeConnection (baseurl, version) dal = dal\_\-openSiapConnection (baseurl, version) dal = dal\_\-openSsapConnection (baseurl, version) dal\_\-closeConnection (dal)
+
+dal\_\-setBaseUrl (dal, url) \# setters/getters url = dal\_\-getBaseUrl (dal)
+
+errcode = dal\_\-getError (dal) dal\_\-clearError (dal)
+
+---- Query Parameters ---------
+
+query = dal\_\-getQuery (dal) dal\_\-closeQuery (query) \# free resources
+
+query = dal\_\-getConeQuery (dal, ra, dec, sr) query = dal\_\-getSiapQuery (dal, ra, dec, ra\_\-size, dec\_\-size, format) query = dal\_\-getSsapQuery (dal, ra, dec, size, band, time, format)
+
+query = dal\_\-genConeQuery (dal, pos) query = dal\_\-genSiapQuery (dal, pos, band, time, pol, format, mode) query = dal\_\-genSsapQuery (dal, pos, band, time, pol, format, mode)
+
+pos = dal\_\-getObjPos (objname$|$NULL) pos = dal\_\-setPos (c1, c2, size, frame$|$NULL) pos = dal\_\-setPos2 (c1, c2, size1, size2, frame$|$NULL) $<$additional-constructors$>$ $<$additional-setters$>$ dal\_\-posGetCoords (pos, c1, c2, \&frame) dal\_\-closePos (pos)
+
+int = dal\_\-getParamCount (query) str = dal\_\-getParamName (query, index) stat = dal\_\-addIntParam (query, pname, ival) stat = dal\_\-addFloatParam (query, pname, dval) stat = dal\_\-addStringParam (query, pname, str) dal\_\-setParam (query, pname, str) str = dal\_\-getParam (query, pname, index) dal\_\-delParam (query, pname)
+
+str = dal\_\-getQueryURL (query)
+
+A separate connection is required for each service to be queried. Simple queries may be composed directly via a service class-specific constructor, or queries may be built up with parameters, or both.
+
+All public routines in this interface that return an object handle, e.g., for a Dal or Query object, return an opaque object handle (not a normal C object pointer).
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}
+
+
+\subsection{Function Documentation}
+\hypertarget{dalQuery_8c_e0708e2a6ca72c22c8d5aec42e3eea56}{
+\index{dalQuery.c@{dalQuery.c}!dal\_\-error@{dal\_\-error}}
+\index{dal\_\-error@{dal\_\-error}!dalQuery.c@{dalQuery.c}}
+\subsubsection[{dal\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}int dal\_\-error (dalConn\_\-t $\ast$ {\em dal}, \/  int {\em errcode})}}
+\label{dalQuery_8c_e0708e2a6ca72c22c8d5aec42e3eea56}
+
+
+dal\_\-error -- Post an error for the connection.
+
+The given error code is stored in the DAL connection context for later retrieval. The error status is saved until explicitly cleared. DAL\_\-ERROR is returned as the status value, allowing the error status to be posted within a return statement. 
+
+Referenced by dal\_\-qError(), and dal\_\-qrError().\hypertarget{dalQuery_8c_c7a9ae9bd250b14f1e43552a1bcb5a82}{
+\index{dalQuery.c@{dalQuery.c}!dal\_\-nError@{dal\_\-nError}}
+\index{dal\_\-nError@{dal\_\-nError}!dalQuery.c@{dalQuery.c}}
+\subsubsection[{dal\_\-nError}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ dal\_\-nError (dalConn\_\-t $\ast$ {\em dal}, \/  int {\em errcode})}}
+\label{dalQuery_8c_c7a9ae9bd250b14f1e43552a1bcb5a82}
+
+
+dal\_\-nError -- Post an error for the connection, returning NULL. NULL is returned as the status value, allowing the error status to be posted within a return statement. \hypertarget{dalQuery_8c_270da81a2191e86e0f01a24c0d2acd0a}{
+\index{dalQuery.c@{dalQuery.c}!dal\_\-qError@{dal\_\-qError}}
+\index{dal\_\-qError@{dal\_\-qError}!dalQuery.c@{dalQuery.c}}
+\subsubsection[{dal\_\-qError}]{\setlength{\rightskip}{0pt plus 5cm}int dal\_\-qError (dalQuery\_\-t $\ast$ {\em query}, \/  int {\em errcode})}}
+\label{dalQuery_8c_270da81a2191e86e0f01a24c0d2acd0a}
+
+
+dal\_\-qError -- Convenience routine for posting an error within the query construction code. 
+
+References dal\_\-error().\hypertarget{dalQuery_8c_3e73a387cd144d587cc0886375a5db1f}{
+\index{dalQuery.c@{dalQuery.c}!dal\_\-qrError@{dal\_\-qrError}}
+\index{dal\_\-qrError@{dal\_\-qrError}!dalQuery.c@{dalQuery.c}}
+\subsubsection[{dal\_\-qrError}]{\setlength{\rightskip}{0pt plus 5cm}int dal\_\-qrError (dalQR\_\-t $\ast$ {\em qr}, \/  int {\em errcode})}}
+\label{dalQuery_8c_3e73a387cd144d587cc0886375a5db1f}
+
+
+dal\_\-qrError -- Convenience routine for posting an error within the query response code. 
+
+References dal\_\-error().\hypertarget{dalQuery_8c_b472375e52c28fed7e4461072d1f41fd}{
+\index{dalQuery.c@{dalQuery.c}!dal\_\-setErrorMsg@{dal\_\-setErrorMsg}}
+\index{dal\_\-setErrorMsg@{dal\_\-setErrorMsg}!dalQuery.c@{dalQuery.c}}
+\subsubsection[{dal\_\-setErrorMsg}]{\setlength{\rightskip}{0pt plus 5cm}void dal\_\-setErrorMsg (dalConn\_\-t $\ast$ {\em dal}, \/  char $\ast$ {\em errmsg})}}
+\label{dalQuery_8c_b472375e52c28fed7e4461072d1f41fd}
+
+
+dal\_\-setErrorMsg -- Set the error message string. 

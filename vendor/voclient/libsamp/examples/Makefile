@@ -33,20 +33,16 @@ CFLAGS 	    = -g -Wall -D$(PLATFORM) $(CINCS)
 
 ifeq ("$(PLATFORM)", "Darwin")
     ifeq  ("$(PLMACH)", "macintel")
-        CARCH   = -m64
+        CARCH   = -m64 -mmacosx-version-min=10.5
     else
-        CARCH   = -m32
+        CARCH   = -arch i386 -arch ppc -m32 -mmacosx-version-min=10.4
     endif
 else
     CLIBS       = -lm -lc -lpthread -lcurl
-    ifdef IRAFARCH
-        ifeq ($(IRAFARCH),linux)
-            CARCH = -m32
-        endif
-    endif
+    CARCH       = -D$(PLATFORM)
 endif
 
-#CARCH   	= -m32
+#CARCH   	= -arch i386 -arch ppc -m32 -mmacosx-version-min=10.4
 CLIBS           = -lm -lc -lcurl -lpthread
 CFLAGS          = -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -L./
 

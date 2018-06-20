@@ -1,0 +1,214 @@
+\hypertarget{vocHash_8c}{
+\section{vocHash.c File Reference}
+\label{vocHash_8c}\index{vocHash.c@{vocHash.c}}
+}
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$string.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include \char`\"{}vocHash.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+vocHash\_\-t $\ast$ \hyperlink{vocHash_8c_72f5c9ae81b2bb32bedc227977c6a16a}{vht\_\-init} (size\_\-t size, int($\ast$hash\_\-func)(void $\ast$, size\_\-t, size\_\-t), char $\ast$flag)
+\item 
+void $\ast$ \hyperlink{vocHash_8c_454d407896fb38300a92f0bea7958690}{vht\_\-search} (vocHash\_\-t $\ast$hashtable, void $\ast$key, size\_\-t keylen)
+\item 
+void $\ast$ \hyperlink{vocHash_8c_19acb7b4b7c49a9ec41ada76030d4cc3}{vht\_\-findKey} (vocHash\_\-t $\ast$hashtable, char $\ast$key)
+\item 
+void $\ast$ \hyperlink{vocHash_8c_8ab77ddf606c896c49a24649195bd5f8}{vht\_\-insert} (vocHash\_\-t $\ast$hashtable, void $\ast$key, size\_\-t keylen, void $\ast$value, size\_\-t vallen)
+\item 
+void $\ast$ \hyperlink{vocHash_8c_c10bc3cb2dd322dd37d2bb5d217302d8}{vht\_\-insertKey} (vocHash\_\-t $\ast$hashtable, char $\ast$key, void $\ast$value)
+\item 
+void \hyperlink{vocHash_8c_f721af995025ccae1a6926bffb34afaa}{vht\_\-remove} (vocHash\_\-t $\ast$hashtable, void $\ast$key, size\_\-t keylen)
+\item 
+void \hyperlink{vocHash_8c_35b14f27d17a2938929900f11c6bbf1f}{vht\_\-removeKey} (vocHash\_\-t $\ast$hashtable, char $\ast$key)
+\item 
+void $\ast$ \hyperlink{vocHash_8c_64fc15aa23fa3c7cdbe28c0a71261cca}{vht\_\-grow} (vocHash\_\-t $\ast$old\_\-ht, size\_\-t new\_\-size)
+\item 
+void \hyperlink{vocHash_8c_5ceef64033b2c50ee38c23c7387b5c88}{vht\_\-destroy} (vocHash\_\-t $\ast$hashtable)
+\item 
+void \hyperlink{vocHash_8c_46cfad5b28658ec453c870c236f3c851}{vht\_\-iter\_\-init} (vocHash\_\-t $\ast$hashtable, vocHash\_\-iter\_\-t $\ast$ii)
+\item 
+void \hyperlink{vocHash_8c_a8ffaf0d3951b874415e9dc440608c4e}{vht\_\-iter\_\-inc} (vocHash\_\-iter\_\-t $\ast$ii)
+\item 
+int \hyperlink{vocHash_8c_80064b2dfe165ff8b51de78374af6218}{vht\_\-hash} (void $\ast$key, size\_\-t keylen, size\_\-t hashtab\_\-size)
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+VOCHASH - Simple C Hashtable Class.
+
+vht = vht\_\-init (size, hash\_\-func, flag) obj = vht\_\-search (vht, key, keylen) obj = vht\_\-findKey (vht, stringKey) obj = vht\_\-insert (vht, key, keylen, value, vallen) obj = vht\_\-insertKey (vht, stringKey, value, vallen) vht\_\-remove (vht, key, keylen) vht\_\-removeKey (vht, stringKey) vht\_\-grow (vht, new\_\-size) vht\_\-destroy (vht)
+
+vht\_\-iter\_\-init (vht, iterator) vht\_\-iter\_\-inc (iterator) vht\_\-hash (key, keylen, hashtab\_\-size
+
+The hash table may be any size, set when initially created, and may be nondestructively grown during usage if desired. Growing does not happen automatically, nor is it strictly required, but the hash table can become inefficient if multiple keys has to the same hash slot.
+
+Both keys and values are opaque objects and may be any size. Convenience routines are provided for string-valued keys. A custom hash function may be supplied at init time to hash whatever type of key is supplied. A default has function that merely hashes a sequence of bytes is provided and is the default if no hash function is supplied.
+
+Original by C.Wellons; adapted for VOClient usage by D.Tody Dec 2013
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]December 2013 \end{Desc}
+
+
+\subsection{Function Documentation}
+\hypertarget{vocHash_8c_5ceef64033b2c50ee38c23c7387b5c88}{
+\index{vocHash.c@{vocHash.c}!vht\_\-destroy@{vht\_\-destroy}}
+\index{vht\_\-destroy@{vht\_\-destroy}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}void vht\_\-destroy (vocHash\_\-t $\ast$ {\em hashtable})}}
+\label{vocHash_8c_5ceef64033b2c50ee38c23c7387b5c88}
+
+
+vht\_\-destroy -- Free all resources used by the hashtable.
+
+hashtable Hashtable to be destroyed. 
+
+Referenced by vht\_\-grow().\hypertarget{vocHash_8c_19acb7b4b7c49a9ec41ada76030d4cc3}{
+\index{vocHash.c@{vocHash.c}!vht\_\-findKey@{vht\_\-findKey}}
+\index{vht\_\-findKey@{vht\_\-findKey}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-findKey}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ vht\_\-findKey (vocHash\_\-t $\ast$ {\em hashtable}, \/  char $\ast$ {\em key})}}
+\label{vocHash_8c_19acb7b4b7c49a9ec41ada76030d4cc3}
+
+
+vht\_\-findKey -- Convenience routine to search for a string-valued key.
+
+hashtable Hashtable to be used key Hash key to search for
+
+This routine is limited to string-valued keys. What is returned is a pointer to the external Value object originally input to vht\_\-insertKey. 
+
+References vht\_\-search().\hypertarget{vocHash_8c_64fc15aa23fa3c7cdbe28c0a71261cca}{
+\index{vocHash.c@{vocHash.c}!vht\_\-grow@{vht\_\-grow}}
+\index{vht\_\-grow@{vht\_\-grow}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-grow}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ vht\_\-grow (vocHash\_\-t $\ast$ {\em old\_\-ht}, \/  size\_\-t {\em new\_\-size})}}
+\label{vocHash_8c_64fc15aa23fa3c7cdbe28c0a71261cca}
+
+
+ht\_\-grow -- Grow the hashtable.
+
+old\_\-ht Hash table to be modified. new\_\-size N hash slots in new table.
+
+A pointer to the new hash table is returned upon successful completion, otherwise NULL. If an error occors the old hash table is unmodified. 
+
+References vht\_\-destroy(), vht\_\-init(), vht\_\-insert(), vht\_\-iter\_\-inc(), and vht\_\-iter\_\-init().\hypertarget{vocHash_8c_80064b2dfe165ff8b51de78374af6218}{
+\index{vocHash.c@{vocHash.c}!vht\_\-hash@{vht\_\-hash}}
+\index{vht\_\-hash@{vht\_\-hash}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-hash}]{\setlength{\rightskip}{0pt plus 5cm}int vht\_\-hash (void $\ast$ {\em key}, \/  size\_\-t {\em keylen}, \/  size\_\-t {\em hashtab\_\-size})}}
+\label{vocHash_8c_80064b2dfe165ff8b51de78374af6218}
+
+
+vht\_\-hash -- Default, generic hash function.
+
+key Key to be hashed keylen Size in bytes of the key hashtab\_\-size Number of slots in hash table 
+
+Referenced by vht\_\-init(), vht\_\-insert(), vht\_\-remove(), and vht\_\-search().\hypertarget{vocHash_8c_72f5c9ae81b2bb32bedc227977c6a16a}{
+\index{vocHash.c@{vocHash.c}!vht\_\-init@{vht\_\-init}}
+\index{vht\_\-init@{vht\_\-init}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}vocHash\_\-t$\ast$ vht\_\-init (size\_\-t {\em size}, \/  int($\ast$)(void $\ast$, size\_\-t, size\_\-t) {\em hash\_\-func}, \/  char $\ast$ {\em flag})}}
+\label{vocHash_8c_72f5c9ae81b2bb32bedc227977c6a16a}
+
+
+vht\_\-init -- Create a new, empty hash table.
+
+size N slots in initial hash table hash\_\-func Hash function (optional, may be NULL) flag Set to \char`\"{}case\char`\"{} (default) or \char`\"{}nocase\char`\"{}
+
+A unique key is determined by the hash value of the key data and the keylen in bytes. In this implementation, only a single instance of a key is permitted; inserts for the same key overwrite the old instance. A possible future enhancement would be to permit multiple instances with the same key. 
+
+References vht\_\-hash().
+
+Referenced by vht\_\-grow().\hypertarget{vocHash_8c_8ab77ddf606c896c49a24649195bd5f8}{
+\index{vocHash.c@{vocHash.c}!vht\_\-insert@{vht\_\-insert}}
+\index{vht\_\-insert@{vht\_\-insert}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-insert}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ vht\_\-insert (vocHash\_\-t $\ast$ {\em hashtable}, \/  void $\ast$ {\em key}, \/  size\_\-t {\em keylen}, \/  void $\ast$ {\em value}, \/  size\_\-t {\em vallen})}}
+\label{vocHash_8c_8ab77ddf606c896c49a24649195bd5f8}
+
+
+vht\_\-insert -- Insert a key, value pair in the hash table.
+
+hashtable Hashtable to be used key Ptr to the key keylen Size in bytes of the key value Ptr to the value vallen Size in bytes of value data
+
+If a matching key,keylen entry already exists (key and keylen identical) it is updated. If the insertion is successful a pointer to the value element is returned, otherwise NULL is returned. 
+
+References vht\_\-hash().
+
+Referenced by vht\_\-grow(), and vht\_\-insertKey().\hypertarget{vocHash_8c_c10bc3cb2dd322dd37d2bb5d217302d8}{
+\index{vocHash.c@{vocHash.c}!vht\_\-insertKey@{vht\_\-insertKey}}
+\index{vht\_\-insertKey@{vht\_\-insertKey}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-insertKey}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ vht\_\-insertKey (vocHash\_\-t $\ast$ {\em hashtable}, \/  char $\ast$ {\em key}, \/  void $\ast$ {\em value})}}
+\label{vocHash_8c_c10bc3cb2dd322dd37d2bb5d217302d8}
+
+
+vht\_\-insertKey -- Convenience routine to insert a string-valued key.
+
+hashtable Hash table to be used key Key to be hashed value Pointer to external data object
+
+This routine is limited to string-valued keys. Value is a pointer to some external object. Unlike vht\_\-insert, the content of the Value object is not copied into internal storage, rather only the value of the Value object pointer is stored. 
+
+References vht\_\-insert().\hypertarget{vocHash_8c_a8ffaf0d3951b874415e9dc440608c4e}{
+\index{vocHash.c@{vocHash.c}!vht\_\-iter\_\-inc@{vht\_\-iter\_\-inc}}
+\index{vht\_\-iter\_\-inc@{vht\_\-iter\_\-inc}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-iter\_\-inc}]{\setlength{\rightskip}{0pt plus 5cm}void vht\_\-iter\_\-inc (vocHash\_\-iter\_\-t $\ast$ {\em ii})}}
+\label{vocHash_8c_a8ffaf0d3951b874415e9dc440608c4e}
+
+
+vht\_\-iter\_\-inc -- Incrememt the iterator.
+
+ii Active iterator 
+
+Referenced by vht\_\-grow(), and vht\_\-iter\_\-init().\hypertarget{vocHash_8c_46cfad5b28658ec453c870c236f3c851}{
+\index{vocHash.c@{vocHash.c}!vht\_\-iter\_\-init@{vht\_\-iter\_\-init}}
+\index{vht\_\-iter\_\-init@{vht\_\-iter\_\-init}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-iter\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void vht\_\-iter\_\-init (vocHash\_\-t $\ast$ {\em hashtable}, \/  vocHash\_\-iter\_\-t $\ast$ {\em ii})}}
+\label{vocHash_8c_46cfad5b28658ec453c870c236f3c851}
+
+
+vht\_\-iter\_\-init -- Initialize a new hash table iterator.
+
+hashtable Hashtable to be iterated ii Iterator 
+
+References vht\_\-iter\_\-inc().
+
+Referenced by vht\_\-grow().\hypertarget{vocHash_8c_f721af995025ccae1a6926bffb34afaa}{
+\index{vocHash.c@{vocHash.c}!vht\_\-remove@{vht\_\-remove}}
+\index{vht\_\-remove@{vht\_\-remove}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-remove}]{\setlength{\rightskip}{0pt plus 5cm}void vht\_\-remove (vocHash\_\-t $\ast$ {\em hashtable}, \/  void $\ast$ {\em key}, \/  size\_\-t {\em keylen})}}
+\label{vocHash_8c_f721af995025ccae1a6926bffb34afaa}
+
+
+vht\_\-remove - Delete the given key from the hashtable.
+
+hashtable Hash table to be used key Key to be removed keylen Key length (must match)
+
+It is not an error if the key is not found. 
+
+References vht\_\-hash().
+
+Referenced by vht\_\-removeKey().\hypertarget{vocHash_8c_35b14f27d17a2938929900f11c6bbf1f}{
+\index{vocHash.c@{vocHash.c}!vht\_\-removeKey@{vht\_\-removeKey}}
+\index{vht\_\-removeKey@{vht\_\-removeKey}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-removeKey}]{\setlength{\rightskip}{0pt plus 5cm}void vht\_\-removeKey (vocHash\_\-t $\ast$ {\em hashtable}, \/  char $\ast$ {\em key})}}
+\label{vocHash_8c_35b14f27d17a2938929900f11c6bbf1f}
+
+
+vht\_\-removeKey -- Convenience routine to remove a string-valued key. 
+
+References vht\_\-remove().\hypertarget{vocHash_8c_454d407896fb38300a92f0bea7958690}{
+\index{vocHash.c@{vocHash.c}!vht\_\-search@{vht\_\-search}}
+\index{vht\_\-search@{vht\_\-search}!vocHash.c@{vocHash.c}}
+\subsubsection[{vht\_\-search}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ vht\_\-search (vocHash\_\-t $\ast$ {\em hashtable}, \/  void $\ast$ {\em key}, \/  size\_\-t {\em keylen})}}
+\label{vocHash_8c_454d407896fb38300a92f0bea7958690}
+
+
+vht\_\-search -- Look up the given key in the hash table, returning a pointer to the found entry, or NULL.
+
+hashtable Hashtable to be searched key Hash key keylen Hash key length
+
+The hash key datatype and size is arbitrary but must agree with what the hash function expects. 
+
+References vht\_\-hash().
+
+Referenced by vht\_\-findKey().

@@ -1,0 +1,115 @@
+DALClient Interface
+------------------------------
+
+The DALClient library is a C library providing a client API for querying
+VO Data Access Layer (DAL) services.  This is a self contained library,
+built on top of the VOClient VOTable parsing library, and libCurl which
+is used for HTTP.  While DALClient may be used standalone to invoke DAL
+services, it is normally used as a component within VOClient, which
+provides ready to use higher level tasks performing common functions,
+support for registry queries, SAMP, and other VO protocols, and
+capabilities for distributed execution and concurrency.
+
+A summary of the main DALClient interface procedures follows below.
+
+
+---- Manage Service Context ---------
+
+       dal = dal_openConnection (svc_url, protocol, version)
+   dal = dal_openConeConnection (svc_url, version)
+   dal = dal_openSiapConnection (svc_url, version)
+   dal = dal_openSsapConnection (svc_url, version)
+            dal_closeConnection (dal)
+
+	 errcode = dal_getError (dal)
+		 dal_clearError (dal)
+
+---- Query Parameters ---------
+
+           query = dal_getQuery (dal)
+		 dal_closeQuery (query)		# free resources
+
+       query = dal_getConeQuery (dal, ra, dec, sr)
+       query = dal_getSiapQuery (dal, ra, dec, ra_size, dec_size, format)
+       query = dal_getSsapQuery (dal, ra, dec, size, band, time, format)
+
+       query = dal_genConeQuery (dal, pos)
+       query = dal_genSiapQuery (dal, pos, band, time, pol, format, mode)
+       query = dal_genSsapQuery (dal, pos, band, time, pol, format, mode)
+
+	    pos = dal_getObjPos (objname|NULL)
+	       pos = dal_setPos (c1, c2, size, frame|NULL)
+	      pos = dal_setPos2 (c1, c2, size1, size2, frame|NULL)
+	           <additional-constructors>
+	           <additional-setters>
+	       dal_posGetCoords (pos, c1, c2, &frame)
+		   dal_closePos (pos)
+
+	int = dal_getParamCount (query)
+         str = dal_getParamName (query, index)
+         stat = dal_addIntParam (query, pname, ival)
+       stat = dal_addFloatParam (query, pname, dval)
+      stat = dal_addStringParam (query, pname, str)
+		   dal_setParam (query, pname, str)
+	     str = dal_getParam (query, pname, index)
+		   dal_delParam (query, pname)
+
+	  str = dal_getQueryURL (query)
+
+
+---- Query Execution ---------
+
+          qr = dal_executeQuery (query)
+       str = dal_executeVOTable (query)
+     qr = dal_initQueryResponse (dal, votable, resource, table)
+      qr = dal_getQueryResponse (query)
+	 dal_closeQueryResponse (qr)		# free resources
+
+       csv_tab = dal_executeCSV (query)
+       tsv_tab = dal_executeTSV (query)
+        ascii = dal_executeText (query)
+
+---- Query Response ---------
+
+       int = dal_getRecordCount (qr)
+       int = dal_getColumnCount (qr)
+         int = dal_getInfoCount (qr)
+        int = dal_getFieldCount (qr)
+         int = dal_getPropCount (qr)
+	  str = dal_getPropName (qr, index)
+          str = dal_getInfoAttr (qr, index, attr_code)
+         str = dal_getFieldAttr (qr, index, attr_code)
+	int = dal_getFieldIndex (qr, key, attr_code)
+
+            rec = dal_getRecord (qr, recnum)
+	      dal_releaseRecord (rec)
+
+       int = dal_getIntProperty (rec, property)
+    dval = dal_getFloatProperty (rec, property)
+    str = dal_getStringProperty (rec, property)
+
+	  int = dal_getIntField (rec, index)
+       dval = dal_getFloatField (rec, index)
+       str = dal_getStringField (rec, index)
+
+	stat = dal_getIntColumn (qr, index, iptr)
+      stat = dal_getFloatColumn (qr, index, dptr)
+     stat = dal_getStringColumn (qr, index, sptr)
+
+          stat = dal_getDataset (rec, acref, fname) 
+
+The DALClient library tracks execution errors on a connection context
+basis.  Functions which may return an error return DAL_OK or DAL_ERROR
+(integer-valued functions) or NULL (pointer-valued functions).  In most
+cases, if an error occurs an error code is also saved in the connection
+context.  This code may be retrieved with dal_getError().  Errors once
+set are retained until overwritten by a new error, or cleared with
+dal_clearError().  The integer error codes are defined in dalclient.h.
+
+This initial version of DALClient includes prototype support for the SIAV2
+protocol (multi-dimensional image/cube data access).  Not yet implemented
+are support for getMetadata (retrieve complete ImageDM metadata including
+the image WCS), and accessData (client-directed access directly into a
+remote image dataset).
+
+D. Tody, January 2014

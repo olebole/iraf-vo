@@ -1,0 +1,83 @@
+		 ===========================================
+		    LIBVOSI v1.0 Installation Instructions
+		 ===========================================
+
+
+	LIBVOSI is distributed as a GZip compressed tarball of either 
+the source, or pre-built binaries for a particular platform.  Current dist-
+ributions include:
+
+    libvosi-src.tar.gz	    	Source code distribution 
+    libvosi-linux.tar.gz	Linux binary distribution
+    libvosi-osx.tar.gz	    	Mac OSX (Universal Binary) distribution
+
+
+See the README file for a complete list of the contents in the source
+distribution.  Binary distributions will contain the following files
+and directories:
+
+    INSTALL		This file
+    libvosi.a		The VOSI library 
+
+Software wishing to use the language binding wrappers should build from
+source.
+
+
+Requirements Checklist:
+
+    o   The parser library is entirely self-contained, there are no known 
+	external requirements.
+
+
+=======================
+To Install from Source:
+=======================
+
+
+1)  Create a directory for the source, and unpack the distirbution tar file:
+
+	% mkdir /path/libvosi		    	# create directory
+	% cd /path/libvosi			# go there
+	% tar zxf /path/libvosi-src.tar.gz	# unpack the distrbution
+
+2)  Compile the package:
+
+	% make					# Do the compilation
+
+3)  To install, copy the library to a system or project directory.  In some
+    cases this will require root permission in order to do it.  Assuming you
+    want to install in /usr/local/bin, something like the following 
+    command:
+
+	% su					# become 'root'
+	# cp -p libvosi.a /usr/local/lib 	# copy binaries
+
+
+======================================
+To Install from a Binary Distribution:
+======================================
+
+1)  Create a temporary directory to unpack the files:
+
+	% mkdir /tmp/libvosi			# create temp directory
+	% cd /tmp/libvosi			# go there
+	% tar zxf /path/libvosi-<arch>.tar.gz   # unpack the distrbution
+
+2)  To install, copy the library to a system or project directory.  In some
+    cases this will require root permission in order to do it.  Assuming you
+    want to install in /usr/local/bin, something like the following 
+    command:
+
+	% su					# become 'root'
+	# cp -p libvosi.a /usr/local/lib 	# copy binaries
+
+
+
+-------------------------------------------------------------------------------
+
+    Please report any bugs, comments, or suggestions to the author
+(fitz@noao.edu).
+
+
+Mike Fitzpatrick, fitz@noao.edu, NOAO
+Aug 11, 2014

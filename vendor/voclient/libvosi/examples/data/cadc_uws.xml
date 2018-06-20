@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uws:job xmlns:uws="http://www.ivoa.net/xml/UWS/v1.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <uws:jobId>maa7sios1u0ru1ne</uws:jobId>
+  <uws:runId />
+  <uws:ownerId xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+  <uws:phase>PENDING</uws:phase>
+  <uws:quote>2014-09-06T19:07:34.962</uws:quote>
+  <uws:startTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+  <uws:endTime xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+  <uws:executionDuration>28800</uws:executionDuration>
+  <uws:destruction>2014-09-12T19:07:34.962</uws:destruction>
+  <uws:parameters />
+  <uws:results />
+</uws:job>

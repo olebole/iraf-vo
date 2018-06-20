@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<availability xmlns="http://www.ivoa.net/xml/VOSIAvailability/v1.0" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://www.ivoa.net/xml/VOSIAvailability/v1.0">
+    <available>
+	true
+    </available>
+    <note>
+	Simbad TAP is accepting queries.
+    </note>
+</availability>

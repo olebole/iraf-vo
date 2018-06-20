@@ -8,7 +8,9 @@
  *  @brief      Internal declarations for the VOClient Package applications.
  */
 
-#include <unistd.h>
+#include <unistd.h>			/* needed for pid_t		*/
+
+
 
 #ifndef SZ_LINE
 #define SZ_LINE                4096
@@ -18,6 +20,7 @@
 #endif
 #define DEF_SR                  0.1
 
+#define USE_GETOPT_LONG
 
 
 /* Local processing definitions.
@@ -114,6 +117,9 @@
 #define E_VOCINIT		4	/* VOClient init failed		*/
 
 
+/*  Debug macros.
+*/
+#define PARAM_DBG  (getenv("PARAM_DBG")!=NULL||access("/tmp/PARAM_DBG",F_OK)==0)
 
 
 /*  Utility macros.

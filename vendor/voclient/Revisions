@@ -339,3 +339,39 @@ libsamp/libxrpc
 voapps/vosamp.c
     - fix to snoop mode (7/29/13)
 
+-------------------------------------------------
+
+voapps/voiminfo.c
+    - added test case for URLs (12/13/13)
+
+voapps/Makefile
+voapps/lib/Makefile
+voapps/vodata.c
+voapps/voregistry.c
+voapps/lib/voSvc.c
+voapps/lib/voAclist.c
+    - changes needed for OSX Mavericks compiler (12/13/13)
+
+voapps/vodata.c
+    - the '-b' flag wasn't updating the arglist index (12/13/13)
+
+common/curl
+common/curl-7.33.0			+
+common/curl-7.18.2			-
+libsamp/libxrpc/curl
+libsamp/libxrpc/curl-7.33.0		+
+libsamp/libxrpc/curl-7.18.2		-
+    - updated to cURL v7.33.0 (12/13/13)
+
+libvotable/votParse.c
+    - ifdef'd out the <curl/types.h> include because of curl-7.33.0 (12/13/13)
+
+voapps/lib/voParams.c
+voapps/vodata.c
+    - fix for VAOPD-889 (12/14/13)
+
+libsamp/libxrpc/xrServer.c
+    - a compiler change under OSX Mavericks changed the order of evaluation
+      for an expression like "a = b = c" and caused the method linked list to
+      be truncated.  Separated into separate lines, fixed VAOPD-930 (12/22/13)
+

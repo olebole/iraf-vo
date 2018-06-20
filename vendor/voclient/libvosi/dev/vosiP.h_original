@@ -1,0 +1,105 @@
+/**
+ *  VOSiP.H -- Internal LIBVOSI definitions.
+ *
+ *  @file       vosiP.h
+ *  @author     Ken Mighell and Mike Fitzpatrick
+ *  @date       8/11/09
+ *
+ *  @brief      Internal LIBVOSI definitions.
+ */
+
+
+#include <expat.h>
+
+#define	VOT_DOC_VERSION		"1.2"	/** VOTable document version (write)  */
+
+#define	VOT_XSI			"http://www.w3.org/2001/XMLSchema-instance"
+#define	VOT_SCHEMA_LOC		"http://www.ivoa.net/xml/VOTable/v1.1  http://www.ivoa.net/xml/VOTable/v1.1"
+#define	VOT_XMLNS		"http://www.ivoa.net/xml/VOTable/v1.1"
+
+
+#define SZ_ATTRNAME             32      /** size of attribute name            */
+#define SZ_ATTRVAL              2048    /** size of attribute value           */
+#define SZ_FNAME                255     /** size of filename+path             */
+#define SZ_XMLTAG               1024    /** max length of entire XML tag      */
+#define SZ_LINE                 4096    /** handy size                        */
+
+#define MAX_ATTR                100     /** max size of an attribute/value    */
+#define HANDLE_INCREMENT        1024000 /** incr size of handle table         */
+
+
+#ifdef  min
+#undef  min
+#endif
+#define min(a,b)	((a<b)?a:b)
+
+#ifdef  max
+#undef  max
+#endif
+#define max(a,b)	((a>b)?a:b)
+
+
+
+/**
+ *  @brief  Handle type definition
+ */
+#ifndef  handle_t
+#define  handle_t       int
+#endif
+
+
+
+/** 
+ *  @struct Avail
+ *  @brief 		Information from an Availability interface
+ *  @param available 	is service accepting requests?
+ *  @param upSince  	duration of continuously uptime
+ *  @param downAt 	time of next scheduled down time
+ *  @param backAt	time of return to service
+ *  @param note  	reason for unavailability
+ */
+typedef struct {
+    int	   available;		/** is service accepting requests?	*/
+    char   upSince[SZ_LINE]; 	/** duration of continuously uptime	*/
+    char   downAt[SZ_LINE];	/** time of next scheduled down time	*/
+    char   backAt[SZ_LINE];	/** time of return to service		*/
+    char   note[SZ_LINE]; 	/** reason for unavailability		*/
+} Avail, *AvailP;
+
+
+/**
+ *  @struct Capabilities
+ *  @brief 		Information from a Capabilities interface
+ *  @param foo		A foo thing
+ */
+typedef struct {
+    void    *next;		/* linked list of capabilities		*/
+} Capability, *CapabilityP;
+
+
+/**
+ *  @struct Table
+ *  @brief 		Information from a Table interface
+ *  @param foo		A foo thing
+ */
+typedef struct {
+    ;
+} Tables, *TablesP;
+
+
+
+
+/** ***************************************************************************
+ *
+ *  Public Internal Methods.  The procedures are used to implement the
+ *  library, however are not part of the public interface.
+ *
+ ** **************************************************************************/
+
+void      vosi_initHandles (void);
+int       vosi_newHandleContext (char *name, int size);
+void      vosi_closeHandleContext (int context);
+handle_t  vosi_newHandle (int context, void *ptr);
+void      vosi_freeHandle (handle_t handle);
+void     *vosi_H2P (handle_t handle);
+

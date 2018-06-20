@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vosi:tableset
+  xmlns:vosi="http://www.ivoa.net/xml/VOSITables/v1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:vod="http://www.ivoa.net/xml/VODataService/v1.1">
+  <schema>
+    <name>cfht </name>
+    <table type="output">
+      <name>cfht.deepU </name>
+      <column>
+        <name>cfhtlsID </name>
+        <dataType xsi:type="vod:TAP" size="30">adql:VARCHAR </dataType>
+      </column>
+      <column>
+        <name>survey </name>
+        <dataType xsi:type="vod:TAP" size="6">adql:VARCHAR </dataType>
+      </column>
+      <column>
+        <name>field </name>
+        <dataType xsi:type="vod:TAP" size="2">adql:VARCHAR </dataType>
+      </column>
+      <column>
+        <name>pointing </name>
+        <dataType xsi:type="vod:TAP" size="6">adql:VARCHAR </dataType>
+      </column>
+      <column>
+        <name>selectionFilter </name>
+        <dataType xsi:type="vod:TAP" size="2">adql:VARCHAR </dataType>
+      </column>
+    </table>
+    <table type="output">
+      <name>TAP_SCHEMA.keys </name>
+      <column>
+        <name>key_id </name>
+        <description>unique key to join to TAP_SCHEMA.key_columns </description>
+        <dataType xsi:type="vod:TAP" size="64">adql:VARCHAR </dataType>
+      </column>
+      <column>
+        <name>from_table </name>
+        <description>the table with the foreign key </description>
+        <dataType xsi:type="vod:TAP" size="64">adql:VARCHAR </dataType>
+      </column>
+      <column>
+        <name>target_table </name>
+        <description>the table with the primary key </description>
+        <dataType xsi:type="vod:TAP" size="64">adql:VARCHAR </dataType>
+      </column>
+    </table>
+  </schema>
+</vosi:tableset>

@@ -70,9 +70,9 @@ extern int vot_atoi (char *v);
 int
 votcnv (int argc, char **argv, size_t *reslen, void **result)
 {
-    int     status = OK, pos = 0, ch;
+    int     status = OK, pos = 0;
     char   *iname = NULL, *name = NULL, *oname = NULL, format[SZ_FORMAT];
-    char  **pargv, optval[SZ_FNAME];
+    char  **pargv, ch, optval[SZ_FNAME];
 
 
     /*  Parse the argument list.

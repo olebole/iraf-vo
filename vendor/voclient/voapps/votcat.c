@@ -60,9 +60,9 @@ int
 votcat (int argc, char **argv, size_t *reslen, void **result)
 {
     char **pargv, optval[SZ_FNAME];
-    char  *oname = (char *) NULL;
+    char  *oname = (char *) NULL, ch;
     char  *infile[MAX_FILES];
-    int   i, verbose = 0, indent = 1, pos = 0, ch;
+    int   i, verbose = 0, indent = 1, pos = 0;
 
 
     if (argc < 3) {

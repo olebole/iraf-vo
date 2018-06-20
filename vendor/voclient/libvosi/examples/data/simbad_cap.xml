@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vosi:capabilities xmlns:vosi="http://www.ivoa.net/xml/VOSICapabilities/v1.0" xmlns:tr="http://www.ivoa.net/xml/TAP/v0.1" xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/TAP/v0.1 http://www.ivoa.net/xml/TAP/v0.1">
+<capability standardID="ivo://ivoa.net/std/TAP" xsi:type="tr:TableAccess">
+	<interface role="std" xsi:type="vs:ParamHTTP">
+		<accessURL use="base">http://simbad.u-strasbg.fr:80/simbad/sim-tap</accessURL>
+	</interface>
+	<language>
+		<name>ADQL</name>
+		<version>2.0</version>
+		<description>ADQL 2.0</description>
+	</language>
+	<outputFormat>
+		<mime>text/xml</mime>
+		<alias>votable</alias>
+	</outputFormat>
+	<outputFormat>
+		<mime>application/json</mime>
+		<alias>json</alias>
+	</outputFormat>
+	<outputFormat>
+		<mime>text/csv</mime>
+		<alias>csv</alias>
+	</outputFormat>
+	<outputFormat>
+		<mime>text/tsv</mime>
+		<alias>tsv</alias>
+	</outputFormat>
+	<outputFormat>
+		<mime>text/plain</mime>
+		<alias>text</alias>
+	</outputFormat>
+	<retentionPeriod>
+		<default>432000</default>
+		<hard>432000</hard>
+	</retentionPeriod>
+	<executionDuration>
+		<default>3600</default>
+		<hard>3600</hard>
+	</executionDuration>
+	<outputLimit>
+		<hard unit="rows">20000</hard>
+	</outputLimit>
+<uploadMethod ivo-id="ivo://ivoa.org/tap/uploadmethods#inline" /><uploadMethod ivo-id="ivo://ivoa.org/tap/uploadmethods#http" /><uploadMethod ivo-id="ivo://ivoa.org/tap/uploadmethods#ftp" /><uploadMethod ivo-id="ivo://ivoa.net/std/TAPRegExt#upload-inline" /><uploadMethod ivo-id="ivo://ivoa.net/std/TAPRegExt#upload-http" /><uploadMethod ivo-id="ivo://ivoa.net/std/TAPRegExt#upload-ftp" />	<uploadLimit>
+		<default unit="rows">10000</default>
+		<hard unit="rows">10000</hard>
+	</uploadLimit>
+	</capability>
+	<capability standardID="ivo://ivoa.net/std/VOSI#tables">
+		<interface xsi:type="vs:ParamHTTP" role="std">
+			<accessURL use="full"> http://simbad.u-strasbg.fr:80/simbad/sim-tap/tables </accessURL>
+		</interface>
+	</capability>
+	<capability standardID="ivo://ivoa.net/std/VOSI#capabilities">
+		<interface xsi:type="vs:ParamHTTP" role="std">
+			<accessURL use="full"> http://simbad.u-strasbg.fr:80/simbad/sim-tap/capabilities </accessURL>
+		</interface>
+	</capability>
+	<capability standardID="ivo://ivoa.net/std/VOSI#availability">
+		<interface xsi:type="vs:ParamHTTP" role="std">
+			<accessURL use="full"> http://simbad.u-strasbg.fr:80/simbad/sim-tap/availability </accessURL>
+		</interface>
+	</capability>
+</vosi:capabilities>

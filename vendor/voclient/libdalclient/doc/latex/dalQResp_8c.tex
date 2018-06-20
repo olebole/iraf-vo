@@ -1,0 +1,167 @@
+\hypertarget{dalQResp_8c}{
+\section{dalQResp.c File Reference}
+\label{dalQResp_8c}\index{dalQResp.c@{dalQResp.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+{\tt \#include $<$sys/file.h$>$}\par
+{\tt \#include $<$curl/curl.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalQResp_8c_8639526c24945794e60d93ef9a0df417}{
+int \textbf{dal\_\-getRecordCount} (QResponse qr\_\-h)}
+\label{dalQResp_8c_8639526c24945794e60d93ef9a0df417}
+
+\item 
+\hypertarget{dalQResp_8c_31421e01c49af5433950de03ca6ae957}{
+int \textbf{dal\_\-getColumnCount} (QResponse qr\_\-h)}
+\label{dalQResp_8c_31421e01c49af5433950de03ca6ae957}
+
+\item 
+\hypertarget{dalQResp_8c_04bfa323cf08ec2ab346ceaba669fc2b}{
+int \textbf{dal\_\-getInfoCount} (QResponse qr\_\-h)}
+\label{dalQResp_8c_04bfa323cf08ec2ab346ceaba669fc2b}
+
+\item 
+\hypertarget{dalQResp_8c_e846287198f831a3676b12e3af61bcca}{
+int \textbf{dal\_\-getFieldCount} (QResponse qr\_\-h)}
+\label{dalQResp_8c_e846287198f831a3676b12e3af61bcca}
+
+\item 
+\hypertarget{dalQResp_8c_58d5a210d9a7342e4d4a064153778ef8}{
+int \textbf{dal\_\-getPropCount} (QResponse qr\_\-h)}
+\label{dalQResp_8c_58d5a210d9a7342e4d4a064153778ef8}
+
+\item 
+\hypertarget{dalQResp_8c_78d8f3223c748ebe18e24095e3f089a8}{
+char $\ast$ \textbf{dal\_\-getPropName} (QResponse qr\_\-h, int index)}
+\label{dalQResp_8c_78d8f3223c748ebe18e24095e3f089a8}
+
+\item 
+\hypertarget{dalQResp_8c_a22044f1ad25b4ae5444f91cd797a2e9}{
+char $\ast$ \textbf{dal\_\-getInfoAttr} (QResponse qr\_\-h, int index, int attr)}
+\label{dalQResp_8c_a22044f1ad25b4ae5444f91cd797a2e9}
+
+\item 
+\hypertarget{dalQResp_8c_523346fd5f1c10bf81d59b20d8d48368}{
+char $\ast$ \textbf{dal\_\-getFieldAttr} (QResponse qr\_\-h, int index, int attr)}
+\label{dalQResp_8c_523346fd5f1c10bf81d59b20d8d48368}
+
+\item 
+\hypertarget{dalQResp_8c_cac7a81e75acb3cf1f41b2f881255067}{
+int \textbf{dal\_\-getFieldIndex} (QResponse qr\_\-h, char $\ast$key, int attr)}
+\label{dalQResp_8c_cac7a81e75acb3cf1f41b2f881255067}
+
+\item 
+\hypertarget{dalQResp_8c_08e251c5ecc80c2f64d6aaa3bac5eaed}{
+QRecord \textbf{dal\_\-getRecord} (QResponse qr\_\-h, int recnum)}
+\label{dalQResp_8c_08e251c5ecc80c2f64d6aaa3bac5eaed}
+
+\item 
+\hypertarget{dalQResp_8c_1d3ae11225d27c30418401b97b3e985a}{
+void \textbf{dal\_\-releaseRecord} (QRecord rec\_\-h)}
+\label{dalQResp_8c_1d3ae11225d27c30418401b97b3e985a}
+
+\item 
+\hypertarget{dalQResp_8c_6bf36ac98595e17bc64e4e645e75685a}{
+int \textbf{dal\_\-getIntProperty} (QRecord rec\_\-h, char $\ast$property)}
+\label{dalQResp_8c_6bf36ac98595e17bc64e4e645e75685a}
+
+\item 
+\hypertarget{dalQResp_8c_df1f8b00047bcebd08454f454fb29217}{
+double \textbf{dal\_\-getFloatProperty} (QRecord rec\_\-h, char $\ast$property)}
+\label{dalQResp_8c_df1f8b00047bcebd08454f454fb29217}
+
+\item 
+\hypertarget{dalQResp_8c_452a583e3b641e6a77aafed3a07b4e1d}{
+char $\ast$ \textbf{dal\_\-getStringProperty} (QRecord rec\_\-h, char $\ast$property)}
+\label{dalQResp_8c_452a583e3b641e6a77aafed3a07b4e1d}
+
+\item 
+\hypertarget{dalQResp_8c_e1dc82e0f03dc003a9ec1ea729a8dff8}{
+int \textbf{dal\_\-getIntField} (QRecord rec\_\-h, int index)}
+\label{dalQResp_8c_e1dc82e0f03dc003a9ec1ea729a8dff8}
+
+\item 
+\hypertarget{dalQResp_8c_9d7703b1f6bf010c464cb342705eef53}{
+double \textbf{dal\_\-getFloatField} (QRecord rec\_\-h, int index)}
+\label{dalQResp_8c_9d7703b1f6bf010c464cb342705eef53}
+
+\item 
+\hypertarget{dalQResp_8c_9f82f2d0d94d42534fb2e561c7cf16e3}{
+char $\ast$ \textbf{dal\_\-getStringField} (QRecord rec\_\-h, int index)}
+\label{dalQResp_8c_9f82f2d0d94d42534fb2e561c7cf16e3}
+
+\item 
+\hypertarget{dalQResp_8c_33045b4a0f01d32b7abeb4b95d305509}{
+int \textbf{dal\_\-getIntColumn} (QResponse qr\_\-h, int index, long $\ast$iptr)}
+\label{dalQResp_8c_33045b4a0f01d32b7abeb4b95d305509}
+
+\item 
+\hypertarget{dalQResp_8c_1293a6b46682cb8a4709c75ab1c89c0f}{
+int \textbf{dal\_\-getFloatColumn} (QResponse qr\_\-h, int index, double $\ast$dptr)}
+\label{dalQResp_8c_1293a6b46682cb8a4709c75ab1c89c0f}
+
+\item 
+\hypertarget{dalQResp_8c_2733ae1e65fc714bd64d625617de239a}{
+int \textbf{dal\_\-getStringColumn} (QResponse qr\_\-h, int index, char $\ast$$\ast$sptr)}
+\label{dalQResp_8c_2733ae1e65fc714bd64d625617de239a}
+
+\item 
+\hypertarget{dalQResp_8c_8f7d66f725e504bd279cbf4d792078f9}{
+int \textbf{dal\_\-getDataset} (QRecord rec\_\-h, char $\ast$acref, char $\ast$fname)}
+\label{dalQResp_8c_8f7d66f725e504bd279cbf4d792078f9}
+
+\item 
+\hypertarget{dalQResp_8c_b304c60204e9fc9d2f7bfd752a9ca3e3}{
+dalProp\_\-t $\ast$ \textbf{vut\_\-addProperty} (dalQR\_\-t $\ast$qr, char $\ast$propname, char $\ast$value, int type)}
+\label{dalQResp_8c_b304c60204e9fc9d2f7bfd752a9ca3e3}
+
+\item 
+\hypertarget{dalQResp_8c_7bc0b9e7b5def64677728660d197c6fa}{
+dalProp\_\-t $\ast$ \textbf{vut\_\-setProperty} (QRecord rec\_\-h, char $\ast$propname, char $\ast$value)}
+\label{dalQResp_8c_7bc0b9e7b5def64677728660d197c6fa}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALQRESPONSE -- Query Response Object for a DAL (or similar) query.
+
+The QueryResponse class is used to walk through or randomly access the processed response from a DAL (or similar VOTable-based) query.
+
+---- Query Execution ---------
+
+qr = dal\_\-executeQuery (query) qr = dal\_\-initQueryResponse (dal, votable, resource, table) (etc.)
+
+---- Query Response ---------
+
+int = dal\_\-getRecordCount (qr) int = dal\_\-getColumnCount (qr) int = dal\_\-getInfoCount (qr) int = dal\_\-getFieldCount (qr) int = dal\_\-getPropCount (qr) str = dal\_\-getPropName (qr, index) str = dal\_\-getInfoAttr (qr, index, attr\_\-code) str = dal\_\-getFieldAttr (qr, index, attr\_\-code) int = dal\_\-getFieldIndex (qr, key, attr\_\-code)
+
+rec = dal\_\-getRecord (qr, recnum) dal\_\-releaseRecord (rec) int = dal\_\-getIntProperty (rec, property) dval = dal\_\-getFloatProperty (rec, property) str = dal\_\-getStringProperty (rec, property)
+
+int = dal\_\-getIntField (rec, index) dval = dal\_\-getFloatField (rec, index) str = dal\_\-getStringField (rec, index)
+
+stat = dal\_\-getIntColumn (qr, index, iptr) stat = dal\_\-getFloatColumn (qr, index, dptr) stat = dal\_\-getStringColumn (qr, index, sptr)
+
+stat = dal\_\-getDataset (rec, acref, fname)
+
+The tables to be processed are often modest sized, but can potentially be very large, with tens of thousands of rows and hundreds of columns. All processing of the input VOTable is sequential, with one pass to parse the XML and a second to process the parsed table into a QueryResponse object. The QueryResponse object is stored in memory and is randomly accessible, fully indexed and hashed.
+
+While the intended use of this class is mainly to process the VOTable results from VO DAL or Registry queries, it may be used to walk through any VOTable, accessing table fields by index or by tag (ID, NAME, UTYPE, UCD, etc.). For example, this could be used to access data VOTables such as from a TAP or Cone Search query, or in some cases, VOTable-encoded data objects such as a Spectrum or ImageDM Data-element descriptor.
+
+This interface mostly treats VOTable FIELDs and PARAMs as the same type of object, although the specific object type can be queried at a lower level. For applications such as querying the attributes of a dataset described in a table row they are equivalent. Higher level object properties are also supported; these are abstract properties of the data model for the object stored in the table, and have the important characteristic of being represented consistently regardless of the representation (in terms of ID, NAME, UTYPE, UCD, etc.) in the lower level VOTable and service version.
+
+There is no explicit support here for VOTable mechanisms such as GROUP, hence for example UTYPES are assumed to be unique in a table (this is the case with current VO interfaces).
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

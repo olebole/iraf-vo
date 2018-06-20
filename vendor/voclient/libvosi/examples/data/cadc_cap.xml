@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vosi:capabilities xmlns:vosi="http://www.ivoa.net/xml/VOSICapabilities/v1.0" xmlns:vod="http://www.ivoa.net/xml/VODataService/v1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <capability standardID="ivo://ivoa.net/std/VOSI#capabilities">
+    <interface xsi:type="vod:ParamHTTP" version="1.0">
+      <accessURL use="full">http://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/sia/capabilities</accessURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
+    <interface xsi:type="vod:ParamHTTP" version="1.0">
+      <accessURL use="full">http://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/sia/availability</accessURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/SIA">
+    <interface xsi:type="vod:ParamHTTP" role="std" version="1.0">
+      <accessURL>http://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/sia/query</accessURL>
+      <!-- site-specific params -->
+      <param use="optional" std="false">
+        <name>collection</name>
+        <description>Specify the name of a single data collection to search: actual values that can be used are dependent on the presence of calibrated images in the entire archive; the values are given in the output as a field with name="collection". The default is to search all collections (equivalent to collection="ALL").</description>
+        <dataType arraysize="1" delim=" ">string</dataType>
+      </param>
+      <param use="optional" std="false">
+        <name>mode</name>
+        <description>Specify the type of accessURL to include in the output. Recognised values are archive (retrieve the full image) and cutout (retrieve approximately the region-of-interest). The default mode is archive mode.</description>
+        <dataType arraysize="1" delim=" ">string</dataType>
+      </param>
+    </interface>
+  </capability>
+  <!-- placeholder for SIA-2.0 query capability -->
+  <capability standardID="ivo://ivoa.net/std/SIA#query-2.0">
+    <interface xsi:type="vod:ParamHTTP" role="std" version="2.0">
+      <accessURL>http://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/sia/v2query</accessURL>
+    </interface>
+  </capability>
+</vosi:capabilities>

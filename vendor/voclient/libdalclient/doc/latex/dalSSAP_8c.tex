@@ -1,0 +1,64 @@
+\hypertarget{dalSSAP_8c}{
+\section{dalSSAP.c File Reference}
+\label{dalSSAP_8c}\index{dalSSAP.c@{dalSSAP.c}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include $<$stdlib.h$>$}\par
+{\tt \#include $<$unistd.h$>$}\par
+{\tt \#include $<$ctype.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+{\tt \#include \char`\"{}dalclient.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hypertarget{dalSSAP_8c_7e9f1470c9317b8bfed94fa040b74cae}{
+char $\ast$ \textbf{ssap\_\-getQueryURL} (dalQuery\_\-t $\ast$query)}
+\label{dalSSAP_8c_7e9f1470c9317b8bfed94fa040b74cae}
+
+\item 
+\hypertarget{dalSSAP_8c_0ff4060dd4a3b0539caae37d9fc8f75f}{
+void \textbf{ssap\_\-initProperties} (dalQR\_\-t $\ast$qr)}
+\label{dalSSAP_8c_0ff4060dd4a3b0539caae37d9fc8f75f}
+
+\end{CompactItemize}
+
+
+\label{_details}
+\hypertarget{_details}{}
+\subsection{Detailed Description}
+DALSSAP -- Simple Spectral Access Protocol-specific code.
+
+Most of the DALClient code is generic and common to all service types. The files dalSCSP (cone simple search), dalSIAP (simple image access), and so forth contain the protocol-specific code for each class of service. In particular this is where we deal with multiple versions of the VO prtotocols, and shielding the client from the details of the VO protocols as they evolve.
+
+The Simple Spectral Access Protocol (SSAP) is used to discover, download, and access 1-dimensional spectra.
+
+------ Query Parameters ---------
+
+The following standard query parameters are recognized by the SSAP driver and may be used for custom protocol-specific translation. All other query parameters are merely passed through to the remote service.
+
+POS Encoded RA,DEC position encoded as a list SIZE Region size (one or two values). BAND Spectral band TIME Time band POL Polarisation states FORMAT Desired image formats
+
+POS-object Not yet implemented. This will be a generic spatial region object that gets translated into whatever the specific protocol requires, in this case ra,dec,sr.
+
+Not all versions of the protocol implement all these parameters. Parameters not implemented by the target service version are ignored.
+
+------ Object Properties ---------
+
+Each row of the SSAP query response describes a single available image. The following Image dataset properties describe each dataset.
+
+protocol Protocol implemented (\char`\"{}SSA\char`\"{}) version Protocol version (e.g., \char`\"{}1.0\char`\"{} or \char`\"{}2.0\char`\"{})
+
+title Image title ra Right ascension of image center (ICRS, decimal degrees) dec Declination of image center (ICRS, decimal degrees) format Image format (MIME type) acref Access reference (URL) estsize Estimated dataset size (kB)
+
+Other properties may be added but this is a good start...
+
+------ SSAP routines (internal) ---------
+
+str = ssap\_\-getQueryURL (query) void ssap\_\-initProperties (qr)
+
+The routines in this file are internal to the DALClient code and are not intended to be called directly by applications.
+
+\begin{Desc}
+\item[Author:]Doug Tody \end{Desc}
+\begin{Desc}
+\item[Version:]January 2014 \end{Desc}

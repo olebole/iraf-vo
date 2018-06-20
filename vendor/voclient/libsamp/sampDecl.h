@@ -17,12 +17,24 @@ typedef  int    Msg;                    /** SAMP Msg datatype 	    	    */
 typedef  int    Param;                  /** SAMP Param datatype 	    */
 typedef  char  *String;                 /** SAMP String datatype            */
 
-#define  SZ_NAME             256        /** size of a file path 	    */
-#define  SZ_LINE             256        /** size of a text line 	    */
-#define  SZ_SECRET           64         /** size of secret string 	    */
-#define  SZ_DESC             8192       /** len of a description 	    */
-#define  SZ_URL              1024       /** len of a URL 		    */
-#define  SZ_CMD              1024       /** len of a command 	    	    */
+#ifndef SZ_NAME
+#define SZ_NAME             256         /** size of a file path 	    */
+#endif
+#ifndef SZ_LINE
+#define SZ_LINE             256         /** size of a text line 	    */
+#endif
+#ifndef SZ_SECRET
+#define SZ_SECRET           64          /** size of secret string 	    */
+#endif
+#ifndef SZ_DESC
+#define SZ_DESC             8192        /** len of a description 	    */
+#endif
+#ifndef SZ_CMD
+#define SZ_CMD              1024        /** len of a command 	    	    */
+#endif
+#ifndef SZ_URL
+#define SZ_URL              2048        /** len of a URL 		    */
+#endif
 
 #define  MAX_SAMPS           16         /** max clients allowed 	    */
 #define  MAX_HUBS            16         /** max hubs allowed 	    	    */
@@ -239,8 +251,8 @@ int 	samp_sendMsg (handle_t handle, String recip, Map msg);
 void    samp_notify (handle_t handle, String recipId, Map msg);
 List    samp_notifyAll (handle_t handle, Map msg);
 String  samp_call (handle_t handle, String recipId, String tag, Map msg);
-int     samp_callAll (handle_t handle, String msg_tag, Map msg);
-int     samp_callAndWait (handle_t handle, String recipId, String msg_tag, 
+Map     samp_callAll (handle_t handle, String msg_tag, Map msg);
+Map     samp_callAndWait (handle_t handle, String recipId, String msg_tag, 
 				Map msg);
 int  	samp_Reply (handle_t handle, String msg_id, Map resp);
 

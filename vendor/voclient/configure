@@ -1,0 +1,209 @@
+#!/bin/bash
+#
+#  CONFIGURE -- A pseudo-autoconf configure script to allow a standard
+#  build command sequence to reset the installation directories.  We
+#  assume a build/install of this package can be accomplished with the
+#  commands:
+#		% ./configure --prefix=/opt/local
+#		% make
+#		% make install
+#
+#  This configure script rewrites the "install_env" file with the specified
+#  install paths, that script is then used in the 'make install' change to
+#  set the install directories for the binaries, libraries, include files and
+#  man pages.  The '--prefix' option sets the default root path, other options
+#  allow paths to be set individually for each component.
+#
+#  The default paths used are:
+#
+#	prefix=/usr/local/		global root path
+#	bindir=${prefix}/bin/		task binary install directory
+#	libdir=${prefix}/lib/		library install directory
+#	incdir=${prefix}/include/	include file install directory
+#	mandir=${prefix}/man/man1/	man page install directory
+#
+#
+#  Usage:     ./configure [ <opts>=<val> | <opt> <val> ]
+#
+#  Where    -h  -help    --help		print a help summary
+#	    -p	-prefix  --prefix 	set global path prefix
+#	    -b 	-bindir  --bindir 	task bin directory
+#	    -i 	-incdir  --incdir 	include file directory
+#	    -l 	-libdir  --libdir 	library directory
+#	    -m 	-mandir  --mandir 	man page directory
+#
+#  Example:
+#
+#    The following commands are all equivalent for setting the global install
+#    path prefix:
+#
+#	% ./configure --p /opt/local
+#	% ./configure -prefix /opt/local
+#	% ./configure --prefix /opt/local
+#	% ./configure -p=/opt/local
+#	% ./configure -prefix=/opt/local
+#	% ./configure --prefix=/opt/local
+#
+# ----------------------------------------------------------------------------
+
+
+# Setup the default environment.
+
+unset noclobber
+
+prefix=/usr/local/
+bindir=${prefix}/bin/
+libdir=${prefix}/lib/
+incdir=${prefix}/include/
+mandir=${prefix}/man/man1/
+
+
+# Process any cmdline flags.
+while [ $# -gt 0 ]
+do
+
+    case "$1" in
+    -h | -help | --help)                                # print a help summary
+	echo ""
+	echo "  Usage:    ./configure [ <opts>=<val> | <opt> <val> ]"
+	echo ""
+	echo "  Where     -h  -help    --help		print a help summary"
+	echo "	    -p	-prefix  --prefix 	set global path prefix"
+	echo "	    -b 	-bindir  --bindir 	task bin directory"
+	echo "	    -i 	-incdir  --incdir 	include file directory"
+	echo "	    -l 	-libdir  --libdir 	library directory"
+	echo "	    -m 	-mandir  --mandir 	man page directory"
+	echo ""
+	echo "  Example:"
+	echo ""
+	echo "    The following commands are all equivalent for setting the"
+	echo "    global install path prefix:"
+	echo ""
+	echo "	% ./configure --p /opt/local"
+	echo "	% ./configure -prefix /opt/local"
+	echo "	% ./configure --prefix /opt/local"
+	echo "	% ./configure -p=/opt/local"
+	echo "	% ./configure -prefix=/opt/local"
+	echo "	% ./configure --prefix=/opt/local"
+	echo ""
+	exit 0
+	;;
+
+    -p | -prefix | --prefix)                            # global prefix
+	case "$2" in
+	    "") shift 2 ;;
+	     *) prefix=$2/ ; shift 2 ;;
+	esac
+	bindir=${prefix%/}/bin/
+	libdir=${prefix%/}/lib/
+	incdir=${prefix%/}/include/
+	mandir=${prefix%/}/man/man1/
+	;;
+    -p=* | -prefix=* | --prefix=*)
+	prefix="${1#*=}"/
+	bindir=${prefix%/}/bin/
+	libdir=${prefix%/}/lib/
+	incdir=${prefix%/}/include/
+	mandir=${prefix%/}/man/man1/
+	;;
+
+    -b | -bindir | --bindir)                            # task bin directory
+	case "$2" in
+	    "") shift 2 ;;
+	     *) bindir=$2/ ; shift 2 ;;
+	esac ;;
+    -b=* | -bindir=* | --bindir=*)
+	bindir="${1#*=}"/
+	;;
+
+    -l | -libdir | --libdir)                            # library directory
+	case "$2" in
+	    "") shift 2 ;;
+	     *) libdir=$2/ ; shift 2 ;;
+	esac ;;
+    -l=* | -libdir=* | --libdir=*)
+	libdir="${1#*=}"/
+	;;
+
+    -i | -incdir | --incdir)                    # include directory
+	case "$2" in
+	    "") shift 2 ;;
+	     *) incdir=$2/ ; shift 2 ;;
+	esac ;;
+    -i=* | -incdir=* | --incdir=*)
+	incdir="${1#*=}"/
+	;;
+
+    -m | -mandir | --mandir)                            # man page directory
+	case "$2" in
+	    "") shift 2 ;;
+	     *) mandir=$2/ ; shift 2 ;;
+	esac ;;
+    -m=* | -mandir=* | --mandir=*)
+	mandir="${1#*=}"/
+	;;
+
+    *)
+	echo "Unknown argument '$1'"
+        shift
+    esac
+done
+
+
+# Create the environment file for the "make install" command.  First check
+# that if the file exists, we have permission to overwrite it.
+
+if [ ! -w ./install_env ]; then
+    echo "Error: cannot overwrite environment file './install_env'"
+    exit 1
+fi
+
+
+cat << END_OF_ENVFILE | sed -e 's://:/:g' > ./install_env
+#!/bin/bash
+
+prefix=${prefix%/}
+
+bindir=${bindir}
+libdir=${libdir}
+incdir=${incdir}
+mandir=${mandir}
+
+# Process cmdline flags.
+for a in "\$@"
+do
+    case "\$a" in
+    -b | -bindir | --bindir)        # task bin directory
+        echo \$bindir ;;
+    -l | -libdir | --libdir)        # library directory
+        echo \$libdir ;;
+    -i | -incdir | --incdir) 	    # include directory
+        echo \$incdir ;;
+    -m | -mandir | --mandir)        # man page directory
+        echo \$mandir ;;
+    *)
+	exit 1 ;;
+    esac
+done
+END_OF_ENVFILE
+
+
+#  Create the install directories if needed.  This also gives us a chance to 
+#  print errors if we don't have permissions on these dirs.
+
+dirs=($bindir $libdir $incdir $mandir)
+for f in ${dirs[@]}; do
+  if [ ! -d $f ]; then
+    /bin/mkdir -p $f	>> /dev/null 2>&1
+    if (( $?==1 )); then
+	echo "Warning: Cannot create install directory '$f' as user '$USER'."
+    fi
+  elif [ ! -w $f ]; then
+    echo "Warning: Install directory '$f' is not writable by user '$USER'."
+  fi
+done
+
+
+# Set the execute permission and quit.
+chmod 755 ./install_env
+exit 0

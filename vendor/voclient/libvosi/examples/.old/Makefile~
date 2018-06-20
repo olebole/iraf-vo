@@ -1,0 +1,139 @@
+#///////////////////////////////////////////////////////////////////////////////
+#//
+#//  Makefile for the libVOSI example tasks.
+#//
+#///////////////////////////////////////////////////////////////////////////////
+
+# primary dependencies
+
+NAME       	= VOSI
+VERSION    	= 1.0
+PLATFORM       := $(shell uname -s)
+PLATFORM        := $(shell uname -s)
+PLMACH          := $(shell uname -m)
+HERE            := $(shell /bin/pwd)
+BINDIR          := $HERE
+LIBDIR          := ../../lib/
+INCDIR          := ../../include/
+
+# secondary dependencies
+
+LIBBASE     = lib$(NAME)
+STATICLIB   = $(HERE)/$(LIBBASE).a
+SHAREDLIB   = $(HERE)/$(LIBBASE).so.$(VERSION)
+
+
+# stuff that's precious to keep
+
+.PRECIOUS:	$(STATICLIB) $(SHAREDLIB)
+.KEEP_STATE:
+
+
+# includes, flags and libraries
+CC 	    = gcc
+CINCS  	    = -I$(HERE) -I../ -I../include -L../ -L../../lib/ -L../ $(INCDIR)
+CFLAGS 	    = -g -Wall -D$(PLATFORM) $(CINCS)
+
+F77 	    = g77
+#F77 	    = gfortran -m64
+FFLAGS 	    = -g -Wall
+
+
+
+# list of source and include files
+
+C_SRCS 	    = tables_example.c 
+C_OBJS 	    = tables_example.o
+C_INCS 	    =  
+
+F77_SRCS    = 
+F77_OBJS    = 
+F77_INCS    =  
+
+SPP_SRCS    = 
+SPP_OBJS    = 
+SPP_INCS    = 
+
+
+LIBS 	    = -lVOSI -lcurl -lexpat -lm
+
+SPP_TASKS   = 
+F77_TASKS   = 
+C_TASKS	    = tables_example
+	      
+TARGETS	    = $(C_TASKS) # $(F77_TASKS) $(SPP_TASKS)
+
+
+# Targets
+
+all: c_progs
+
+c_progs:    $(C_TASKS)
+spp_progs:  $(SPP_TASKS)
+f77_progs:  $(F77_TASKS)
+
+clean:
+	/bin/rm -rf .make.state .nse_depinfo *.[aeo] *.dSYM
+	/bin/rm -rf $(TARGETS)
+
+everything:
+	make clean
+	make all
+	make install
+
+help: HELP
+
+install: all 
+
+
+
+###############################################################################
+# Unit test programs to be built.
+###############################################################################
+
+demo:	$(TARGETS)
+
+
+###########################
+#  C Test programs
+###########################
+
+tables_example:  tables_example.c
+	$(CC) $(CFLAGS) -o tables_example tables_example.c $(LIBS)
+
+
+
+###########################
+#  SPP Test programs
+###########################
+
+
+
+
+###########################
+#  Fortran Test programs.
+###########################
+
+
+
+
+
+###############################################################################
+# Leave this stuff alone.
+###############################################################################
+
+$(STATICLIB): $(C_SRCS:%.c=Static/%.o)
+	/usr/bin/ar rv $@ $?
+Static/%.o: %.c $(C_INCS)
+	/usr/bin/gcc $(CINCS) $(CFLAGS) -c $< -o $@
+Static:
+	/bin/mkdir $@
+	chmod 777 $@
+
+$(SHAREDLIB): $(C_SRCS:%.c=Shared/%.o)
+	/usr/bin/ld -shared -o $@ $? -lc -ldl
+Shared/%.o: %.c $(C_INCS)
+	/usr/bin/gcc $(CINCS) $(CFLAGS) -fpic -shared -c $< -o $@
+Shared:
+	/bin/mkdir $@
+	chmod 777 $@

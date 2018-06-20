@@ -253,8 +253,8 @@ static void Tests (char *input);
 int
 vosamp (int argc, char **argv, size_t *reslen, void **result)
 {
-    char **pargv, optval[SZ_FNAME], *env_proxy = NULL;
-    int	   i, pos = 0, len = 0, ch;
+    char **pargv, optval[SZ_FNAME], ch, *env_proxy = NULL;
+    int	   i, pos = 0, len = 0;
     time_t expiry;
 
 
@@ -414,7 +414,7 @@ vosamp (int argc, char **argv, size_t *reslen, void **result)
 
 	if (keep_alive && access (dotfile , R_OK) == 0) {
 	    if ((fd = fopen (dotfile, "r+")) != (FILE *) NULL) {
-		time_t  now = time ((time_t) 0);
+		time_t  now = time ((time_t *) NULL);
 		int  test = 0;
 
 		/*  Read the dotfile contents.
@@ -558,6 +558,7 @@ samp_init:
     /*  Close down and clean up.
      */
 cleanup_:
+//sleep (30);
     if (!keep_alive)
         vos_sampShutdown ();
 
@@ -1420,6 +1421,10 @@ vos_sampInit (void)
     if (session)
         samp_Subscribe (sampH, "*",  vos_sessionHandler);
 
+    /*  Install a generic message handler.
+    samp_Subscribe (sampH, "*",  vos_msgHandler);
+     */
+
     /*  Register with the Hub and begin messaging.
      */
     sampStartup (sampH);
@@ -1429,7 +1434,7 @@ vos_sampInit (void)
      */
     if (!interact && (df = fopen (vos_dotFile(), "w+")) != (FILE *) NULL) {
 	fprintf (df, "%s  %d  %d  %ld  %s\n", vos_getLocalIP(), proxy_port,
-	    (int) getpid(), (long) (time((time_t)0) + timeout),
+	    (int) getpid(), (long) (time((time_t *)NULL) + timeout),
 	    (session ? session : "none"));
 	fclose (df);
     }
@@ -1827,7 +1832,7 @@ vos_procCmd (int sampH, char *to, char *cmd, char *args[], int numargs)
 	    reslen = strlen (clist);
 	    result = strdup (clist);
 	} else {
-	    printf ("\nClients:\n%s\n", clist);
+	    printf ("%s", clist);
 	}
 	
 
