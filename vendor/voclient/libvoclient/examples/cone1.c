@@ -17,13 +17,15 @@
 
 double  ra       = 12.0;			/* default values	*/
 double  dec      = 12.0;
-double  sr       = 0.1;
+double  sr       = 0.05;
+
 
 #ifdef USNOB
 char   *service  = \
       "http://www.nofs.navy.mil/cgi-bin/vo_cone.cgi?CAT=USNO-B1&";
 #else
-  char   *service  = "http://chart.stsci.edu/GSCVO/GSC22VO.jsp?";
+ char *service  = \
+	"http://gsss.stsci.edu/webservices/vo/ConeSearch.aspx?CAT=GSC23&";
 #endif
 
 char   *server   = "6200:localhost";
@@ -121,7 +123,7 @@ callConeService (char *service_url, double ra, double dec, double sr)
     /* Summarize and print selected query results.
      */
     for (i = 0; i < nrec; i++) {
-        char *s_id, *s_ra, *s_dec, *s_class;
+        char *s_id, *s_ra, *s_dec;
 
         rec = voc_getRecord (qr, i);		/* get a row in the table    */
 
@@ -132,19 +134,21 @@ callConeService (char *service_url, double ra, double dec, double sr)
 	s_id =    voc_getStringAttr (rec, "ID_MAIN");
 	s_ra =    voc_getStringAttr (rec, "POS_EQ_RA_MAIN");
 	s_dec =   voc_getStringAttr (rec, "POS_EQ_DEC_MAIN");
-	s_class = voc_getStringAttr (rec, "CLASS_OBJECT");
 
+	/*  Find alternatives.
+	 */
+	if (!s_id )   s_id  = voc_getStringAttr (rec, "meta.id;meta.main");
+	if (!s_ra )   s_ra  = voc_getStringAttr (rec, "pos.eq.ra;meta.main");
+	if (!s_dec)   s_dec = voc_getStringAttr (rec, "pos.eq.dec;meta.main");
 
-        printf ("id=%-16s  ra=%s\tdec=%s\tclass=%s\n", 
+        printf ("id=%-16s  ra=%s\tdec=%s\n", 
 	    (s_id ? s_id : "<null>"), 
 	    (s_ra ? s_ra : "<null>"), 
-	    (s_dec ? s_dec : "<null>"),
-	    (s_class ? s_class : "<null>"));
+	    (s_dec ? s_dec : "<null>"));
 
 	if (s_id)    free ((void *) s_id);	/* clean up temp pointers    */
 	if (s_ra)    free ((void *) s_ra);
 	if (s_dec)   free ((void *) s_dec);
-	if (s_class) free ((void *) s_class);
     }
 
     free ((void *) attrList);
