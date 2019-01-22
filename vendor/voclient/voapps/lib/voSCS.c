@@ -153,7 +153,9 @@ vot_callConeSvc (svcParams *pars)
 
  	    if (!result)
    	        vot_dalExit (E_NODATA, 0);
-	    else if (pars->fmt != F_RAW)
+	    //else if (pars->fmt != F_RAW && pars->fmt != (F_RAW|F_XML))
+	    //else if (pars->fmt != F_RAW)
+	    else if (! (pars->fmt | F_RAW) )
 		res_count = vot_extractResults (result, delim, pars);
 	    else 
 		res_count = vot_countResults (result);
