@@ -939,17 +939,18 @@ ppMultiLine (char *result, int poffset, int pwidth, int maxchars)
 {
     register int i, j, ellipses = 0;
     int len = strlen((result ? result : ""));
-    char *ip;
+    char *ip, line[1024], *ell_str = "(read more ....) ";
     extern int longlines;
+
 
     if (result)
 	len = strlen (result);
     else
 	return;
 
-	
     for (i=0; i < len-1; i++ ) {
-	if (result[i] == '\n' && result[i+1] != '\n')
+	//if (result[i] == '\n' && result[i+1] != '\n')
+	if (result[i] == '\n' || result[i] == '\r')
 	    result[i] = ' ';
     }
 
@@ -962,9 +963,10 @@ ppMultiLine (char *result, int poffset, int pwidth, int maxchars)
 	return;
     }
 
-    if (len > maxchars) {
-	result[maxchars] = '\0';
-	len = maxchars;
+    len = strlen (result);
+    if (len >= maxchars) {
+	result[maxchars - strlen (ell_str) - 1] = '\0';
+	len = maxchars - strlen (ell_str) - 1;
 	ellipses++;
     }
 
@@ -974,18 +976,42 @@ ppMultiLine (char *result, int poffset, int pwidth, int maxchars)
         printf ("%s", ip);
     } else {
 	j = pwidth;
+            
 	for (i=0; i < len; ) {
 	    while (isspace (result[i])) i++;
 
-            printf ("%-*.*s\n", pwidth, pwidth, &result[i]);
-	    i = j + 1;
+            //printf ("%-*.*s\n", pwidth, pwidth, &result[i]);
+
+	    memset (line, 0, 1024);
+            sprintf (line, "%-*.*s", pwidth, pwidth, &result[i]);
+	    if ( ! isspace (result[i]) ) {
+		int  k, l = j, llen = strlen (line);
+
+		k = llen - 1;
+		for ( ; !isspace(line[k]) && k >= 0; k--)
+		    l--;
+		if (isspace (line[k]))
+		    line[k] = '\0';
+
+		if (k < 0) {
+            	    printf ("%-*.*s\n", llen, llen, &result[i]);
+		} else {
+		    llen = strlen (line);
+                    printf ("%-*.*s\n", llen, llen, line);
+		    j = l;
+		}
+	    } else 
+                printf ("%-*.*s\n", pwidth, pwidth, line);
+
+	    i = j;
 	    j += pwidth;
-            printf ("%*s", poffset, " ");
-	    if (j > len) {
-	        while (isspace (result[i])) i++;
-                printf ("%s", &result[i]);
+            printf ("%*s", poffset, " ");		// leading spaces
+
+	    if (j >= len) {
 		if (ellipses)
-                    printf (" (read more)....");
+                    printf ("%s", ell_str);
+	        else 
+                    printf ("%s", &result[i]);
 		break;
 	    }
 	}
