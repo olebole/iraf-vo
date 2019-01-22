@@ -210,7 +210,7 @@ vot_callConeSvc (svcParams *pars)
 	    }
 
 	    if (output && output[0] == '-' && (! extract & EX_COLLECT)) {
-	        write (fileno(stdout), result, strlen (result)-1);
+	        write (fileno(stdout), result, strlen (result));
 
 	    } else if (format != (F_CSV|F_HTML) && format != (F_CSV|F_KML)) {
 
@@ -223,7 +223,7 @@ vot_callConeSvc (svcParams *pars)
 	        if (pars->fmt = F_CSV || pars->fmt == F_TSV)
 		    vot_printHdr (fd, pars);
                 */
-	        write (fd, result, strlen (result)-1);
+	        write (fd, result, strlen (result));
 	        close (fd);
 	    }
 	}

@@ -199,7 +199,7 @@ vot_callSiapSvc (svcParams *pars)
 
 
             if (output && output[0] == '-' && (! extract & EX_COLLECT)) {
-                write (fileno(stdout), result, strlen (result)-1);
+                write (fileno(stdout), result, strlen (result));
 
             } else if (format != (F_CSV|F_HTML) && format != (F_CSV|F_KML)) {
 	        if ((fd = open (fname, O_WRONLY|O_CREAT, 0644)) < 0){
@@ -212,7 +212,7 @@ vot_callSiapSvc (svcParams *pars)
 		    vot_printHdr (fd, pars);
                 */
 	        if (result)
-	            write (fd, result, strlen (result)-1);
+	            write (fd, result, strlen (result));
 	        close (fd);
 
 	    }
