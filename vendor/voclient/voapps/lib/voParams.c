@@ -22,6 +22,8 @@
 
 
 
+static  int last_good_index = 0;
+
 /**
  *  VO_PARAMINIT -- Initialize the task parameter vector.
  *
@@ -36,11 +38,13 @@ char **
 vo_paramInit (int argc, char *argv[], char *opts, struct option long_opts[])
 {
     static  char *pargv[MAXARGS], arg[SZ_ARG];
-    int  i, j, len = 0;
+    int  i, j, k, len = 0;
 
     memset (&pargv[0], 0, MAXARGS);
+    last_good_index = 0;
+
     for (i=0; i < argc; i++) {
-	/*  Make a local copy of the arg so we can modify it w/out side
+	/*  Make a local copy of the arg so we can modify it without side
  	 *  effects.
 	 */
 	memset (arg, 0, SZ_ARG);
@@ -82,6 +86,23 @@ vo_paramInit (int argc, char *argv[], char *opts, struct option long_opts[])
 	        } else if (arg[2] != '=' && strchr (arg, (int)'=')) {
 		    fprintf (stderr, "Illegal flag '%s', skipping.\n", arg);
 		    continue;
+
+	        } else {
+		    /*  Check for a flag of the form "-all", which should
+		     *  really be the long-form of "--all".  Rewrite the
+		     *  pargv value so the flag isn't interpreted incorrectly
+		     *  as "-a", "-l", "-l".
+		     */
+		    int found = 0;
+		    for (k=0; (char *)long_opts[k].name; k++) {
+			if (strcmp (long_opts[k].name, &arg[1]) == 0) {
+	    		    pargv[i] = calloc (1, strlen (arg) + 6);
+	        	    sprintf (pargv[i], "--%s", &arg[1]);
+			    found = 1;
+			    break;
+			}
+		    }
+		    if (found) continue;
 	        }
 	    }
 
@@ -90,10 +111,11 @@ vo_paramInit (int argc, char *argv[], char *opts, struct option long_opts[])
 	}
     }
 
-#ifdef DEBUG
+    if (PARAM_DBG) {
     for (i=0; i < argc; i++) 
-	fprintf (stderr, "argv[%d] = '%s'\n", i, pargv[i]);
-#endif
+	    fprintf (stderr, "pargv[%d] = '%s'\n", i, pargv[i]);
+    }
+
     return (pargv);
 }
 
@@ -128,6 +150,12 @@ vo_paramNext (char *opts, struct option long_opts[], int argc, char *argv[],
 #else
     ch = getopt_long_only (argc, argv, opts, long_opts, &index);
 #endif
+
+    if (ch == 63) {
+	optind = last_good_index;
+	return (-1);
+    }
+
     if (ch >= 0) {
         if (ch > 0 && optarg) {
 	    if ((strchr (optarg, (int)'=') != 0) && (optarg[0] != '-') && 
@@ -148,6 +176,7 @@ vo_paramNext (char *opts, struct option long_opts[], int argc, char *argv[],
 	    *posindex = index;
 	    if (optarg)
 	        strcpy (optval, optarg);
+	} else {
 	}
 
     } else {
@@ -158,11 +187,14 @@ vo_paramNext (char *opts, struct option long_opts[], int argc, char *argv[],
 	} else
 	    return (0);
     }
+    last_good_index = optind;
 
-#ifdef DEBUG
-  fprintf (stderr, "ch = %d (%c)  optval='%s' optarg='%s'  index=%d\n", 
+    if (PARAM_DBG) {
+	fprintf (stderr, 
+	    "paramNext: ch=%d (%c) optval='%s' optarg='%s' index=%d\n",
       ch, ch, optval, optarg, index);
-#endif
+    }
+
     return (ch);
 }
 

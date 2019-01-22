@@ -18,6 +18,7 @@
 #endif
 #define DEF_SR                  0.1
 
+#define USE_GETOPT_LONG
 
 
 /* Local processing definitions.
