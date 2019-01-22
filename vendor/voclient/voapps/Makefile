@@ -71,12 +71,12 @@ CFLAGS          = -g -Wall $(CARCH) -D$(PLATFORM) $(CINCS) -L./
 C_SRCS 	    = votcnv.c votget.c votinfo.c vosesame.c vodata.c voregistry.c \
 	      votpos.c votcat.c votsplit.c votstat.c votjoin.c voatlas.c \
 	      votsort.c vosamp.c voiminfo.c \
-	      voimage.c vocatalog.c vospectra.c votopic.c \
+	      voimage.c vocatalog.c vospectrum.c votopic.c \
 	      voApps_spp.c
 C_OBJS 	    = votcnv.o votget.o votinfo.o vosesame.o vodata.o voregistry.o \
 	      votpos.o votcat.o votsplit.o votstat.o votjoin.o voatlas.o \
 	      votsort.o vosamp.o voiminfo.o \
-	      voimage.o vocatalog.o vospectra.o votopic.o \
+	      voimage.o vocatalog.o vospectrum.o votopic.o \
 	      voApps_spp.o
 C_INCS 	    = voApps.h voAppsP.h
 
@@ -94,7 +94,7 @@ SPP_TASKS   =
 F77_TASKS   =
 C_TASKS	    = voregistry \
 	      vosesame \
-	      vodata voatlas voimage vocatalog vospectra votopic \
+	      vodata voatlas voimage vocatalog vospectrum votopic \
 	      votcnv votget votpos votinfo votstat votsort \
 	      vosamp \
 	      voiminfo \
@@ -263,9 +263,9 @@ vocatalog: voApps.c vocatalog.o lib
 	$(CC) $(CFLAGS) -o vocatalog voApps.c $(LIBS)
 	/bin/rm -rf vocatalog.dSYM
 
-vospectra: voApps.c vospectra.o lib
-	$(CC) $(CFLAGS) -o vospectra voApps.c $(LIBS)
-	/bin/rm -rf vospectra.dSYM
+vospectrum: voApps.c vospectrum.o lib
+	$(CC) $(CFLAGS) -o vospectrum voApps.c $(LIBS)
+	/bin/rm -rf vospectrum.dSYM
 
 votopic: voApps.c votopic.o lib
 	$(CC) $(CFLAGS) -o votopic voApps.c $(LIBS)
