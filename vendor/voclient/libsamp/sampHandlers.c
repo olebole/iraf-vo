@@ -210,7 +210,8 @@ samp_execUserHandler (String sender, String mtype, String msg_id, Map params)
 
     /*  Get the user handler pointer.
      */
-    func = samp_getUserHandler (mtype);
+    if (! (func = samp_getUserHandler (mtype)) )
+	return;
 
 
     /*  Process the mtype.
@@ -395,9 +396,10 @@ samp_execUserHandler (String sender, String mtype, String msg_id, Map params)
 	    } else
                 (*func) (sender, mtype, msg_id, params);
 
-	} else
+	} else {
             samp_genericMsgHandler (sender, mtype, msg_id, params);
     }
+}
 }
 
 
@@ -429,7 +431,7 @@ int
 samp_hubHandler (String sender, String mtype, String msg_id, Map msg_map)
 {
     /*  Process any special Hub events as a special case.
-    return (samp_processHubEvent (mtype, params));
+    return (samp_processHubEvent (mtype, msg_map));
      */
     return (0);
 }
