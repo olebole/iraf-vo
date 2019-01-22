@@ -456,9 +456,10 @@ vot_countResults (char *result)
     ** we desire.  Allow for upper or lower-case tag names.
     */
     while (tr) {
-	if ((tr = strstr (pos, "<TR>")) || (tr = strstr (pos, "<tr>")))
-	    pos = tr + 4, nrows++;
-	else
+	if ((tr = strcasestr (pos, "<TR>"))) {
+	    pos = tr + 4; 
+	    nrows++;
+	} else
 	    break;
     }
 
