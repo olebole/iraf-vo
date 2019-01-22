@@ -568,7 +568,7 @@ static int voc_openVOCServer (char *dev)
 static int 
 voc_parseDev (char *dev, unsigned short *hport, unsigned long *host_addr)
 {
-    char   *ip, osfn[128], buf[128], host_str[128];
+    char   *ip=NULL, osfn[128], buf[128], host_str[128];
     unsigned short port;
     register int i;
     struct hostent *hp;
@@ -586,6 +586,7 @@ voc_parseDev (char *dev, unsigned short *hport, unsigned long *host_addr)
     /* Form is a port number with an optional node name.  First extract
      * the port number.
      */
+    ip = osfn;
     if (isdigit (osfn[0]))
         ip = osfn;
     else if (strncmp (osfn, "inet:", 5) == 0)

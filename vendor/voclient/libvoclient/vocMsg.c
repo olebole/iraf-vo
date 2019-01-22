@@ -620,8 +620,13 @@ msg_getFloatResult (vocRes_t *res, int index)
 char *
 msg_getStringResult (vocRes_t *res, int index)
 {
-    if (strlen (res->value[index]) > SZ_MSGSTR)
+    if (strlen (res->value[index]) > SZ_MSGSTR) {
+        char *ip = res->value[index];
+        ip[SZ_MSGSTR-1] = '\0';
+        /*
         *res->value[SZ_MSGSTR-1] = '\0';
+        */
+    }
     return (strdup(res->value[index]));
 }
 
