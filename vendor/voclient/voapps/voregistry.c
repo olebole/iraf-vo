@@ -232,7 +232,7 @@ char *resList[] = {			/* resource fields (full print) */
     "ServiceURL", 	    "ReferenceURL",     "Description",
     "Creator", 		    "Publisher",        "CoverageSpatial",
     "CoverageTemporal",     "Waveband",         "ContentLevel",      
-    "Version",		    "CapabilityName",
+    "Version",
     NULL
 };
 
@@ -364,8 +364,7 @@ voregistry (int argc, char *argv[], size_t *reslen, void **result)
             case 'R':    			/* Resolve mode		*/
 		mode = M_RESOLVE;
 		dal_only++;				
-		fields =
-		     "ShortName,CapabilityStandardID,Identifier,CapabilityName";
+		fields = "ShortName,CapabilityStandardID,Identifier";
 		user_fields++;
 		break;
             case 'S':    			/* SName Resolve mode	*/
