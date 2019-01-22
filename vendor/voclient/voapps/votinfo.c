@@ -310,11 +310,13 @@ votinfo (int argc, char **argv, size_t *reslen, void **result)
         printf ("%s\n\n", (iname[0] == '-' ? "stdin" : iname));
         printf ("    Resources:  %d\tType: %-12s\t"
 	    "    Table Size:  %d x %d\n", 
-	    vot_getLength (res), vot_getDATATypeString (data), ncols, nrows);
+	    vot_getLength (res), (data ? vot_getDATATypeString (data) : "none"), 
+	    ncols, nrows);
 
         if ((handle = vot_getINFO (res)) > 0)
             printf ("         INFO:  %d\n", vot_getLength (handle));
 
+	nlen = 0;
         if ((handle = vot_getPARAM (res)) > 0)
             printf ("        PARAM:  %d\t", 
 		(nlen=vot_getLength (handle)));
