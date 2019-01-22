@@ -313,8 +313,8 @@ int 	samp_sendMsg (handle_t handle, String recip, Map msg);
 void    samp_notify (handle_t handle, String recipId, Map msg);
 List    samp_notifyAll (handle_t handle, Map msg);
 String  samp_call (handle_t handle, String recipId, String tag, Map msg);
-int     samp_callAll (handle_t handle, String msg_tag, Map msg);
-int     samp_callAndWait (handle_t handle, String recipId, String msg_tag, 
+Map     samp_callAll (handle_t handle, String msg_tag, Map msg);
+Map     samp_callAndWait (handle_t handle, String recipId, String msg_tag, 
 				Map msg);
 int  	samp_Reply (handle_t handle, String msg_id, Map resp);
 

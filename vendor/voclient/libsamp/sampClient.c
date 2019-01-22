@@ -172,25 +172,25 @@ samp_call (handle_t handle, String recipId, String msg_tag, Map msg)
  *  SAMP_CALLALL -- Make a callAll() call to the Hub
  *
  *  @brief	Make a callAll() call to the Hub
- *  @fn		Map calls = samp_callAll (handle_t handle, String msg_tag, 
+ *  @fn		Map resp = samp_callAll (handle_t handle, String msg_tag, 
  *				Map msg)
  *
  *  @param   handle	samp struct handle
  *  @param   msg_tag    message tag
  *  @param   msg        message map
- *  @return 		SAMP_OK or SAMP_ERR
+ *  @return 		response map
  */
-int 
+Map 
 samp_callAll (handle_t handle, String msg_tag, Map msg)
 {
     Samp *sampP = samp_H2P(handle);
     Hub  *hub   = sampP->hub;
     Map   resp  = (Map) 0;
-    int   status = SAMP_OK;
+    //int   status = SAMP_OK;
 
 
     if (!hub)
-        return (status);
+        return ((Map) 0);
 
     xr_initParam (hub->id);             /* set calling parameters       */
     xr_setStringInParam (hub->id, hub->privateKey);
@@ -201,15 +201,15 @@ samp_callAll (handle_t handle, String msg_tag, Map msg)
 	/*  Save the response to a new map so we can free the msg result.
 	 */
         xr_getStructFromResult (hub->id, &resp);
-        status = samp_setErr (handle, resp);          /* save the result   */
+        //status = samp_setErr (handle, resp);          /* save the result   */
     } else { 
 	strcpy (sampP->errortxt, xr_getErrMsg (hub->id));
 	if (sampP->debug || sampP->trace)
 	    fprintf (stderr, "%s\n", sampP->errortxt);
-	return (SAMP_ERR);
+	return ((Map) 0);
     }
 
-    return (status);
+    return (resp);
 }
 
 
@@ -217,27 +217,27 @@ samp_callAll (handle_t handle, String msg_tag, Map msg)
  *  SAMP_CALLANDWAIT -- Make a callAndWait() call to the Hub
  *
  *  @brief	Make a callAndWait() call to the Hub
- *  @fn		status = samp_callAndWait (handle_t handle, String recipId, 
+ *  @fn		Map resp = samp_callAndWait (handle_t handle, String recipId, 
  *			String msg_tag, Map msg)
  *
  *  @param   handle	samp struct handle
  *  @param   recipId    recipient ID
  *  @param   msg_tag    message tag
  *  @param   msg        message map
- *  @return 		SAMP_OK or SAMP_ERR
+ *  @return 		response map
  */
-int
+Map
 samp_callAndWait (handle_t handle, String recipId, String msg_tag, Map msg)
 {
     Samp *sampP = samp_H2P(handle);
     Hub  *hub   = sampP->hub;
     char *pubId = samp_app2id (handle, recipId);
     Map   resp  = (Map) 0;
-    int   status = SAMP_OK;
+    //int   status = SAMP_OK;
 
 
     if (!hub)
-        return (status);
+        return ((Map) 0);
 
     xr_initParam (hub->id);             /* set calling parameters       */
     xr_setStringInParam (hub->id, hub->privateKey);
@@ -249,15 +249,15 @@ samp_callAndWait (handle_t handle, String recipId, String msg_tag, Map msg)
 	/*  Save the response to a new map so we can free the msg result.
 	 */
         xr_getStructFromResult (hub->id, &resp);
-        status = samp_setErr (handle, resp);          /* save the result   */
+        //status = samp_setErr (handle, resp);          /* save the result   */
     } else { 
 	strcpy (sampP->errortxt, xr_getErrMsg (hub->id));
 	if (sampP->debug || sampP->trace)
 	    fprintf (stderr, "%s\n", sampP->errortxt);
-	return (SAMP_ERR);
+	return ((Map) 0);
     }
 
-    return (status);
+    return (resp);
 }
 
 
