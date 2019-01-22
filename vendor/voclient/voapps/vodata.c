@@ -423,7 +423,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
     all_data  = 0;
 
 
-    rs_time = time ((time_t) NULL);
+    rs_time = time ((time_t *) NULL);
 
     /*  Now process the command line arguments. 
      */
@@ -818,7 +818,7 @@ vodata (int argc, char *argv[], size_t *reslen, void **result)
     	    }
 	}
     }
-    re_time = time ((time_t) NULL);
+    re_time = time ((time_t *) NULL);
 
 
     /* Close VOClient connection.  Each child process will need to reopen
@@ -1627,7 +1627,7 @@ vot_runSvcThreads ()
     pthread_attr_t  attr;		/* thread attributes		*/
 
 
-    qs_time = time ((time_t) NULL);
+    qs_time = time ((time_t *) NULL);
 
     if (verbose && !count && !meta && nservices > 1)
 	fprintf (stderr, "# Creating service processing threads...\n");
@@ -1688,7 +1688,7 @@ vot_runSvcThreads ()
 
         pthread_attr_destroy (&attr);
     }
-    qe_time = time ((time_t) NULL);
+    qe_time = time ((time_t *) NULL);
 
     if ((debug && verbose > 1)) {
 	fprintf (stderr, "\n\n..........THREAD PROCS COMPLETED.....\n");

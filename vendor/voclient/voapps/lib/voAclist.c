@@ -117,7 +117,7 @@ vot_procAclist (void)
     nrunning = 0;
     nremaining = nacrefs;
 
-    as_time = time ((time_t) NULL);	/* get start time	*/
+    as_time = time ((time_t *) NULL);	/* get start time	*/
 
 
     if (verbose && !quiet)
@@ -164,7 +164,7 @@ vot_procAclist (void)
 	printf ("#\n# Downloads complete.\n");
 
 
-    ae_time = time ((time_t) NULL);	/* get end time		*/
+    ae_time = time ((time_t *) NULL);	/* get end time		*/
 
     return;
 }

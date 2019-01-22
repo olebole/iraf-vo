@@ -1093,8 +1093,8 @@ static char *
 vot_getTime (int type, char *arg)
 {
     char  unit = arg[strlen (arg) - 1];
-    long  diff, val;
-    time_t  now = time((time_t)NULL), then;
+    long  diff=0, val;
+    time_t  now = time((time_t *)NULL), then;
     struct tm *start, *end;
     static char  t1[SZ_TSTR], t2[SZ_TSTR], tquery[SZ_TQUERY];
 

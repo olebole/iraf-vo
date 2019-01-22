@@ -748,7 +748,7 @@ vot_regIsCached (char *id, char *type, char *bpass)
     char *fname = vot_regCacheName (id, type, bpass);
     char *s, *line[SZ_LINE];
     struct stat st;
-    time_t now = time ((time_t)NULL);
+    time_t now = time ((time_t *)NULL);
     FILE *fd;
 
 
