@@ -1827,7 +1827,7 @@ vos_procCmd (int sampH, char *to, char *cmd, char *args[], int numargs)
 	    reslen = strlen (clist);
 	    result = strdup (clist);
 	} else {
-	    printf ("\nClients:\n%s\n", clist);
+	    printf ("%s", clist);
 	}
 	
 

@@ -611,12 +611,20 @@ vot_regSearch (char **ids, int nids, char *svctype, char *bpass,
 	    voc_regDALOnly (query, dalOnly);
 	voc_regSortRes (query, sortRes);
         
+        if (debug)
+	    printf ("query string:\n\n%s\n\n", voc_regGetQueryString (query));
+	    
         res = voc_regExecute (query);			/* execute it         */
 
     } else {
 /*
         res = voc_regSearch (qstring, NULL, orValues);
 */
+        if (debug) {
+	    RegQuery query = voc_regQuery (qstring, FALSE);
+	    printf ("qstring:\n\n%s\n\n", voc_regGetQueryString (query));
+	}
+	    
         res = voc_regSearch (qstring, term2, orValues);
 	bzero (keyws, SZ_RESBUF);
     }

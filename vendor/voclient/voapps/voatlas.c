@@ -507,8 +507,8 @@ voa_callService (char *svc_url, double ra, double dec, double size,
 	(list_surveys ? NULL : (graphic ? "image/jpeg" : "image/fits")));
 
 
-    if (VOAPP_DEBUG) {
-        fprintf (stderr, "Executing Query:\n  %s\n\n", 
+    if (VOAPP_DEBUG || debug) {
+        fprintf (stderr, "Executing Query:\n\t'%s'\n\n", 
             voc_getQueryString (query, SIAP_CONN, 0));
     }
         

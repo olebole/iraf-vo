@@ -115,6 +115,9 @@
 #define E_VOCINIT		4	/* VOClient init failed		*/
 
 
+/*  Debug macros.
+*/
+#define PARAM_DBG  (getenv("PARAM_DBG")!=NULL||access("/tmp/PARAM_DBG",F_OK)==0)
 
 
 /*  Utility macros.

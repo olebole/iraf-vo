@@ -906,15 +906,15 @@ printFullRecord (char *term)
     char      *attr_val, sql[SZ_LINE];
 
 
-    if (debug)
-	fprintf (stderr, "printFullRec:  term='%s'\n", term);
-
     if (res_all)
         sprintf (sql, "(ShortName like '%%%s%%') OR (Identifier like '%%%s%%')",
 	    term, term);
     else
         sprintf (sql, "(ShortName like '%s') OR (Identifier like '%s')",
 	    term, term);
+
+    if (debug)
+	fprintf (stderr, "printFullRec:  term='%s' sql='%s'\n", term, sql);
 
     resource = voc_regExecute (voc_regQuery (sql, 0));
     nresults = voc_resGetCount (resource);
