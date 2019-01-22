@@ -296,7 +296,7 @@ voatlas (int argc, char **argv, size_t *reslen, void **result)
 	    status = ERR;
 	    goto done_;
     } else if (field) {
-	if (voa_resolveField (field, &ra, &dec) == OK) {
+	if (voa_resolveField (field, &ra, &dec) != OK) {
 	    fprintf (stderr, "Error: cannot resolve object '%s'\n", field);
 	    status = ERR;
 	    goto done_;
