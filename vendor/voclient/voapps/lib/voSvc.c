@@ -792,8 +792,8 @@ static char *
 vot_regGetCacheResults (char *fname, int *nres)
 {
     FILE *fd;
-    int  nr, size;
-    char line[SZ_LINE], *results;
+    int  nr=0, size=0;
+    char line[SZ_LINE], *results = NULL;
 
     memset (line, 0, SZ_LINE);
     if ((fd = fopen (fname, "r")) != (FILE *) NULL) {

@@ -902,7 +902,7 @@ static void
 printFullRecord (char *term)
 {
     RegResult  resource = 0;
-    int        i, j, nresults;
+    int        i, j, nresults = 0;
     char      *attr_val, sql[SZ_LINE];
 
 
