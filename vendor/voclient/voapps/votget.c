@@ -339,7 +339,7 @@ votableHandler (char *url, char *tblId, char *name)
 
     if (strncmp (url, "http://", 7) == 0) {
         strcpy (fname, "/tmp/votgetXXXXXX");    /* temp download name    */
-        mktemp (fname);
+        mkstemp (fname);
         if (vot_getData (url, fname) < 0) 
 	    fprintf (stderr, "Error accessing url '%s'\n", url);
 

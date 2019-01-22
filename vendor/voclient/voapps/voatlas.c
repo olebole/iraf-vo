@@ -241,7 +241,7 @@ voatlas (int argc, char **argv, size_t *reslen, void **result)
 	dlname = oname;			    /* output name specified	*/
     } else if (do_samp) {
 	strcpy (tmp, "/tmp/voatlasXXXXXX");    /* temp download name	*/
-	mktemp (tmp);
+	mkstemp (tmp);
 	dlname = tmp;
     } else {
 	if (field)
