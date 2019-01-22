@@ -24,10 +24,12 @@
 #ifndef SZ_LINE
 #define	SZ_LINE		    256 	/** size of a text line       	    */
 #endif
+#ifndef SZ_URL
+#define	SZ_URL		    2048	/** len of a URL	      	    */
+#endif
 
 #define	SZ_SECRET	    64		/** size of secret string     	    */
 #define	SZ_DESC		    8192	/** len of a description      	    */
-#define	SZ_URL		    1024	/** len of a URL	      	    */
 #define	SZ_CMD		    1024	/** len of a command	      	    */
 #define SZ_SBUF             65536	/** big string buffer		    */
 #define	SZ_RESSTR	    1024	/** len of result string      	    */
@@ -61,7 +63,8 @@
 #define SAMP_SAMPRUCT       TY_STRUCT
 #define SAMP_ARRAY          TY_ARRAY
 
-#define	SAMP_TRACE	    0		/** debug trace               	    */
+					/** debug trace               	    */
+#define	SAMP_TRACE   (getenv("SAMP_TRACE")||access("/tmp/SAMP_TRACE",F_OK)==0)
 
 
 /** 

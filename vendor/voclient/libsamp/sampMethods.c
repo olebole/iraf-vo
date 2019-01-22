@@ -150,9 +150,9 @@ samp_receiveNotification (void *data)
      *  then call the userHandler directly, no reply() to the sender is 
      *  required.
      */
-    if ( (func = samp_getSampHandler (mtype)) )
+    if ( (func = samp_getSampHandler (mtype)) ) {
 	(*func) (sender, mtype, NULL, params);
-    else {
+    } else {
 	/*
 	samp_execUserHandler (sender, mtype, 0, params);
 	*/
@@ -163,7 +163,6 @@ samp_receiveNotification (void *data)
     }
 
 done_:
-    resp = OK_Map;
 resp = samp_getHandlerReply ();
 
     xr_setStructInResult (data, resp);

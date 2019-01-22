@@ -296,7 +296,7 @@ samp_processHubEvent (String mtype, Map params)
 	break;
 
     case HUB_SUBSCRIPTIONS:
-	/*   nothing to do   */
+	samp_mapClients (sampH); 	/*   new task connected	   */
 	break;
 
     default:
